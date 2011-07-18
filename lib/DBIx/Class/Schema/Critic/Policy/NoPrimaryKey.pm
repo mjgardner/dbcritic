@@ -67,16 +67,21 @@ version 0.001
 
 =head2 description
 
+Returns the short description of what this policy checks.
 Required by
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =head2 explanation
 
+Returns the long description of what this policy checks.
 Required by
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =head2 applies_to
 
+Returns a reference to an array with one element: a
+L<Moose::Meta::TypeConstraint|Moose::Meta::TypeConstraint> for a
+L<MooseX::Types::DBIx::Class::ResultSource|MooseX::Types::DBIx::Class/ResultSource>.
 Required by
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
