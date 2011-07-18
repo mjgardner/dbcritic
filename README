@@ -17,11 +17,13 @@ METHODS
     "DBIx::Class::Schema::Critic::Policy" namespace are loaded.
 
   critique
-    Arguments: none
-    Return value: none
-
     Runs the "schema" through the DBIx::Class::Schema::Critic engine using
-    all the policies that have been loaded.
+    all the policies that have been loaded and dumps a string representation
+    of "violations" to "STDOUT".
+
+  violations
+    Returns a list of all DBIx::Class::Schema::Critic::Violations picked up
+    by the various policies.
 
 SUPPORT
   Perldoc
