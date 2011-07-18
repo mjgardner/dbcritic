@@ -24,7 +24,7 @@ use MooseX::Types::Moose qw(ArrayRef Str);
 use namespace::autoclean;
 
 const my %ATTR => (
-    description => 'No primary key for a ResultSource',
+    description => 'No primary key',
     explanation => <<'END_EXPLANATION',
 ResultSource tables should have one or more columns defined as a primary key.
 END_EXPLANATION
@@ -37,9 +37,14 @@ has applies_to => ( ro,
     isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
     default => sub { [ResultSource] },
     traits  => ['Array'],
-    handles =>
-        { can_critique => [ first => sub { $ARG->equals( $ARG[0] ) } ] },
+    handles => { _first_applicable => 'first' },
 );
+
+sub can_critique {
+    my ( $self, $type ) = @ARG;
+    return $self->_first_applicable(
+        sub { $ARG->name eq "MooseX::Types::DBIx::Class::$type" } );
+}
 
 with 'DBIx::Class::Schema::Critic::Policy';
 

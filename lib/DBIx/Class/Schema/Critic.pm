@@ -14,18 +14,21 @@ BEGIN {
 
 # ABSTRACT: Critique a database schema for best practices
 
+use Modern::Perl;
 use English '-no_match_vars';
+
+use Module::Pluggable
+    search_path => [ __PACKAGE__ . '::Policy' ],
+    sub_name    => 'policies',
+    instantiate => 'new';
+
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class 'Schema';
-
-use Module::Pluggable
-    sub_name    => 'policies',
-    search_path => [ __PACKAGE__ . '::Policy' ];
-
 use DBIx::Class::Schema::Critic::Types 'Policy';
-use namespace::autoclean;
+
+#use namespace::autoclean;
 with 'MooseX::Getopt';
 
 has schema => ( ro, required,
@@ -36,16 +39,36 @@ has schema => ( ro, required,
 );
 
 sub critique {
-    my $self = shift;
+    my $self   = shift;
+    my $schema = $self->schema;
 
-    for my $type (qw(Schema ResultSource ResultSet Row)) {
-        for my $policy ( $self->policies ) {
-            next if not $policy->can_critique($type);
-            say "$policy running against $type";
+    for my $policy ( $self->_policies_can('Schema') ) {
+        if ( $policy->violates( ($schema) x 2 ) ) {
+            say $policy->violation->stringify();
         }
     }
 
+    for my $policy ( $self->_policies_can('ResultSource') ) {
+        for my $source ( $schema->sources ) {
+            if ( $policy->violates( $schema->source($source), $schema ) ) {
+                say $policy->violation->stringify();
+            }
+        }
+    }
+
+    for my $source ( $schema->sources ) {
+        for my $policy ( $self->_policies_can('ResultSet') ) {
+            if ( $policy->violates( $schema->resultset($source), $schema ) ) {
+                say $policy->violation->stringify();
+            }
+        }
+    }
     return;
+}
+
+sub _policies_can {
+    my $self = shift;
+    return grep { $ARG->can_critique(@ARG) } $self->policies;
 }
 
 __PACKAGE__->meta->make_immutable();

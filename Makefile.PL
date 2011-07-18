@@ -15,8 +15,10 @@ my %WriteMakefileArgs = (
     'Carp' => '0',
     'File::Find' => '0',
     'File::Temp' => '0',
+    'GSI::Automerge::Connection' => '0',
     'Scalar::Util' => '0',
     'Test::More' => '0.94',
+    'Test::Most' => '0',
     'perl' => '5.006'
   },
   'CONFIGURE_REQUIRES' => {
@@ -41,6 +43,7 @@ my %WriteMakefileArgs = (
     'MooseX::Types::DBIx::Class' => '0',
     'MooseX::Types::Moose' => '0',
     'namespace::autoclean' => '0',
+    'overload' => '0',
     'utf8' => '0'
   },
   'VERSION' => '0.001',

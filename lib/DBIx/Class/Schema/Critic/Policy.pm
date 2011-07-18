@@ -20,6 +20,7 @@ use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
+use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean;
 
 requires qw(description explanation applies_to violates);
@@ -40,14 +41,10 @@ has element => ( ro,
 
 has schema => ( ro, isa => Schema, writer => '_set_schema' );
 
-has violation => ( ro, lazy,
-    init_arg => undef,
-    default  => sub {
-        DBIx::Class::Schema::Critic::Violation->new(
-            map { $ARG => $ARG[0]->$ARG }
-                qw(description explanation element) );
-    },
-);
+sub violation {
+    return DBIx::Class::Schema::Critic::Violation->new(
+        map { $ARG => $ARG[0]->$ARG } qw(description explanation element) );
+}
 
 1;
 
@@ -80,6 +77,8 @@ as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 
 Read-only accessor for the current schema object being examined by
 L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+
+=head1 METHODS
 
 =head2 violation
 

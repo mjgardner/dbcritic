@@ -15,16 +15,31 @@ BEGIN {
 
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
+use Modern::Perl;
 use English '-no_match_vars';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'Str';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
-use namespace::autoclean;
+use overload '""' => \&stringify;
 
 has [qw(description explanation)] => ( ro, isa => Str );
 
 has element => ( ro, isa => DBICType );
+
+sub stringify {
+    my $self    = shift;
+    my $element = $self->element;
+    my $type    = ref $element;
+    $type =~ s/\A .* :://xms;
+
+    given ($type) {
+        when ('Table') {
+            $type .= ' ' . $element->from;
+        }
+    }
+    return "[$type] " . $self->description . "\n" . $self->explanation;
+}
 
 __PACKAGE__->meta->make_immutable();
 1;
