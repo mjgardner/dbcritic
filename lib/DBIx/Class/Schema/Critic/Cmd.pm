@@ -29,11 +29,11 @@ override opt_spec => sub {
 override validate_args => sub {
     my ( $self, $opt_ref, $args_ref ) = @ARG;
 
-    if @{$args_ref}{ $self->usage_error('No args allowed') }
+    if ( @{$args_ref} ) { $self->usage_error('No args allowed') }
 
-            ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
-            try { require $opt_ref->{schema} }
-        catch { $self->usage_error("Couldn't load $opt_ref->{schema}") };
+    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
+    try { require $opt_ref->{schema} }
+    catch { $self->usage_error("Couldn't load $opt_ref->{schema}") };
 
     return;
 };
