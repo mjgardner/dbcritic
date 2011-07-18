@@ -18,7 +18,7 @@ above_version = 5.010
 flowcontrol = carp cluck confess croak die exit goto warn exit
 
 [Documentation::PodSpelling]
-stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas DBICType TypeConstraints ResultSource namespace
+stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas DBICType TypeConstraints ResultSource namespace stringify
 
 [Documentation::RequirePodSections]
 lib_sections = NAME | VERSION | SYNOPSIS | DESCRIPTION | SUPPORT | AUTHOR | COPYRIGHT AND LICENSE
