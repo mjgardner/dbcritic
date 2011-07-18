@@ -28,17 +28,24 @@ override opt_spec => sub {
 
 override validate_args => sub {
     my ( $self, $opt_ref, $args_ref ) = @ARG;
-    $self->usage_error('No args allowed') if @{$args_ref};
-    try { require $opt_ref->{schema} }
-    catch { $self->usage_error("Couldn't load $opt_ref->{schema}") };
+
+    if @{$args_ref}{ $self->usage_error('No args allowed') }
+
+            ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
+            try { require $opt_ref->{schema} }
+        catch { $self->usage_error("Couldn't load $opt_ref->{schema}") };
+
     return;
 };
 
 override execute => sub {
     my ( $self, $opt_ref, $args_ref ) = @ARG;
+
+    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
     my $critic = DBIx::Class::Schema::Critic->new(
         { schema => $opt_ref->{schema} } );
     $critic->critique();
+
     return;
 };
 
