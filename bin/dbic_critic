@@ -1,0 +1,14 @@
+#!perl
+
+# PODNAME: dbic_critic
+# ABSTRACT: Critique a database schema for best practices
+
+package main;
+use DBIx::Class::Schema::Critic::Cmd;
+DBIx::Class::Schema::Critic::Cmd->run();
+
+=head1 USAGE
+
+=head1 DESCRIPTION
+
+=head1 CONFIGURATION
