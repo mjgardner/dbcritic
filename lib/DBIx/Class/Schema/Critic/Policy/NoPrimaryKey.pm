@@ -34,7 +34,7 @@ END_EXPLANATION
 while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( ro, isa => Str, default => $default );
 }
-has applies_to => ( default => [ResultSource] );
+has applies_to => ( default => sub { [ResultSource] } );
 
 with 'DBIx::Class::Schema::Critic::Policy';
 
