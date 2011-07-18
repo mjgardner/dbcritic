@@ -47,6 +47,23 @@ DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::C
 
 version 0.001
 
+=head1 ATTRIBUTES
+
+=head2 description
+
+A short string describing what's wrong.  Only settable at construction.
+
+=head2 explanation
+
+A string giving further details.  Only settable at construction.
+
+=head2 element
+
+The schema element that violated a
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
+as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
+Only settable at construction.
+
 =head1 SUPPORT
 
 =head2 Perldoc

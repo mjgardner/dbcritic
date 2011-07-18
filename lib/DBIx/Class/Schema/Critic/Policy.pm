@@ -63,20 +63,8 @@ version 0.001
 =head2 element
 
 Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.  Can be an instance
-of the following:
-
-=over
-
-=item L<DBIx::Class::ResultSet|DBIx::Class::ResultSet>
-
-=item L<DBIx::Class::ResultSource|DBIx::Class::ResultSource>
-
-=item L<DBIx::Class::Row|DBIx::Class::Row>
-
-=item L<DBIx::Class::Schema|DBIx::Class::Schema>
-
-=back
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>,
+as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 
 =head2 schema
 

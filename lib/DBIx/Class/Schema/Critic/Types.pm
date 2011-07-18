@@ -48,6 +48,29 @@ DBIx::Class::Schema::Critic::Types - Type library for DBIx::Class::Schema::Criti
 
 version 0.001
 
+=head1 TYPES
+
+=head2 Policy
+
+An instance of a
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=head2 DBICType
+
+An instance of any of the following:
+
+=over
+
+=item L<DBIx::Class::ResultSet|DBIx::Class::ResultSet>
+
+=item L<DBIx::Class::ResultSource|DBIx::Class::ResultSource>
+
+=item L<DBIx::Class::Row|DBIx::Class::Row>
+
+=item L<DBIx::Class::Schema|DBIx::Class::Schema>
+
+=back
+
 =head1 SUPPORT
 
 =head2 Perldoc
