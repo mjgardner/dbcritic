@@ -26,7 +26,7 @@ has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
 has policies => ( rw,
     isa => ArrayRef ['DBIx::Class::Schema::Critic::Policy'],
     traits  => ['Array'],
-    handles => { push => 'add_policy' },
+    handles => { add_policy => 'push' },
 );
 
 sub critique {
