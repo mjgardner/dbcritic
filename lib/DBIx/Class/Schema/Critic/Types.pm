@@ -1,5 +1,6 @@
 use utf8;
 use strict;
+use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Types;
 
@@ -13,7 +14,6 @@ BEGIN {
 
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
-use Modern::Perl;
 use English '-no_match_vars';
 use MooseX::Types -declare => [qw(DBICType Policy)];
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);

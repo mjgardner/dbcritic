@@ -1,6 +1,7 @@
 #!perl
 use utf8;
 use strict;
+use Modern::Perl;
 
 use Test::Most;
 use GSI::Automerge::Connection;

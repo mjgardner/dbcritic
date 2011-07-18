@@ -1,5 +1,6 @@
 use utf8;
 use strict;
+use Modern::Perl;
 
 package DBIx::Class::Schema::Critic;
 
@@ -20,7 +21,7 @@ use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
     instantiate => 'new';
-
+use List::MoreUtils qw(all any);
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
@@ -66,8 +67,14 @@ sub critique {
 }
 
 sub _policies_can {
-    my $self = shift;
-    return grep { $ARG->can_critique(@ARG) } $self->policies;
+    my ( $self, $type ) = @ARG;
+    return grep { _policy_applies_to( $ARG, $type ) } $self->policies;
+}
+
+sub _policy_applies_to {
+    my ( $policy, $type ) = @ARG;
+    return any { $ARG->name eq "MooseX::Types::DBIx::Class::$type" }
+    @{ $policy->applies_to };
 }
 
 __PACKAGE__->meta->make_immutable();

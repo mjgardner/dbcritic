@@ -1,6 +1,7 @@
 #!perl
 use utf8;
 use strict;
+use Modern::Perl;
 
 use strict;
 use warnings;

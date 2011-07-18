@@ -1,5 +1,6 @@
 use utf8;
 use strict;
+use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
@@ -14,9 +15,8 @@ BEGIN {
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-use Modern::Perl;
-use Const::Fast;
 use English '-no_match_vars';
+use Const::Fast;
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::DBIx::Class 'ResultSource';
@@ -33,18 +33,11 @@ END_EXPLANATION
 while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( ro, isa => Str, default => $default );
 }
+
 has applies_to => ( ro,
     isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
     default => sub { [ResultSource] },
-    traits  => ['Array'],
-    handles => { _first_applicable => 'first' },
 );
-
-sub can_critique {
-    my ( $self, $type ) = @ARG;
-    return $self->_first_applicable(
-        sub { $ARG->name eq "MooseX::Types::DBIx::Class::$type" } );
-}
 
 with 'DBIx::Class::Schema::Critic::Policy';
 
@@ -69,6 +62,23 @@ DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schem
 =head1 VERSION
 
 version 0.001
+
+=head1 ATTRIBUTES
+
+=head2 description
+
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=head2 explanation
+
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=head2 applies_to
+
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =head1 METHODS
 

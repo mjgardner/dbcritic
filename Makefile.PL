@@ -33,6 +33,7 @@ my %WriteMakefileArgs = (
   'PREREQ_PM' => {
     'Const::Fast' => '0',
     'English' => '0',
+    'List::MoreUtils' => '0',
     'Modern::Perl' => '0',
     'Module::Pluggable' => '0',
     'Moose' => '0',
