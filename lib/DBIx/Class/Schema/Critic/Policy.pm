@@ -8,6 +8,7 @@ use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
+use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean;
 
 =head1 REQUIRED METHODS
@@ -80,7 +81,7 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 has schema => ( ro, isa => Schema, writer => '_set_schema' );
 
-=attr violation
+=method violation
 
 Read-only accessor for a
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
@@ -88,13 +89,9 @@ object based on the state of the current policy.
 
 =cut
 
-has violation => ( ro, lazy,
-    init_arg => undef,
-    default  => sub {
-        DBIx::Class::Schema::Critic::Violation->new(
-            map { $ARG => $ARG[0]->$ARG }
-                qw(description explanation element) );
-    },
-);
+sub violation {
+    return DBIx::Class::Schema::Critic::Violation->new(
+        map { $ARG => $ARG[0]->$ARG } qw(description explanation element) );
+}
 
 1;

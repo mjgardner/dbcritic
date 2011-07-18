@@ -2,16 +2,28 @@ package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-use Const::Fast;
 use English '-no_match_vars';
+use Const::Fast;
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use MooseX::Types::Moose qw(ArrayRef Str);
 use namespace::autoclean;
 
+=attr description
+
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=attr explanation
+
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=cut
+
 const my %ATTR => (
-    description => 'No primary key for a ResultSource',
+    description => 'No primary key',
     explanation => <<'END_EXPLANATION',
 ResultSource tables should have one or more columns defined as a primary key.
 END_EXPLANATION
@@ -20,6 +32,14 @@ END_EXPLANATION
 while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( ro, isa => Str, default => $default );
 }
+
+=attr applies_to
+
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=cut
+
 has applies_to => ( ro,
     isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
     default => sub { [ResultSource] },

@@ -18,7 +18,7 @@ above_version = 5.010
 flowcontrol = carp cluck confess croak die exit goto warn exit
 
 [Documentation::PodSpelling]
-stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas DBICType TypeConstraints ResultSource
+stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas DBICType TypeConstraints ResultSource namespace stringify
 
 [Documentation::RequirePodSections]
 lib_sections = NAME | VERSION | SYNOPSIS | DESCRIPTION | SUPPORT | AUTHOR | COPYRIGHT AND LICENSE
@@ -26,10 +26,10 @@ script_sections = NAME | USAGE | DESCRIPTION | CONFIGURATION | SUPPORT | AUTHOR 
 
 [InputOutput::RequireCheckedSyscalls]
 functions = :builtins
-exclude_functions = print
+exclude_functions = print say
 
 [Subroutines::ProhibitCallsToUndeclaredSubs]
-exempt_subs = Const::Fast::const Moose::extends Moose::has Moose::override Moose::with Moose::Role::around Moose::Role::has Moose::Role::requires MooseX::Has::Sugar::lazy MooseX::Has::Sugar::ro MooseX::Has::Sugar::rw MooseX::Types::as MooseX::Types::role_type Try::Tiny::catch Try::Tiny::try
+exempt_subs = Const::Fast::const Moose::extends Moose::has Moose::override Moose::with Moose::Role::around Moose::Role::has Moose::Role::requires MooseX::Has::Sugar::lazy MooseX::Has::Sugar::required MooseX::Has::Sugar::ro MooseX::Has::Sugar::rw MooseX::Types::as MooseX::Types::role_type Try::Tiny::catch Try::Tiny::try
 
 [TestingAndDebugging::RequireUseStrict]
 equivalent_modules = Modern::Perl

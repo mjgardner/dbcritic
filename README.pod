@@ -20,34 +20,26 @@ version 0.001
 A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
 Only settable at construction time.
 
-=head2 policies
-
-A reference to an array of
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-consumers that will be applied during L</critique>.  Can be set at construction
-or via the C<policies> accessor method.
-
 =head1 METHODS
 
-=head2 add_policy
+=head2 policies
 
-Adds a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-consumer to L</policies>.
+Returns an array of loaded policy names that will be applied during
+L</critique>.  By default all modules under the
+C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
 
 =head2 critique
 
 =over
 
-=item Arguments: I<$schema?>
+=item Arguments: none
 
 =item Return value: none
 
 =back
 
-Runs the I<$schema> through the DBIx::Class::Schema::Critic engine using all
-the policies that have been loaded.  If no I<$schema> is provided then the
-L</schema> attribute is used.
+Runs the L</schema> through the DBIx::Class::Schema::Critic engine using all
+the policies that have been loaded.
 
 =head1 SUPPORT
 
