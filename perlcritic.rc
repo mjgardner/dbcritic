@@ -18,7 +18,7 @@ above_version = 5.010
 flowcontrol = carp cluck confess croak die exit goto warn exit
 
 [Documentation::PodSpelling]
-stop_words = Perldoc perldoc annonations PASSed DBIx accessor
+stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas
 
 [Documentation::RequirePodSections]
 lib_sections = NAME | VERSION | SUPPORT | AUTHOR | COPYRIGHT AND LICENSE
@@ -29,7 +29,7 @@ functions = :builtins
 exclude_functions = print
 
 [Subroutines::ProhibitCallsToUndeclaredSubs]
-exempt_subs = Moose::has MooseX::Has::Sugar::ro MooseX::Has::Sugar::rw
+exempt_subs = Moose::has MooseX::Has::Sugar::ro MooseX::Has::Sugar::rw MooseX::Types::role_type
 
 [TestingAndDebugging::RequireUseStrict]
 equivalent_modules = Modern::Perl

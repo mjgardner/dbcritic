@@ -19,7 +19,8 @@ use English '-no_match_vars';
 use MooseX::Types -declare => ['Policy'];
 use namespace::autoclean;
 
-role_type Policy, { role => 'DBIx::Class::Schema::Critic::Policy' };
+role_type Policy,    # no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
+    { role => 'DBIx::Class::Schema::Critic::Policy' };
 
 __PACKAGE__->meta->make_immutable();
 1;
