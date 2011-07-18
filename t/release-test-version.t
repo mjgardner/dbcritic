@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use utf8;
+use strict;
 use Modern::Perl;
 
 BEGIN {

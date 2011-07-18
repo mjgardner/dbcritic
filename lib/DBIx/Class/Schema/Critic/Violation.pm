@@ -1,4 +1,5 @@
 use utf8;
+use strict;
 use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Violation;
