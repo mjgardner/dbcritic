@@ -41,7 +41,7 @@ has applies_to => ( ro,
 
 with 'DBIx::Class::Schema::Critic::Policy';
 
-sub violates { !scalar $ARG[0]->element->primary_columns }
+sub violates { return !scalar $ARG[0]->element->primary_columns }
 
 __PACKAGE__->meta->make_immutable();
 1;

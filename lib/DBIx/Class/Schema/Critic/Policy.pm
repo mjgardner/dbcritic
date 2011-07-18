@@ -88,8 +88,6 @@ Read-only accessor for a
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object based on the state of the current policy.
 
-=back
-
 =head1 REQUIRED METHODS
 
 =head2 description
@@ -113,6 +111,8 @@ Role consumers must implement a C<violates> method that returns true if the
 policy is violated and false otherwise, based on attributes provided by the
 role.  Callers should call the C<violates> method as the following:
 
+    $policy->violates($element, $schema);
+
 =over
 
 =item Arguments: I<$element>, I<$schema>
@@ -122,8 +122,6 @@ L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object if it doesn't.
 
 =back
-
-E.g., C<< $policy->violates($element, $schema) >>.
 
 =head1 SUPPORT
 
