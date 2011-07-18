@@ -11,13 +11,13 @@ ATTRIBUTES
     construction time.
 
   policies
-    A reference to an array of DBIx::Class::Schema::Critic::Policy objects
+    A reference to an array of DBIx::Class::Schema::Critic::Policy consumers
     that will be applied during "critique". Can be set at construction or
     via the "policies" accessor method.
 
 METHODS
   add_policy
-    Adds a DBIx::Class::Schema::Critic::Policy object to "policies".
+    Adds a DBIx::Class::Schema::Critic::Policy consumer to "policies".
 
   critique
     Arguments: *$schema?*

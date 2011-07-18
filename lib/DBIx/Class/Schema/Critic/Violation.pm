@@ -1,44 +1,33 @@
 use strict;
 use warnings;
 
-package DBIx::Class::Schema::Critic::Policy;
+package DBIx::Class::Schema::Critic::Violation;
 
 BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::VERSION = '0.001';
+    $DBIx::Class::Schema::Critic::Violation::VERSION = '0.001';
 }
 
 BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::DIST = 'DBIx-Class-Schema-Critic';
+    $DBIx::Class::Schema::Critic::Violation::DIST
+        = 'DBIx-Class-Schema-Critic';
 }
 
-# ABSTRACT: Role for criticizing database schemas
+# ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
 use utf8;
 use Modern::Perl;
 use English '-no_match_vars';
-use Moose::Role;
+use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::DBIx::Class 'Schema';
+use MooseX::Types::Moose 'Str';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use namespace::autoclean;
 
-requires qw(description explanation violates);
+has [qw(description explanation)] => ( ro, isa => Str );
 
-has element => ( ro,
-    init_arg => undef,
-    isa      => DBICType,
-    writer   => '_set_element',
-);
+has element => ( ro, isa => DBICType );
 
-has schema => ( ro, isa => Schema );
-
-sub violation {
-    my $self = shift;
-    return DBIx::Class::Schema::Critic::Violation->new(
-        map { $ARG => $self->$ARG } qw(description explanation element),
-    );
-}
-
+__PACKAGE__->meta->make_immutable();
 1;
 
 __END__
@@ -52,68 +41,11 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
+DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::Critic::Policy
 
 =head1 VERSION
 
 version 0.001
-
-=head1 ATTRIBUTES
-
-=head2 element
-
-Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.  Can be an instance
-of the following:
-
-=over
-
-=item L<DBIx::Class::ResultSet|DBIx::Class::ResultSet>
-
-=item L<DBIx::Class::ResultSource|DBIx::Class::ResultSource>
-
-=item L<DBIx::Class::Row|DBIx::Class::Row>
-
-=item L<DBIx::Class::Schema|DBIx::Class::Schema>
-
-=back
-
-=head2 schema
-
-Read-only accessor for the current schema object being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
-
-=head1 METHODS
-
-=head2 violation
-
-=over
-
-=item Arguments: none
-
-=item Return value: A new
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object based on the state of the current policy.
-
-=head1 REQUIRED METHODS
-
-=head2 description
-
-Returns a short string describing what's wrong.
-
-=head2 explanation
-
-Returns a string giving further details.
-
-=head2 violates
-
-=over
-
-=item Arguments: I<$element>, I<$schema>
-
-=item Return value: nothing if the policy passes, or a
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object if it doesn't.
 
 =head1 SUPPORT
 

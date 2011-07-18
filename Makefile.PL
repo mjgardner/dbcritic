@@ -33,6 +33,7 @@ my %WriteMakefileArgs = (
     'Moose::Role' => '0',
     'MooseX::Has::Sugar' => '0',
     'MooseX::Types' => '0',
+    'MooseX::Types::DBIx::Class' => '0',
     'MooseX::Types::Moose' => '0',
     'namespace::autoclean' => '0',
     'utf8' => '0'
