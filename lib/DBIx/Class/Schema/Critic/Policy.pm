@@ -23,9 +23,7 @@ use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use namespace::autoclean;
 
-has applies_to => ( ro, isa => ArrayRef [DBICType] );
-
-requires qw(description explanation violates);
+requires qw(description explanation applies_to violates);
 
 around violates => sub {
     my ( $orig, $self ) = splice @ARG, 0, 2;
@@ -104,9 +102,10 @@ Returns a string giving further details.
 
 =head2 applies_to
 
-Returns an array reference of
-L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>s indicating what part(s)
-of the schema the policy is interested in.
+Returns an array reference of L<TypeConstraint|Moose::Meta::TypeConstraint>s
+s indicating what part(s) of the schema the policy is interested in.  Select
+from the list defined in
+L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 
 =head2 violates
 

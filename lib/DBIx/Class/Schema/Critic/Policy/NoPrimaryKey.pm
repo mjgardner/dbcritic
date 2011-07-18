@@ -21,7 +21,7 @@ use English '-no_match_vars';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::DBIx::Class 'ResultSource';
-use MooseX::Types::Moose 'Str';
+use MooseX::Types::Moose qw(ArrayRef Str);
 use namespace::autoclean;
 
 const my %ATTR => (
@@ -34,7 +34,10 @@ END_EXPLANATION
 while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( ro, isa => Str, default => $default );
 }
-has applies_to => ( default => sub { [ResultSource] } );
+has applies_to => ( ro,
+    isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
+    default => sub { [ResultSource] },
+);
 
 with 'DBIx::Class::Schema::Critic::Policy';
 
