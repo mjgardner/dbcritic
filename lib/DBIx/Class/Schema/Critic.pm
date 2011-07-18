@@ -23,8 +23,6 @@ use MooseX::Has::Sugar;
 use MooseX::Types::Moose qw(ArrayRef HashRef);
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'Policy';
-
-#use namespace::autoclean;
 with 'MooseX::Getopt';
 
 =attr schema
@@ -41,7 +39,15 @@ has schema => ( ro, required,
     writer      => '_set_schema',
 );
 
-has _elements => ( ro, lazy_build, isa => HashRef );
+has _elements => ( ro,
+    lazy_build,
+    isa     => HashRef,
+    traits  => ['Hash'],
+    handles => {
+        _element_names => 'keys',
+        _element       => 'get',
+    },
+);
 
 sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $schema = shift->schema;
@@ -54,40 +60,51 @@ sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
 
 =method critique
 
-=over
-
-=item Arguments: none
-
-=item Return value: none
-
-=back
-
 Runs the L</schema> through the DBIx::Class::Schema::Critic engine using all
-the policies that have been loaded.
+the policies that have been loaded and dumps a string representation of
+L</violations> to C<STDOUT>.
 
 =cut
 
 sub critique {
     my $self = shift;
-    while ( my ( $element_type, $elements_ref ) = each %{ $self->_elements } )
-    {
-        $self->_policy_loop( $element_type, $elements_ref );
-    }
+    for ( $self->violations ) { say "$ARG" }
     return;
+}
+
+=method violations
+
+Returns a list of all
+L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
+picked up by the various policies.
+
+=cut
+
+has _violations => ( ro, lazy_build,
+    isa     => ArrayRef,
+    traits  => ['Array'],
+    handles => { violations => 'elements' },
+);
+
+sub _build__violations {    ## no critic (ProhibitUnusedPrivateSubroutines)
+    my $self = shift;
+    return [ map { $self->_policy_loop( $ARG, $self->_element($ARG) ) }
+            $self->_element_names ];
 }
 
 sub _policy_loop {
     my ( $self, $policy_type, $elements_ref ) = @ARG;
+    my @violations;
     for my $policy ( grep { _policy_applies_to( $ARG, $policy_type ) }
         $self->policies )
     {
         for my $element ( @{$elements_ref} ) {
             if ( $policy->violates( $element, $self->schema ) ) {
-                say $policy->violation->stringify();
+                push @violations, $policy->violation;
             }
         }
     }
-    return;
+    return @violations;
 }
 
 sub _policy_applies_to {
