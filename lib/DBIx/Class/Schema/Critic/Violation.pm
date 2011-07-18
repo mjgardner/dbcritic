@@ -21,7 +21,7 @@ use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'Str';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
-use overload '""' => \&stringify;
+use overload q{""} => \&stringify;
 
 has [qw(description explanation)] => ( ro, isa => Str );
 
@@ -35,7 +35,7 @@ sub stringify {
 
     given ($type) {
         when ('Table') {
-            $type .= ' ' . $element->from;
+            $type .= q{ } . $element->from;
         }
     }
     return "[$type] " . $self->description . "\n" . $self->explanation;

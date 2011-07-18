@@ -21,7 +21,7 @@ use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
     instantiate => 'new';
-use List::MoreUtils qw(all any);
+use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
