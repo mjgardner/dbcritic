@@ -8,6 +8,8 @@ use English '-no_match_vars';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
+use MooseX::Types::DBIx::Class 'Schema';
+use DBIx::Class::Schema::Critic::Types 'Policy';
 use namespace::autoclean;
 
 =attr schema
@@ -17,25 +19,25 @@ Only settable at construction time.
 
 =cut
 
-has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
+has schema => ( ro, isa => Schema, writer => '_set_schema' );
 
 =attr policies
 
 A reference to an array of
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-objects that will be applied during L</critique>.  Can be set at construction
+consumers that will be applied during L</critique>.  Can be set at construction
 or via the C<policies> accessor method.
 
 =method add_policy
 
 Adds a
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-object to L</policies>.
+consumer to L</policies>.
 
 =cut
 
 has policies => ( rw,
-    isa => ArrayRef ['DBIx::Class::Schema::Critic::Policy'],
+    isa => ArrayRef [Policy],
     traits  => ['Array'],
     handles => { add_policy => 'push' },
 );

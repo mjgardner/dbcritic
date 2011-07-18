@@ -24,7 +24,7 @@ Only settable at construction time.
 
 A reference to an array of
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-objects that will be applied during L</critique>.  Can be set at construction
+consumers that will be applied during L</critique>.  Can be set at construction
 or via the C<policies> accessor method.
 
 =head1 METHODS
@@ -33,7 +33,7 @@ or via the C<policies> accessor method.
 
 Adds a
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-object to L</policies>.
+consumer to L</policies>.
 
 =head2 critique
 
