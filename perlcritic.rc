@@ -6,7 +6,7 @@ exclude = Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modu
 perltidyrc = xt/author/perltidy.rc
 
 [Lax::RequireExplicitPackage::ExceptForPragmata]
-allowed_pragmata = diagnostics feature perlversion strict warnings utf8
+allowed_pragmata = diagnostics feature perlversion strict warnings utf8 Modern::Perl
 
 # since we're using Modern::Perl
 [Compatibility::PerlMinimumVersionAndWhy]
