@@ -23,7 +23,6 @@ use MooseX::Has::Sugar;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use MooseX::Types::Moose 'Str';
 use namespace::autoclean;
-with 'DBIx::Class::Schema::Critic::Policy';
 
 const my %ATTR => (
     description => 'No primary key for a ResultSource',
@@ -36,6 +35,8 @@ while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( ro, isa => Str, default => $default );
 }
 has applies_to => ( default => [ResultSource] );
+
+with 'DBIx::Class::Schema::Critic::Policy';
 
 sub violates { !scalar $ARG[0]->element->primary_columns }
 
