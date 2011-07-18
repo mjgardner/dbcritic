@@ -68,8 +68,7 @@ version 0.001
 =head2 violates
 
 This policy returns a violation if a
-L<DBIx::Class::Schema::ResultSource|DBIx::Class::Schema::ResultSource>
-has zero primary columns.
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
 
 =head1 SUPPORT
 
