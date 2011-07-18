@@ -20,7 +20,6 @@ use Moose::Role;
 use MooseX::Has::Sugar;
 use namespace::autoclean;
 
-__PACKAGE__->meta->make_immutable();
 1;
 
 __END__
