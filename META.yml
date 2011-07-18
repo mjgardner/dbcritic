@@ -1,0 +1,29 @@
+---
+abstract: 'Main module for DBIx-Class-Schema-Critic'
+author:
+  - 'Mark Gardner <mjgardner@cpan.org>'
+build_requires:
+  Carp: 0
+  File::Find: 0
+  File::Temp: 0
+  Scalar::Util: 0
+  Test::More: 0.94
+  perl: 5.006
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.200011, CPAN::Meta::Converter version 2.110930'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: DBIx-Class-Schema-Critic
+requires:
+  English: 0
+  Modern::Perl: 0
+  perl: 5.010
+  utf8: 0
+resources:
+  bugtracker: https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues
+  repository: git://github.com/mjgardner/DBIx-Class-Schema-Critic.git
+version: 0.001

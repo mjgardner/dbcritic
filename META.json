@@ -1,0 +1,54 @@
+{
+   "abstract" : "Main module for DBIx-Class-Schema-Critic",
+   "author" : [
+      "Mark Gardner <mjgardner@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.200011, CPAN::Meta::Converter version 2.110930",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "DBIx-Class-Schema-Critic",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.30"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "English" : 0,
+            "Modern::Perl" : 0,
+            "perl" : "5.010",
+            "utf8" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Carp" : 0,
+            "File::Find" : 0,
+            "File::Temp" : 0,
+            "Scalar::Util" : 0,
+            "Test::More" : "0.94",
+            "perl" : "5.006"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues"
+      },
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/mjgardner/DBIx-Class-Schema-Critic.git",
+         "web" : "https://github.com/mjgardner/DBIx-Class-Schema-Critic"
+      }
+   },
+   "version" : "0.001"
+}
+
