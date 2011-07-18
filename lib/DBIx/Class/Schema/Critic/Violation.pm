@@ -78,6 +78,13 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
 as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 Only settable at construction.
 
+=head1 METHODS
+
+=head2 stringify
+
+Returns a string representation of the object.  The same method is called if
+the object appears in double quotes.
+
 =head1 SUPPORT
 
 =head2 Perldoc
