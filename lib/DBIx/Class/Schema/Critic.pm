@@ -27,8 +27,6 @@ use MooseX::Has::Sugar;
 use MooseX::Types::Moose qw(ArrayRef HashRef);
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'Policy';
-
-#use namespace::autoclean;
 with 'MooseX::Getopt';
 
 has schema => ( ro, required,
@@ -38,7 +36,15 @@ has schema => ( ro, required,
     writer      => '_set_schema',
 );
 
-has _elements => ( ro, lazy_build, isa => HashRef );
+has _elements => ( ro,
+    lazy_build,
+    isa     => HashRef,
+    traits  => ['Hash'],
+    handles => {
+        _element_names => 'keys',
+        _element       => 'get',
+    }
+);
 
 sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $schema = shift->schema;
@@ -51,25 +57,35 @@ sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
 
 sub critique {
     my $self = shift;
-    while ( my ( $element_type, $elements_ref ) = each %{ $self->_elements } )
-    {
-        $self->_policy_loop( $element_type, $elements_ref );
-    }
+    for ( $self->violations ) { say "$ARG" }
     return;
+}
+
+has _violations => ( ro, lazy_build,
+    isa     => ArrayRef,
+    traits  => ['Array'],
+    handles => { violations => 'elements' },
+);
+
+sub _build__violations {
+    my $self = shift;
+    return [ map { $self->_policy_loop( $ARG, $self->_element($ARG) ) }
+            $self->_element_names ];
 }
 
 sub _policy_loop {
     my ( $self, $policy_type, $elements_ref ) = @ARG;
+    my @violations;
     for my $policy ( grep { _policy_applies_to( $ARG, $policy_type ) }
         $self->policies )
     {
         for my $element ( @{$elements_ref} ) {
             if ( $policy->violates( $element, $self->schema ) ) {
-                say $policy->violation->stringify();
+                push @violations, $policy->violation;
             }
         }
     }
-    return;
+    return @violations;
 }
 
 sub _policy_applies_to {

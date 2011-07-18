@@ -25,9 +25,8 @@ use namespace::autoclean;
 
 const my %ATTR => (
     description => 'No primary key',
-    explanation => <<'END_EXPLANATION',
-ResultSource tables should have one or more columns defined as a primary key.
-END_EXPLANATION
+    explanation =>
+        'ResultSource tables should have one or more columns defined as a primary key.',
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {

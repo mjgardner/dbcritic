@@ -3,6 +3,8 @@ use utf8;
 use strict;
 use Modern::Perl;
 
+use Modern::Perl;
+use English '-no_match_vars';
 use Test::Most;
 use GSI::Automerge::Connection;
 
