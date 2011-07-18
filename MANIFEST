@@ -9,6 +9,7 @@ README
 dist.ini
 lib/DBIx/Class/Schema/Critic.pm
 lib/DBIx/Class/Schema/Critic/Policy.pm
+lib/DBIx/Class/Schema/Critic/Policy/NoPrimaryKey.pm
 lib/DBIx/Class/Schema/Critic/Types.pm
 lib/DBIx/Class/Schema/Critic/Violation.pm
 perlcritic.rc

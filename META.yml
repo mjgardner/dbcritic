@@ -19,6 +19,7 @@ meta-spec:
   version: 1.4
 name: DBIx-Class-Schema-Critic
 requires:
+  Const::Fast: 0
   English: 0
   Modern::Perl: 0
   Moose: 0

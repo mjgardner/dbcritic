@@ -1,56 +1,45 @@
 use strict;
 use warnings;
 
-package DBIx::Class::Schema::Critic::Policy;
+package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
 BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::VERSION = '0.001';
+    $DBIx::Class::Schema::Critic::Policy::NoPrimaryKey::VERSION = '0.001';
 }
 
 BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::DIST = 'DBIx-Class-Schema-Critic';
+    $DBIx::Class::Schema::Critic::Policy::NoPrimaryKey::DIST
+        = 'DBIx-Class-Schema-Critic';
 }
 
-# ABSTRACT: Role for criticizing database schemas
+# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 use utf8;
 use Modern::Perl;
+use Const::Fast;
 use English '-no_match_vars';
-use Moose::Role;
+use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::DBIx::Class 'Schema';
-use DBIx::Class::Schema::Critic::Types 'DBICType';
+use MooseX::Types::DBIx::Class 'ResultSource';
+use MooseX::Types::Moose 'Str';
 use namespace::autoclean;
+with 'DBIx::Class::Schema::Critic::Policy';
 
-has applies_to => ( ro, isa => ArrayRef [DBICType] );
-
-requires qw(description explanation violates);
-
-around violates => sub {
-    my ( $orig, $self ) = splice @ARG, 0, 2;
-    $self->_set_element(shift);
-    $self->_set_schema(shift);
-    return $self->violation if $self->$orig(@ARG);
-    return;
-};
-
-has element => ( ro,
-    init_arg => undef,
-    isa      => DBICType,
-    writer   => '_set_element',
+const my %ATTR => (
+    description => 'No primary key for a ResultSource',
+    explanation => <<'END_EXPLANATION',
+ResultSource tables should have one or more columns defined as a primary key.
+END_EXPLANATION
 );
 
-has schema => ( ro, isa => Schema, writer => '_set_schema' );
+while ( my ( $name, $default ) = each %ATTR ) {
+    has $name => ( ro, isa => Str, default => $default );
+}
+has applies_to => ( default => [ResultSource] );
 
-has violation => ( ro, lazy,
-    init_arg => undef,
-    default  => sub {
-        DBIx::Class::Schema::Critic::Violation->new(
-            map { $ARG => $ARG[0]->$ARG }
-                qw(description explanation element) );
-    },
-);
+sub violates { !scalar $ARG[0]->element->primary_columns }
 
+__PACKAGE__->meta->make_immutable();
 1;
 
 __END__
@@ -64,66 +53,19 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
+DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schema::ResultSources without primary keys
 
 =head1 VERSION
 
 version 0.001
 
-=head1 ATTRIBUTES
-
-=head2 element
-
-Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>,
-as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
-
-=head2 schema
-
-Read-only accessor for the current schema object being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
-
-=head2 violation
-
-Read-only accessor for a
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object based on the state of the current policy.
-
-=back
-
-=head1 REQUIRED METHODS
-
-=head2 description
-
-Returns a short string describing what's wrong.
-
-=head2 explanation
-
-Returns a string giving further details.
-
-=head2 applies_to
-
-Returns an array reference of
-L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>s indicating what part(s)
-of the schema the policy is interested in.
+=head1 METHODS
 
 =head2 violates
 
-Role consumers must implement a C<violates> method that returns true if the
-policy is violated and false otherwise, based on attributes provided by the
-role.  Callers should call the C<violates> method as the following:
-
-=over
-
-=item Arguments: I<$element>, I<$schema>
-
-=item Return value: nothing if the policy passes, or a
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object if it doesn't.
-
-=back
-
-E.g., C<< $policy->violates($element, $schema) >>.
+This policy returns a violation if
+L<primary_columns|DBIx::Class::Schema::ResultSource/primary_columns> returns
+0 for a L<ResultSource|DBIx::Class::Schema::ResultSource>.
 
 =head1 SUPPORT
 
