@@ -15,8 +15,9 @@ BEGIN {
 BEGIN {
     $main::DIST = 'DBIx-Class-Schema-Critic';
 }
-use DBIx::Class::Schema::Critic::Cmd;
-DBIx::Class::Schema::Critic::Cmd->run();
+use DBIx::Class::Schema::Critic;
+my $critic = DBIx::Class::Schema::Critic->new_with_options();
+$critic->critique();
 
 __END__
 
@@ -34,12 +35,6 @@ dbic_critic - Critique a database schema for best practices
 =head1 VERSION
 
 version 0.001
-
-=head1 USAGE
-
-=head1 DESCRIPTION
-
-=head1 CONFIGURATION
 
 =head1 SUPPORT
 

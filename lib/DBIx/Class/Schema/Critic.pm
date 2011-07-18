@@ -19,20 +19,32 @@ use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class 'Schema';
+
+use Module::Pluggable
+    sub_name    => 'policies',
+    search_path => [ __PACKAGE__ . '::Policy' ];
+
 use DBIx::Class::Schema::Critic::Types 'Policy';
 use namespace::autoclean;
+with 'MooseX::Getopt';
 
-has schema => ( ro, isa => Schema, writer => '_set_schema' );
-
-has policies => ( rw,
-    isa => ArrayRef [Policy],
-    traits  => ['Array'],
-    handles => { add_policy => 'push' },
+has schema => ( ro, required,
+    isa         => Schema,
+    traits      => ['Getopt'],
+    cmd_aliases => 's',
+    writer      => '_set_schema',
 );
 
 sub critique {
     my $self = shift;
-    if ( defined $ARG[0] ) { $self->_set_schema(shift) }
+
+    for my $type (qw(Schema ResultSource ResultSet Row)) {
+        for my $policy ( $self->policies ) {
+            next if not $policy->can_critique($type);
+            say "$policy running against $type";
+        }
+    }
+
     return;
 }
 
@@ -63,34 +75,26 @@ version 0.001
 A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
 Only settable at construction time.
 
-=head2 policies
-
-A reference to an array of
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-consumers that will be applied during L</critique>.  Can be set at construction
-or via the C<policies> accessor method.
-
 =head1 METHODS
 
-=head2 add_policy
+=head2 policies
 
-Adds a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-consumer to L</policies>.
+Returns an array of loaded policy names that will be applied during
+L</critique>.  By default all modules under the
+C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
 
 =head2 critique
 
 =over
 
-=item Arguments: I<$schema?>
+=item Arguments: none
 
 =item Return value: none
 
 =back
 
-Runs the I<$schema> through the DBIx::Class::Schema::Critic engine using all
-the policies that have been loaded.  If no I<$schema> is provided then the
-L</schema> attribute is used.
+Runs the L</schema> through the DBIx::Class::Schema::Critic engine using all
+the policies that have been loaded.
 
 =head1 SUPPORT
 

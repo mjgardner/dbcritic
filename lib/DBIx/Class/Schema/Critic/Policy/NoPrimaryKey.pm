@@ -36,6 +36,9 @@ while ( my ( $name, $default ) = each %ATTR ) {
 has applies_to => ( ro,
     isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
     default => sub { [ResultSource] },
+    traits  => ['Array'],
+    handles =>
+        { can_critique => [ first => sub { $ARG->equals( $ARG[0] ) } ] },
 );
 
 with 'DBIx::Class::Schema::Critic::Policy';

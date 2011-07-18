@@ -10,22 +10,18 @@ ATTRIBUTES
     A DBIx::Class::Schema object you wish to "critique". Only settable at
     construction time.
 
-  policies
-    A reference to an array of DBIx::Class::Schema::Critic::Policy consumers
-    that will be applied during "critique". Can be set at construction or
-    via the "policies" accessor method.
-
 METHODS
-  add_policy
-    Adds a DBIx::Class::Schema::Critic::Policy consumer to "policies".
+  policies
+    Returns an array of loaded policy names that will be applied during
+    "critique". By default all modules under the
+    "DBIx::Class::Schema::Critic::Policy" namespace are loaded.
 
   critique
-    Arguments: *$schema?*
+    Arguments: none
     Return value: none
 
-    Runs the *$schema* through the DBIx::Class::Schema::Critic engine using
-    all the policies that have been loaded. If no *$schema* is provided then
-    the "schema" attribute is used.
+    Runs the "schema" through the DBIx::Class::Schema::Critic engine using
+    all the policies that have been loaded.
 
 SUPPORT
   Perldoc
