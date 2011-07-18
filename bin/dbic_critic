@@ -5,6 +5,8 @@ use strict;
 # PODNAME: dbic_critic
 # ABSTRACT: Critique a database schema for best practices
 
+use Modern::Perl;
+
 package main;
 
 BEGIN {
@@ -14,7 +16,6 @@ BEGIN {
 BEGIN {
     $main::DIST = 'DBIx-Class-Schema-Critic';
 }
-use Modern::Perl;
 use DBIx::Class::Schema::Critic;
 my $critic = DBIx::Class::Schema::Critic->new_with_options();
 $critic->critique();
