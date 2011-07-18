@@ -69,7 +69,7 @@ version 0.001
 
 This policy returns a violation if
 L<primary_columns|DBIx::Class::Schema::ResultSource/primary_columns> returns
-C<0> for a L<ResultSource|DBIx::Class::Schema::ResultSource>.
+zero for a L<ResultSource|DBIx::Class::Schema::ResultSource>.
 
 =head1 SUPPORT
 
