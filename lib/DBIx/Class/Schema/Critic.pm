@@ -40,7 +40,7 @@ has schema => ( ro, required,
 
 has _elements => ( ro, lazy_build, isa => HashRef );
 
-sub _build__elements {
+sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $schema = shift->schema;
     return {
         Schema       => [$schema],
@@ -69,6 +69,7 @@ sub _policy_loop {
             }
         }
     }
+    return;
 }
 
 sub _policy_applies_to {

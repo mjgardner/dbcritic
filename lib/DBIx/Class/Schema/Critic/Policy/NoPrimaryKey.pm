@@ -81,7 +81,7 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 Returns a reference to an array with one element: a
 L<Moose::Meta::TypeConstraint|Moose::Meta::TypeConstraint> for a
-L<MooseX::Types::DBIx::Class::ResultSource|MooseX::Types::DBIx::Class/ResultSource>.
+L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class> I<ResultSource>.
 Required by
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
