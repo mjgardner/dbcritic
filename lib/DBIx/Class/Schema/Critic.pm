@@ -20,7 +20,7 @@ use Module::Pluggable
 use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::Moose 'ArrayRef';
+use MooseX::Types::Moose qw(ArrayRef HashRef);
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'Policy';
 
@@ -41,6 +41,17 @@ has schema => ( ro, required,
     writer      => '_set_schema',
 );
 
+has _elements => ( ro, lazy_build, isa => HashRef );
+
+sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
+    my $schema = shift->schema;
+    return {
+        Schema       => [$schema],
+        ResultSource => [ map { $schema->source($ARG) } $schema->sources ],
+        ResultSet    => [ map { $schema->resultset($ARG) } $schema->sources ],
+    };
+}
+
 =method critique
 
 =over
@@ -57,36 +68,26 @@ the policies that have been loaded.
 =cut
 
 sub critique {
-    my $self   = shift;
-    my $schema = $self->schema;
-
-    for my $policy ( $self->_policies_can('Schema') ) {
-        if ( $policy->violates( ($schema) x 2 ) ) {
-            say $policy->violation->stringify();
-        }
+    my $self = shift;
+    while ( my ( $element_type, $elements_ref ) = each %{ $self->_elements } )
+    {
+        $self->_policy_loop( $element_type, $elements_ref );
     }
+    return;
+}
 
-    for my $policy ( $self->_policies_can('ResultSource') ) {
-        for my $source ( $schema->sources ) {
-            if ( $policy->violates( $schema->source($source), $schema ) ) {
-                say $policy->violation->stringify();
-            }
-        }
-    }
-
-    for my $source ( $schema->sources ) {
-        for my $policy ( $self->_policies_can('ResultSet') ) {
-            if ( $policy->violates( $schema->resultset($source), $schema ) ) {
+sub _policy_loop {
+    my ( $self, $policy_type, $elements_ref ) = @ARG;
+    for my $policy ( grep { _policy_applies_to( $ARG, $policy_type ) }
+        $self->policies )
+    {
+        for my $element ( @{$elements_ref} ) {
+            if ( $policy->violates( $element, $self->schema ) ) {
                 say $policy->violation->stringify();
             }
         }
     }
     return;
-}
-
-sub _policies_can {
-    my ( $self, $type ) = @ARG;
-    return grep { _policy_applies_to( $ARG, $type ) } $self->policies;
 }
 
 sub _policy_applies_to {
