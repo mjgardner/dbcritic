@@ -1,5 +1,5 @@
 ---
-abstract: 'Main module for DBIx-Class-Schema-Critic'
+abstract: 'Critique a database schema for best practices'
 author:
   - 'Mark Gardner <mjgardner@cpan.org>'
 build_requires:
@@ -21,6 +21,10 @@ name: DBIx-Class-Schema-Critic
 requires:
   English: 0
   Modern::Perl: 0
+  Moose: 0
+  MooseX::Has::Sugar: 0
+  MooseX::Types::Moose: 0
+  namespace::autoclean: 0
   perl: 5.010
   utf8: 0
 resources:

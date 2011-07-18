@@ -11,12 +11,31 @@ BEGIN {
     $DBIx::Class::Schema::Critic::DIST = 'DBIx-Class-Schema-Critic';
 }
 
-# ABSTRACT: Main module for DBIx-Class-Schema-Critic
+# ABSTRACT: Critique a database schema for best practices
 
 use utf8;
 use Modern::Perl;
 use English '-no_match_vars';
+use Moose;
+use MooseX::Has::Sugar;
+use MooseX::Types::Moose 'ArrayRef';
+use namespace::autoclean;
 
+has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
+
+has policies => ( rw,
+    isa => ArrayRef ['DBIx::Class::Schema::Critic::Policy'],
+    traits  => ['Array'],
+    handles => { push => 'add_policy' },
+);
+
+sub critique {
+    my $self = shift;
+    if ( defined $ARG[0] ) { $self->_set_schema(shift) }
+    return;
+}
+
+__PACKAGE__->meta->make_immutable();
 1;
 
 __END__
@@ -30,11 +49,47 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic - Main module for DBIx-Class-Schema-Critic
+DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 =head1 VERSION
 
 version 0.001
+
+=head1 ATTRIBUTES
+
+=head2 schema
+
+A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
+Only settable at construction time.
+
+=head2 policies
+
+A reference to an array of
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
+objects that will be applied during L</critique>.  Can be set at construction
+or via the C<policies> accessor method.
+
+=head1 METHODS
+
+=head2 add_policy
+
+Adds a
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
+object to L</policies>.
+
+=head2 critique
+
+=over
+
+=item Arguments: I<$schema?>
+
+=item Return value: none
+
+=back
+
+Runs the I<$schema> through the DBIx::Class::Schema::Critic engine using all
+the policies that have been loaded.  If no I<$schema> is provided then the
+L</schema> attribute is used.
 
 =head1 SUPPORT
 

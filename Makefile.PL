@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Main module for DBIx-Class-Schema-Critic',
+  'ABSTRACT' => 'Critique a database schema for best practices',
   'AUTHOR' => 'Mark Gardner <mjgardner@cpan.org>',
   'BUILD_REQUIRES' => {
     'Carp' => '0',
@@ -29,6 +29,10 @@ my %WriteMakefileArgs = (
   'PREREQ_PM' => {
     'English' => '0',
     'Modern::Perl' => '0',
+    'Moose' => '0',
+    'MooseX::Has::Sugar' => '0',
+    'MooseX::Types::Moose' => '0',
+    'namespace::autoclean' => '0',
     'utf8' => '0'
   },
   'VERSION' => '0.001',
