@@ -1,6 +1,5 @@
 use utf8;
 use strict;
-use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Policy;
 
@@ -14,6 +13,7 @@ BEGIN {
 
 # ABSTRACT: Role for criticizing database schemas
 
+use Modern::Perl;
 use English '-no_match_vars';
 use Moose::Role;
 use MooseX::Has::Sugar;
