@@ -2,28 +2,45 @@ use utf8;
 use Modern::Perl;
 use English '-no_match_vars';
 
-package DBIx::Class::Schema::Critic::Violation;
+package DBIx::Class::Schema::Critic::Cmd;
 
 BEGIN {
-    $DBIx::Class::Schema::Critic::Violation::VERSION = '0.001';
+    $DBIx::Class::Schema::Critic::Cmd::VERSION = '0.001';
 }
 
 BEGIN {
-    $DBIx::Class::Schema::Critic::Violation::DIST
-        = 'DBIx-Class-Schema-Critic';
+    $DBIx::Class::Schema::Critic::Cmd::DIST = 'DBIx-Class-Schema-Critic';
 }
 
-# ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
+# ABSTRACT: Command line parser for DBIx::Class::Schema::Critic
 
+use Try::Tiny;
 use Moose;
-use MooseX::Has::Sugar;
-use MooseX::Types::Moose 'Str';
-use DBIx::Class::Schema::Critic::Types 'DBICType';
+use MooseX::Types::Moose 'ClassName';
+use MooseX::NonMoose;
+use DBIx::Class::Schema::Critic;
 use namespace::autoclean;
+extends 'App::Cmd::Simple';
 
-has [qw(description explanation)] => ( ro, isa => Str );
+override opt_spec => sub {
+    return ( [ 'schema=s' => 'schema class name' ], );
+};
 
-has element => ( ro, isa => DBICType );
+override validate_args => sub {
+    my ( $self, $opt_ref, $args_ref ) = @ARG;
+    $self->usage_error('No args allowed') if @{$args_ref};
+    try { require $opt_ref->{schema} }
+    catch { $self->usage_error("Couldn't load $opt_ref->{schema}") };
+    return;
+};
+
+override execute => sub {
+    my ( $self, $opt_ref, $args_ref ) = @ARG;
+    my $critic = DBIx::Class::Schema::Critic->new(
+        { schema => $opt_ref->{schema} } );
+    $critic->critique();
+    return;
+};
 
 __PACKAGE__->meta->make_immutable();
 1;
@@ -39,28 +56,11 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::Critic::Policy
+DBIx::Class::Schema::Critic::Cmd - Command line parser for DBIx::Class::Schema::Critic
 
 =head1 VERSION
 
 version 0.001
-
-=head1 ATTRIBUTES
-
-=head2 description
-
-A short string describing what's wrong.  Only settable at construction.
-
-=head2 explanation
-
-A string giving further details.  Only settable at construction.
-
-=head2 element
-
-The schema element that violated a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
-as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
-Only settable at construction.
 
 =head1 SUPPORT
 

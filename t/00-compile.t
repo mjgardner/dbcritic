@@ -1,6 +1,7 @@
 #!perl
-use strict;
-use warnings;
+use utf8;
+use Modern::Perl;
+use English '-no_match_vars';
 
 use strict;
 use warnings;

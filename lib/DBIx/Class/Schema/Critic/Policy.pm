@@ -1,5 +1,6 @@
-use strict;
-use warnings;
+use utf8;
+use Modern::Perl;
+use English '-no_match_vars';
 
 package DBIx::Class::Schema::Critic::Policy;
 
@@ -13,9 +14,6 @@ BEGIN {
 
 # ABSTRACT: Role for criticizing database schemas
 
-use utf8;
-use Modern::Perl;
-use English '-no_match_vars';
 use Moose::Role;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';

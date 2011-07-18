@@ -1,5 +1,6 @@
-use strict;
-use warnings;
+use utf8;
+use Modern::Perl;
+use English '-no_match_vars';
 
 package DBIx::Class::Schema::Critic;
 
@@ -13,9 +14,6 @@ BEGIN {
 
 # ABSTRACT: Critique a database schema for best practices
 
-use utf8;
-use Modern::Perl;
-use English '-no_match_vars';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';

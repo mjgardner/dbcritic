@@ -23,19 +23,24 @@ my %WriteMakefileArgs = (
     'ExtUtils::MakeMaker' => '6.30'
   },
   'DISTNAME' => 'DBIx-Class-Schema-Critic',
-  'EXE_FILES' => [],
+  'EXE_FILES' => [
+    'bin/dbic_critic'
+  ],
   'LICENSE' => 'perl',
   'NAME' => 'DBIx::Class::Schema::Critic',
   'PREREQ_PM' => {
+    'App::Cmd::Simple' => '0',
     'Const::Fast' => '0',
     'English' => '0',
     'Modern::Perl' => '0',
     'Moose' => '0',
     'Moose::Role' => '0',
     'MooseX::Has::Sugar' => '0',
+    'MooseX::NonMoose' => '0',
     'MooseX::Types' => '0',
     'MooseX::Types::DBIx::Class' => '0',
     'MooseX::Types::Moose' => '0',
+    'Try::Tiny' => '0',
     'namespace::autoclean' => '0',
     'utf8' => '0'
   },

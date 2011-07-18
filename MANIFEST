@@ -6,8 +6,10 @@ META.json
 META.yml
 Makefile.PL
 README
+bin/dbic_critic
 dist.ini
 lib/DBIx/Class/Schema/Critic.pm
+lib/DBIx/Class/Schema/Critic/Cmd.pm
 lib/DBIx/Class/Schema/Critic/Policy.pm
 lib/DBIx/Class/Schema/Critic/Policy/NoPrimaryKey.pm
 lib/DBIx/Class/Schema/Critic/Types.pm
