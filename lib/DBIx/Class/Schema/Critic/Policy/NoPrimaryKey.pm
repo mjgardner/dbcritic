@@ -2,8 +2,6 @@ package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-use utf8;
-use Modern::Perl;
 use Const::Fast;
 use English '-no_match_vars';
 use Moose;
