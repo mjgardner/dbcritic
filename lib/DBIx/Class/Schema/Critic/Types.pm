@@ -23,8 +23,10 @@ use namespace::autoclean;
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     { role => 'DBIx::Class::Schema::Critic::Policy' };
 
-subtype DBICType,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
-    as ResultSet | ResultSource | Row | Schema;
+{
+    ## no critic (ProhibitCallsToUndeclaredSubs, ProhibitBitwiseOperators)
+    subtype DBICType, as ResultSet | ResultSource | Row | Schema;
+}
 
 __PACKAGE__->meta->make_immutable();
 1;

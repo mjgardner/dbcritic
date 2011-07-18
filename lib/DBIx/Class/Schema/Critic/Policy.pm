@@ -95,6 +95,8 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object based on the state of the current policy.
 
+=back
+
 =head1 REQUIRED METHODS
 
 =head2 description
@@ -114,6 +116,8 @@ Returns a string giving further details.
 =item Return value: nothing if the policy passes, or a
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object if it doesn't.
+
+=back
 
 =head1 SUPPORT
 
