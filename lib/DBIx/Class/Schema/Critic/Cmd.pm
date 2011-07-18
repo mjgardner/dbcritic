@@ -1,6 +1,5 @@
 use utf8;
 use Modern::Perl;
-use English '-no_match_vars';
 
 package DBIx::Class::Schema::Critic::Cmd;
 
@@ -14,6 +13,7 @@ BEGIN {
 
 # ABSTRACT: Command line parser for DBIx::Class::Schema::Critic
 
+use English '-no_match_vars';
 use Try::Tiny;
 use Moose;
 use MooseX::Types::Moose 'ClassName';

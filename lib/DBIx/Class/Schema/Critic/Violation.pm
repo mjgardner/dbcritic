@@ -1,6 +1,5 @@
 use utf8;
 use Modern::Perl;
-use English '-no_match_vars';
 
 package DBIx::Class::Schema::Critic::Violation;
 
@@ -15,6 +14,7 @@ BEGIN {
 
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
+use English '-no_match_vars';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'Str';

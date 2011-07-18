@@ -1,7 +1,6 @@
 #!perl
 use utf8;
 use Modern::Perl;
-use English '-no_match_vars';
 
 # PODNAME: dbic_critic
 # ABSTRACT: Critique a database schema for best practices

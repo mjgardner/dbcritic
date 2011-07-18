@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 use utf8;
 use Modern::Perl;
-use English '-no_match_vars';
 
 BEGIN {
     unless ( $ENV{RELEASE_TESTING} ) {
