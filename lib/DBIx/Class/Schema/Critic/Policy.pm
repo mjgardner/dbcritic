@@ -18,6 +18,7 @@ use Modern::Perl;
 use English '-no_match_vars';
 use Moose::Role;
 use MooseX::Has::Sugar;
+use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use namespace::autoclean;
