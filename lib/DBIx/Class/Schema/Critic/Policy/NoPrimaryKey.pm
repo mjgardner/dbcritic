@@ -63,14 +63,6 @@ DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schem
 
 version 0.001
 
-=head1 METHODS
-
-=head2 violates
-
-This policy returns a violation if
-L<primary_columns|DBIx::Class::Schema::ResultSource/primary_columns> returns
-0 for a L<ResultSource|DBIx::Class::Schema::ResultSource>.
-
 =head1 SUPPORT
 
 =head2 Perldoc
