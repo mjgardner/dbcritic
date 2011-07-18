@@ -43,7 +43,7 @@ has _elements => ( ro,
     handles => {
         _element_names => 'keys',
         _element       => 'get',
-    }
+    },
 );
 
 sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
@@ -67,7 +67,7 @@ has _violations => ( ro, lazy_build,
     handles => { violations => 'elements' },
 );
 
-sub _build__violations {
+sub _build__violations {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self = shift;
     return [ map { $self->_policy_loop( $ARG, $self->_element($ARG) ) }
             $self->_element_names ];
