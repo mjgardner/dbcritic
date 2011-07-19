@@ -50,8 +50,7 @@ has schema => ( ro, required, coerce, lazy,
     },
 );
 
-has _elements => ( ro,
-    lazy_build,
+has _elements => ( ro, lazy_build,
     isa     => 'HashRef',
     traits  => ['Hash'],
     handles => { _element_names => 'keys', _element => 'get' },
