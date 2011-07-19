@@ -2,8 +2,6 @@ package DBIx::Class::Schema::Critic;
 
 # ABSTRACT: Critique a database schema for best practices
 
-use Modern::Perl;
-
 =method policies
 
 Returns an array of loaded policy names that will be applied during

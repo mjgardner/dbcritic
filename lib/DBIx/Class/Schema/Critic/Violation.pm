@@ -2,7 +2,6 @@ package DBIx::Class::Schema::Critic::Violation;
 
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
-use Modern::Perl;
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'Str';

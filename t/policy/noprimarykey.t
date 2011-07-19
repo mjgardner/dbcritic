@@ -1,7 +1,6 @@
 #!perl
 
 use Test::Most tests => 1;
-use Modern::Perl;
 use Path::Class;
 use FindBin;
 use local::lib dir( $FindBin::Bin, 'noprimarykey' )->stringify();
