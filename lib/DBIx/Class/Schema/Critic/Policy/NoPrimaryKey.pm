@@ -64,6 +64,10 @@ version 0.001
 
 =head1 SYNOPSIS
 
+    use DBIx::Class::Schema::Critic;
+    my $critic = DBIx::Class::Schema::Critic->new();
+    $critic->critique();
+
 =head1 DESCRIPTION
 
 This policy returns a violation if a
@@ -99,10 +103,6 @@ Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
 C<primary_columns> method returns nothing.
 Required by
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-
-=for test_synopsis 1;
-
-See L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 =head1 SUPPORT
 
