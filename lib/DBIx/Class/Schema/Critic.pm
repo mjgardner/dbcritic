@@ -152,6 +152,8 @@ This package is used to scan a database schema and catalog any violations
 of best practices as defined by a set of policy plugins.  It takes conceptual
 and API inspiration from L<Perl::Critic|Perl::Critic>.
 
+B<dbic_critic> is the command line interface.
+
 =head1 SEE ALSO
 
 =over
