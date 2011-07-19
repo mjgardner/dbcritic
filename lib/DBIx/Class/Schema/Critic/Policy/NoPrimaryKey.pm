@@ -53,8 +53,10 @@ with 'DBIx::Class::Schema::Critic::Policy';
 
 =method violates
 
-This policy returns a violation if a
-L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
+Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
+C<primary_columns> method returns nothing.
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =cut
 
@@ -62,3 +64,14 @@ sub violates { return !scalar $ARG[0]->element->primary_columns }
 
 __PACKAGE__->meta->make_immutable();
 1;
+
+=head1 SYNOPSIS
+
+    use DBIx::Class::Schema::Critic;
+    my $critic = DBIx::Class::Schema::Critic->new();
+    $critic->critique();
+
+=head1 DESCRIPTION
+
+This policy returns a violation if a
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.

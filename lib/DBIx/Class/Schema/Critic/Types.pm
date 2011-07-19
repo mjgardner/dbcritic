@@ -66,3 +66,16 @@ An instance of any of the following:
 
 __PACKAGE__->meta->make_immutable();
 1;
+
+=head1 SYNOPSIS
+
+    use Moose;
+    use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
+
+    has policy => (isa => Policy);
+    has schema => (isa => Schema);
+
+=head1 DESCRIPTION
+
+This is a L<"Moose type library"|MooseX::Types> for
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
