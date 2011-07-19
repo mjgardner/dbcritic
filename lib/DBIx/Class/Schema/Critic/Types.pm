@@ -6,6 +6,8 @@ use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
 use namespace::autoclean;
+## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
+## no critic (ProhibitBitwiseOperators)
 
 =type Policy
 
@@ -14,8 +16,7 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =cut
 
-role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
-    { role => 'DBIx::Class::Schema::Critic::Policy' };
+role_type Policy, { role => 'DBIx::Class::Schema::Critic::Policy' };
 
 =type LoadingSchema
 
@@ -27,16 +28,13 @@ L<DBIx::Class|DBIx::Class>.
 
 =cut
 
-{
-    ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
-    subtype LoadingSchema, as Schema;
-    coerce LoadingSchema, from ArrayRef, via {
-        my $loader = Moose::Meta::Class->create_anon_class(
-            superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
-        $loader->loader_options( naming => 'current' );
-        $loader->connect( @{$_} );
-    };
-}
+subtype LoadingSchema, as Schema;
+coerce LoadingSchema, from ArrayRef, via {
+    my $loader = Moose::Meta::Class->create_anon_class(
+        superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
+    $loader->loader_options( naming => 'current' );
+    $loader->connect( @{$_} );
+};
 
 =type DBICType
 
@@ -56,10 +54,7 @@ An instance of any of the following:
 
 =cut
 
-{
-    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitBitwiseOperators)
-    subtype DBICType, as ResultSet | ResultSource | Row | Schema;
-}
+subtype DBICType, as ResultSet | ResultSource | Row | Schema;
 
 __PACKAGE__->meta->make_immutable();
 1;
