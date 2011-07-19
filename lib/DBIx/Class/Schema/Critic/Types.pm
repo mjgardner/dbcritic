@@ -33,7 +33,8 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     };
 }
 
-{    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitBitwiseOperators)
+{
+    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitBitwiseOperators)
     subtype DBICType, as ResultSet | ResultSource | Row | Schema;
 }
 
