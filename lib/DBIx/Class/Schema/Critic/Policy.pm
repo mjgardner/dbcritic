@@ -26,13 +26,16 @@ has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 
 requires qw(description explanation applies_to violates);
 
-around violates => sub {
-    my ( $orig, $self ) = splice @_, 0, 2;
-    $self->_set_element(shift);
-    $self->_set_schema(shift);
-    return $self->violation if $self->$orig(@_);
-    return;
-};
+{
+    ## no critic (Subroutines::RequireArgUnpacking)
+    around violates => sub {
+        my ( $orig, $self ) = splice @_, 0, 2;
+        $self->_set_element(shift);
+        $self->_set_schema(shift);
+        return $self->violation if $self->$orig(@_);
+        return;
+    };
+}
 
 has element => ( ro,
     init_arg => undef,
