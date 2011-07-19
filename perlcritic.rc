@@ -8,6 +8,9 @@ perltidyrc = xt/author/perltidy.rc
 [Lax::RequireExplicitPackage::ExceptForPragmata]
 allowed_pragmata = diagnostics feature perlversion strict warnings utf8 Modern::Perl
 
+[Subroutines::RequireArgUnpacking]
+allow_delegation_to = splice
+
 # since we're using Modern::Perl
 [Compatibility::PerlMinimumVersionAndWhy]
 above_version = 5.010

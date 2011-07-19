@@ -27,7 +27,6 @@ has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 requires qw(description explanation applies_to violates);
 
 around violates => sub {
-    ## no critic (Subroutines::RequireArgUnpacking)
     my ( $orig, $self ) = splice @_, 0, 2;
     $self->_set_element(shift);
     $self->_set_schema(shift);
