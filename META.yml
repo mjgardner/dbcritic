@@ -7,6 +7,7 @@ build_requires:
   DBICx::TestDatabase: 0
   DBIx::Class::Core: 0
   DBIx::Class::Schema: 0
+  English: 0
   File::Find: 0
   File::Temp: 0
   FindBin: 0
@@ -27,7 +28,6 @@ meta-spec:
 name: DBIx-Class-Schema-Critic
 requires:
   DBIx::Class::Schema::Loader: 0
-  English: 0
   List::MoreUtils: 0
   Modern::Perl: 0
   Module::Pluggable: 0

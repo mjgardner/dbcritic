@@ -14,7 +14,6 @@ BEGIN {
 
 # ABSTRACT: Role for criticizing database schemas
 
-use English '-no_match_vars';
 use Moose::Role;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
@@ -28,10 +27,10 @@ has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 requires qw(description explanation applies_to violates);
 
 around violates => sub {
-    my ( $orig, $self ) = splice @ARG, 0, 2;
+    my ( $orig, $self ) = splice @_, 0, 2;
     $self->_set_element(shift);
     $self->_set_schema(shift);
-    return $self->violation if $self->$orig(@ARG);
+    return $self->violation if $self->$orig(@_);
     return;
 };
 
@@ -45,7 +44,7 @@ has schema => ( ro, isa => Schema, writer => '_set_schema' );
 
 sub violation {
     return DBIx::Class::Schema::Critic::Violation->new(
-        map { $ARG => $ARG[0]->$ARG } qw(description explanation element) );
+        map { $_ => $_[0]->$_ } qw(description explanation element) );
 }
 
 1;

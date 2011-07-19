@@ -16,7 +16,6 @@ BEGIN {
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
 use Modern::Perl;
-use English '-no_match_vars';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'Str';
