@@ -33,7 +33,10 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     };
 }
 
-subtype DBICType, as ResultSet | ResultSource | Row | Schema;
+{
+    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitBitwiseOperators)
+    subtype DBICType, as ResultSet | ResultSource | Row | Schema;
+}
 
 __PACKAGE__->meta->make_immutable();
 1;
