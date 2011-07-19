@@ -65,6 +65,27 @@ DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
 
 version 0.001
 
+=head1 SYNOPSIS
+
+    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    use Moose;
+    use MooseX::Types::DBIx::Class 'ResultSource';
+
+    has description => (default => 'Follow my policy');
+    has explanation => (default => 'My way or the highway');
+    has applies_to => (
+        isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
+        default => sub { [ResultSource] },
+    );
+    with 'DBIx::Class::Schema::Critic::Policy';
+
+    sub violates { $_[0]->element ne '' }
+
+=head1 DESCRIPTION
+
+This is a L<Moose::Role|Moose::Role> consumed by all
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy plugins.
+
 =head1 ATTRIBUTES
 
 =head2 element
