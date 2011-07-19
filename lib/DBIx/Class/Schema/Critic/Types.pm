@@ -23,7 +23,7 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
 {
     ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
-    subtype Schema, as 'MooseX::Types::DBIx::Class::Schema';
+    subtype Schema, as MooseX::Types::DBIx::Class::Schema;
     coerce Schema, from 'ArrayRef', via {
         my $loader = Moose::Meta::Class->create_anon_class(
             superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
