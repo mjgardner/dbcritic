@@ -27,11 +27,10 @@ has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 requires qw(description explanation applies_to violates);
 
 around violates => sub {
-    my $orig = shift;
-    my $self = shift;
-    $self->_set_element(shift);
-    $self->_set_schema(shift);
-    return $self->violation if $self->$orig(@_);
+    my ( $orig, $self, $element, $schema ) = @_;
+    $self->_set_element($element);
+    $self->_set_schema($schema);
+    return $self->violation if $self->$orig();
     return;
 };
 
