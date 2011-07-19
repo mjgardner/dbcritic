@@ -111,7 +111,7 @@ An instance of any of the following:
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc DBIx::Class::Schema::Critic
+  perldoc bin::dbic_critic
 
 =head2 Websites
 
@@ -174,7 +174,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
+L<http://deps.cpantesters.org/?module=bin::dbic_critic>
 
 =back
 
