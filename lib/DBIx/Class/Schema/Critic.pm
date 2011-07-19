@@ -21,11 +21,10 @@ use Module::Pluggable
 use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::Moose qw(ArrayRef HashRef Str);
 use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
 with qw(MooseX::Getopt MooseX::SimpleConfig);
 
-my %string_options = ( ro, isa => Str, traits => ['Getopt'] );
+my %string_options = ( ro, isa => 'Str', traits => ['Getopt'] );
 has dsn => (
     %string_options,
     cmd_aliases   => 'd',
@@ -52,7 +51,7 @@ has schema => ( ro, required, coerce, lazy,
 
 has _elements => ( ro,
     lazy_build,
-    isa     => HashRef,
+    isa     => 'HashRef',
     traits  => ['Hash'],
     handles => { _element_names => 'keys', _element => 'get' },
 );
@@ -72,7 +71,7 @@ sub critique {
 }
 
 has _violations => ( ro, lazy,
-    isa     => ArrayRef,
+    isa     => 'ArrayRef',
     traits  => ['Array'],
     handles => { violations => 'elements' },
     default => sub {

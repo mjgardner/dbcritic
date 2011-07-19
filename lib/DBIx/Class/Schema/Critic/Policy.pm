@@ -16,7 +16,6 @@ BEGIN {
 
 use Moose::Role;
 use MooseX::Has::Sugar;
-use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use DBIx::Class::Schema::Critic::Violation;

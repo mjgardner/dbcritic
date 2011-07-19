@@ -15,7 +15,7 @@ BEGIN {
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-#use Moose;
+use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use namespace::autoclean;
 
