@@ -3,8 +3,6 @@ package DBIx::Class::Schema::Critic::Violation;
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
 use Moose;
-use MooseX::Has::Sugar;
-use MooseX::Types::Moose 'Str';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;
 
@@ -18,7 +16,7 @@ A string giving further details.  Only settable at construction.
 
 =cut
 
-has [qw(description explanation)] => ( ro, isa => Str );
+has [qw(description explanation)] => ( is => 'ro', isa => 'Str' );
 
 =attr element
 
@@ -29,7 +27,7 @@ Only settable at construction.
 
 =cut
 
-has element => ( ro, isa => DBICType );
+has element => ( is => 'ro', isa => DBICType );
 
 =method stringify
 
