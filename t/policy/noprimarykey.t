@@ -6,8 +6,9 @@ use Modern::Perl;
 use Test::Most tests => 1;
 use English '-no_match_vars';
 use Modern::Perl;
+use Path::Class;
 use FindBin;
-use local::lib "$FindBin::Bin/noprimarykey";
+use local::lib dir( $FindBin::Bin, 'noprimarykey' )->stringify();
 use DBICx::TestDatabase;
 use DBIx::Class::Schema::Critic;
 

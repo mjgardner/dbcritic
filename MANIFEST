@@ -17,7 +17,6 @@ perlcritic.rc
 t/00-compile.t
 t/000-report-versions.t
 t/author-critic.t
-t/automerge.t
 t/policy/noprimarykey.t
 t/policy/noprimarykey/lib/perl5/MySchema.pm
 t/policy/noprimarykey/lib/perl5/MySchema/Result/HasPrimaryKey.pm
