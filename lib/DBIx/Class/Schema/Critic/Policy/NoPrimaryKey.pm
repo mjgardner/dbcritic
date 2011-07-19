@@ -95,7 +95,8 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =head2 violates
 
-Returns true if L</element>'s C<primary_columns> method returns nothing.
+Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
+C<primary_columns> method returns nothing.
 Required by
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
