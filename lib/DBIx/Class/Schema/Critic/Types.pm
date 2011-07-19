@@ -35,7 +35,8 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 }
 
 {
-    ## no critic (ProhibitCallsToUndeclaredSubs, ProhibitBitwiseOperators)
+    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitCallsToUnexportedSubs)
+    ## no critic (Bangs::ProhibitBitwiseOperators)
     subtype DBICType, as ResultSet | ResultSource | Row
         | MooseX::Types::DBIx::Class::Schema;
 }
