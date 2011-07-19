@@ -13,6 +13,18 @@ DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 version 0.001
 
+=head1 SYNOPSIS
+
+    use DBIx::Class::Schema::Critic;
+    my $critic = DBIx::Class::Schema::Critic->new();
+    $critic->critique();
+
+=head1 DESCRIPTION
+
+This package is used to scan a database schema and catalog any violations
+of best practices as defined by a set of policy plugins.  It takes conceptual
+and API inspiration from L<Perl::Critic|Perl::Critic>.
+
 =head1 ATTRIBUTES
 
 =head2 dsn
@@ -50,6 +62,18 @@ L</violations> to C<STDOUT>.
 Returns a list of all
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
 picked up by the various policies.
+
+=head1 SEE ALSO
+
+=over
+
+=item L<Perl::Critic|Perl::Critic>
+
+=item L<DBIx::Class|DBIx::Class>
+
+=item L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader>
+
+=back
 
 =head1 SUPPORT
 

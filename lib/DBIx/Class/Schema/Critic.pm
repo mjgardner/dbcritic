@@ -22,7 +22,7 @@ use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose qw(ArrayRef HashRef Str);
 use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
-with 'MooseX::Getopt';
+with qw(MooseX::Getopt MooseX::SimpleConfig);
 
 =attr dsn
 
@@ -37,11 +37,22 @@ schema classes dynamically to be critiqued.
 
 =cut
 
-my %attr = ( dsn => 'd', username => [qw(u user)], password => [qw(p pass)] );
-while ( my ( $attr, $cmd ) = each %attr ) {
-    has $attr =>
-        ( ro, isa => Str, traits => ['Getopt'], cmd_aliases => $cmd );
-}
+my %string_options = ( ro, isa => Str, traits => ['Getopt'] );
+has dsn => (
+    %string_options,
+    cmd_aliases   => 'd',
+    documentation => 'Data source name in Perl DBI format',
+);
+has username => (
+    %string_options,
+    cmd_aliases   => [qw(u user)],
+    documentation => 'User name for connecting to the database',
+);
+has password => (
+    %string_options,
+    cmd_aliases   => [qw(p pass)],
+    documentation => 'Password for connecting to the database',
+);
 
 =attr schema
 
@@ -128,3 +139,27 @@ sub _policy_applies_to {
 
 __PACKAGE__->meta->make_immutable();
 1;
+
+=head1 SYNOPSIS
+
+    use DBIx::Class::Schema::Critic;
+    my $critic = DBIx::Class::Schema::Critic->new();
+    $critic->critique();
+
+=head1 DESCRIPTION
+
+This package is used to scan a database schema and catalog any violations
+of best practices as defined by a set of policy plugins.  It takes conceptual
+and API inspiration from L<Perl::Critic|Perl::Critic>.
+
+=head1 SEE ALSO
+
+=over
+
+=item L<Perl::Critic|Perl::Critic>
+
+=item L<DBIx::Class|DBIx::Class>
+
+=item L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader>
+
+=back
