@@ -127,10 +127,6 @@ version 0.001
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
-    my $critic = DBIx::Class::Schema::Critic->new(schema => $schema);
-    $critic->critique();
-
 =head1 DESCRIPTION
 
 This package is used to scan a database schema and catalog any violations
@@ -174,6 +170,12 @@ L</violations> to C<STDOUT>.
 Returns a list of all
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
 picked up by the various policies.
+
+=for test_synopsis my $schema;
+
+    use DBIx::Class::Schema::Critic;
+    my $critic = DBIx::Class::Schema::Critic->new(schema => $schema);
+    $critic->critique();
 
 =head1 SEE ALSO
 
