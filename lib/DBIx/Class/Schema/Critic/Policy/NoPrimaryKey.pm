@@ -31,7 +31,7 @@ while ( my ( $name, $default ) = each %ATTR ) {
 
 has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
 
-sub violates { return !scalar $_[0]->element->primary_columns }
+sub violates { !scalar shift->element->primary_columns }
 
 with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
