@@ -23,15 +23,16 @@ use namespace::autoclean;
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     { role => 'DBIx::Class::Schema::Critic::Policy' };
 
-subtype Schema,      ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-    as MooseX::Types::DBIx::Class::Schema;
-coerce Schema,       ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-    from ArrayRef, via {
-    my $loader = Moose::Meta::Class->create_anon_class(
-        superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
-    $loader->loader_options( naming => 'current' );
-    $loader->connect( @{$ARG} );
+{
+    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    subtype Schema, as MooseX::Types::DBIx::Class::Schema;
+    coerce Schema, from ArrayRef, via {
+        my $loader = Moose::Meta::Class->create_anon_class(
+            superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
+        $loader->loader_options( naming => 'current' );
+        $loader->connect( @{$ARG} );
     };
+}
 
 {
     ## no critic (ProhibitCallsToUndeclaredSubs, ProhibitBitwiseOperators)
