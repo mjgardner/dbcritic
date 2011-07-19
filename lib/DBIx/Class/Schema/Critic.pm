@@ -48,10 +48,7 @@ has _elements => ( ro,
     lazy_build,
     isa     => HashRef,
     traits  => ['Hash'],
-    handles => {
-        _element_names => 'keys',
-        _element       => 'get',
-    },
+    handles => { _element_names => 'keys', _element => 'get' },
 );
 
 sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
