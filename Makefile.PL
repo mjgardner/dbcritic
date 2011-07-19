@@ -13,11 +13,16 @@ my %WriteMakefileArgs = (
   'AUTHOR' => 'Mark Gardner <mjgardner@cpan.org>',
   'BUILD_REQUIRES' => {
     'Carp' => '0',
+    'DBICx::TestDatabase' => '0',
+    'DBIx::Class::Core' => '0',
+    'DBIx::Class::Schema' => '0',
     'File::Find' => '0',
     'File::Temp' => '0',
+    'FindBin' => '0',
     'Scalar::Util' => '0',
     'Test::More' => '0.94',
     'Test::Most' => '0',
+    'local::lib' => '0',
     'perl' => '5.006'
   },
   'CONFIGURE_REQUIRES' => {
@@ -49,7 +54,7 @@ my %WriteMakefileArgs = (
   },
   'VERSION' => '0.001',
   'test' => {
-    'TESTS' => 't/*.t'
+    'TESTS' => 't/*.t t/policy/*.t'
   }
 );
 
