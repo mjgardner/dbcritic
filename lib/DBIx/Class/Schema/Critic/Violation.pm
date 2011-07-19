@@ -16,14 +16,12 @@ BEGIN {
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
 use Moose;
-use MooseX::Has::Sugar;
-use MooseX::Types::Moose 'Str';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;
 
-has [qw(description explanation)] => ( ro, isa => Str );
+has [qw(description explanation)] => ( is => 'ro', isa => 'Str' );
 
-has element => ( ro, isa => DBICType );
+has element => ( is => 'ro', isa => DBICType );
 
 sub stringify {
     my $self    = shift;
