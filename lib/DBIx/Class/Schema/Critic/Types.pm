@@ -15,8 +15,6 @@ BEGIN {
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
 use MooseX::Types -declare => [qw(DBICType Policy Schema)];
-use MooseX::Types::Moose 'ArrayRef';
-use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row);
 use namespace::autoclean;
 
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
@@ -25,7 +23,7 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 {
     ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
     subtype Schema, as MooseX::Types::DBIx::Class::Schema;
-    coerce Schema, from ArrayRef, via {
+    coerce Schema, from 'ArrayRef', via {
         my $loader = Moose::Meta::Class->create_anon_class(
             superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
         $loader->loader_options( naming => 'current' );
@@ -33,12 +31,9 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     };
 }
 
-{
-    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitCallsToUnexportedSubs)
-    ## no critic (Bangs::ProhibitBitwiseOperators)
-    subtype DBICType, as ResultSet | ResultSource | Row
-        | MooseX::Types::DBIx::Class::Schema;
-}
+subtype DBICType, as join q{|},
+    map {"MooseX::Types::DBIx::Class::$_"}
+    qw(ResultSet ResultSource Row Schema);
 
 __PACKAGE__->meta->make_immutable();
 1;
