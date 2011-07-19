@@ -3,7 +3,7 @@ use utf8;
 use strict;
 use Modern::Perl;
 
-# PODNAME: dbic_critic
+# PODNAME: DBIx::Class::Schema::Critic
 # ABSTRACT: Critique a database schema for best practices
 
 package main;
@@ -30,7 +30,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-dbic_critic - Critique a database schema for best practices
+DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 =head1 VERSION
 

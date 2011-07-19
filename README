@@ -1,5 +1,6 @@
 NAME
-    dbic_critic - Critique a database schema for best practices
+    DBIx::Class::Schema::Critic - Critique a database schema for best
+    practices
 
 VERSION
     version 0.001
