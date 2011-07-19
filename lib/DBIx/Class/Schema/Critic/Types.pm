@@ -15,16 +15,26 @@ BEGIN {
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
 use English '-no_match_vars';
-use MooseX::Types -declare => [qw(DBICType Policy)];
-use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
+use MooseX::Types -declare => [qw(DBICType Policy Schema)];
+use MooseX::Types::Moose 'ArrayRef';
+use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row);
 use namespace::autoclean;
 
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     { role => 'DBIx::Class::Schema::Critic::Policy' };
 
+subtype Schema, as MooseX::Types::DBIx::Class::Schema;
+coerce Schema, from ArrayRef, via {
+    my $loader = Moose::Meta::Class->create_anon_class(
+        superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
+    $loader->loader_options( naming => 'current' );
+    $loader->connect( @{$ARG} );
+};
+
 {
     ## no critic (ProhibitCallsToUndeclaredSubs, ProhibitBitwiseOperators)
-    subtype DBICType, as ResultSet | ResultSource | Row | Schema;
+    subtype DBICType, as ResultSet | ResultSource | Row
+        | MooseX::Types::DBIx::Class::Schema;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -53,6 +63,14 @@ version 0.001
 
 An instance of a
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=head2 Schema
+
+A subtype of
+L<MooseX::Types::DBIx::Class::Schema|MooseX::Types::DBIx::Class/Schema>
+that can create new schemas from an array reference containing a DSN, user name,
+password, and hash references to attributes recognized by L<DBI|DBI> and
+L<DBIx::Class|DBIx::Class>.
 
 =head2 DBICType
 

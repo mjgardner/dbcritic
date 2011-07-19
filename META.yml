@@ -6,7 +6,6 @@ build_requires:
   Carp: 0
   File::Find: 0
   File::Temp: 0
-  GSI::Automerge::Connection: 0
   Scalar::Util: 0
   Test::More: 0.94
   Test::Most: 0
@@ -22,6 +21,7 @@ meta-spec:
 name: DBIx-Class-Schema-Critic
 requires:
   Const::Fast: 0
+  DBIx::Class::Schema::Loader: 0
   English: 0
   List::MoreUtils: 0
   Modern::Perl: 0

@@ -25,11 +25,10 @@ use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose qw(ArrayRef HashRef);
-use MooseX::Types::DBIx::Class 'Schema';
-use DBIx::Class::Schema::Critic::Types 'Policy';
+use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
 with 'MooseX::Getopt';
 
-has schema => ( ro, required,
+has schema => ( ro, required, coerce,
     isa         => Schema,
     traits      => ['Getopt'],
     cmd_aliases => 's',
