@@ -16,7 +16,6 @@ BEGIN {
 
 use Moose::Role;
 use MooseX::Has::Sugar;
-use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean;
@@ -36,7 +35,7 @@ around violates => sub {
 has element =>
     ( ro, init_arg => undef, isa => DBICType, writer => '_set_element' );
 
-has schema => ( ro, isa => Schema, writer => '_set_schema' );
+has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
 
 sub violation {
     my $self = shift;
