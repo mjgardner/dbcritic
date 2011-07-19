@@ -61,10 +61,10 @@ version 0.001
 =head1 SYNOPSIS
 
     use Moose;
-    use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
+    use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
 
     has policy => (isa => Policy);
-    has schema => (isa => Schema);
+    has schema => (isa => LoadingSchema);
 
 =head1 DESCRIPTION
 
