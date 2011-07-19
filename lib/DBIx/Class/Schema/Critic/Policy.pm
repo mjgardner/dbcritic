@@ -4,7 +4,6 @@ package DBIx::Class::Schema::Critic::Policy;
 
 use Moose::Role;
 use MooseX::Has::Sugar;
-use MooseX::Types::DBIx::Class 'Schema';
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean;
@@ -78,7 +77,7 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 =cut
 
-has schema => ( ro, isa => Schema, writer => '_set_schema' );
+has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
 
 =method violation
 

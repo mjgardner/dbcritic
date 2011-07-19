@@ -40,13 +40,10 @@ sub stringify {
     my $self    = shift;
     my $element = $self->element;
     my $type    = ref $element;
-    $type =~ s/\A .* :://xms;
 
-    given ($type) {
-        when ('Table') {
-            $type .= q{ } . $element->from;
-        }
-    }
+    $type =~ s/\A .* :://xms;
+    if ( $type eq 'Table' ) { $type .= q{ } . $element->from }
+
     return "[$type] " . $self->description . "\n" . $self->explanation;
 }
 

@@ -17,7 +17,7 @@ use Module::Pluggable
 use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
-use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
+use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
 with qw(MooseX::Getopt MooseX::SimpleConfig);
 
 =attr dsn
@@ -58,7 +58,7 @@ Only settable at construction time.
 =cut
 
 has schema => ( ro, required, coerce, lazy,
-    isa     => Schema,
+    isa     => LoadingSchema,
     traits  => ['NoGetopt'],
     default => sub {
         Schema->coerce( [ map { $_[0]->$_ } qw(dsn username password) ] );
