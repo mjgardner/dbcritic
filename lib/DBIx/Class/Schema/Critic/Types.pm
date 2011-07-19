@@ -24,7 +24,7 @@ role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     { role => 'DBIx::Class::Schema::Critic::Policy' };
 
 {
-    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
     subtype Schema, as MooseX::Types::DBIx::Class::Schema;
     coerce Schema, from ArrayRef, via {
         my $loader = Moose::Meta::Class->create_anon_class(
