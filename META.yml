@@ -36,6 +36,7 @@ requires:
   Moose::Role: 0
   MooseX::Getopt: 0
   MooseX::Has::Sugar: 0
+  MooseX::SimpleConfig: 0
   MooseX::Types: 0
   MooseX::Types::DBIx::Class: 0
   MooseX::Types::Moose: 0
