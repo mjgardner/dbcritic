@@ -3,7 +3,6 @@ package DBIx::Class::Schema::Critic;
 # ABSTRACT: Critique a database schema for best practices
 
 use Modern::Perl;
-use English '-no_match_vars';
 
 =method policies
 
@@ -65,7 +64,7 @@ has schema => ( ro, required, coerce, lazy,
     isa     => Schema,
     traits  => ['NoGetopt'],
     default => sub {
-        Schema->coerce( [ map { $ARG[0]->$ARG } qw(dsn username password) ] );
+        Schema->coerce( [ map { $_[0]->$_ } qw(dsn username password) ] );
     },
 );
 
@@ -80,8 +79,8 @@ sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $schema = shift->schema;
     return {
         Schema       => [$schema],
-        ResultSource => [ map { $schema->source($ARG) } $schema->sources ],
-        ResultSet    => [ map { $schema->resultset($ARG) } $schema->sources ],
+        ResultSource => [ map { $schema->source($_) } $schema->sources ],
+        ResultSet    => [ map { $schema->resultset($_) } $schema->sources ],
     };
 }
 
@@ -94,7 +93,7 @@ L</violations> to C<STDOUT>.
 =cut
 
 sub critique {
-    for ( shift->violations ) { say "$ARG" }
+    for ( shift->violations ) {say}
     return;
 }
 
@@ -111,15 +110,15 @@ has _violations => ( ro, lazy,
     traits  => ['Array'],
     handles => { violations => 'elements' },
     default => sub {
-        [ map { $ARG[0]->_policy_loop( $ARG, $ARG[0]->_element($ARG) ) }
-                $ARG[0]->_element_names ];
+        [ map { $_[0]->_policy_loop( $_, $_[0]->_element($_) ) }
+                $_[0]->_element_names ];
     },
 );
 
 sub _policy_loop {
-    my ( $self, $policy_type, $elements_ref ) = @ARG;
+    my ( $self, $policy_type, $elements_ref ) = @_;
     my @violations;
-    for my $policy ( grep { _policy_applies_to( $ARG, $policy_type ) }
+    for my $policy ( grep { _policy_applies_to( $_, $policy_type ) }
         $self->policies )
     {
         for my $element ( @{$elements_ref} ) {
@@ -132,8 +131,8 @@ sub _policy_loop {
 }
 
 sub _policy_applies_to {
-    my ( $policy, $type ) = @ARG;
-    return any { $ARG->name eq "MooseX::Types::DBIx::Class::$type" }
+    my ( $policy, $type ) = @_;
+    return any { $_->name eq "MooseX::Types::DBIx::Class::$type" }
     @{ $policy->applies_to };
 }
 

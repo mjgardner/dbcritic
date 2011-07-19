@@ -2,66 +2,39 @@ package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-use English '-no_match_vars';
-use Const::Fast;
 use Moose;
-use MooseX::Has::Sugar;
 use MooseX::Types::DBIx::Class 'ResultSource';
-use MooseX::Types::Moose qw(ArrayRef Str);
 use namespace::autoclean;
 
-=attr description
-
-Returns the short description of what this policy checks.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-
-=attr explanation
-
-Returns the long description of what this policy checks.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-
-=cut
-
-const my %ATTR => (
+my %ATTR = (
     description => 'No primary key',
     explanation =>
-        'ResultSource tables should have one or more columns defined as a primary key.',
+        'Tables should have one or more columns defined as a primary key.',
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( ro, isa => Str, default => $default );
+    has $name => ( is => 'ro', isa => 'Str', default => $default );
 }
 
 =attr applies_to
 
-Returns a reference to an array with one element: a
-L<Moose::Meta::TypeConstraint|Moose::Meta::TypeConstraint> for a
-L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class> I<ResultSource>.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
+I<ResultSource>s.
 
 =cut
 
-has applies_to => ( ro,
-    isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
-    default => sub { [ResultSource] },
-);
-
-with 'DBIx::Class::Schema::Critic::Policy';
+has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
 
 =method violates
 
 Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
 C<primary_columns> method returns nothing.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =cut
 
-sub violates { return !scalar $ARG[0]->element->primary_columns }
+sub violates { return !scalar shift->element->primary_columns }
 
+with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
 1;
 

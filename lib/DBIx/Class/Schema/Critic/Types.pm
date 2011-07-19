@@ -2,7 +2,6 @@ package DBIx::Class::Schema::Critic::Types;
 
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
-use English '-no_match_vars';
 use MooseX::Types -declare => [qw(DBICType Policy Schema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row);
@@ -35,7 +34,7 @@ L<DBIx::Class|DBIx::Class>.
         my $loader = Moose::Meta::Class->create_anon_class(
             superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
         $loader->loader_options( naming => 'current' );
-        $loader->connect( @{$ARG} );
+        $loader->connect( @{$_} );
     };
 }
 

@@ -2,7 +2,6 @@ package DBIx::Class::Schema::Critic::Policy;
 
 # ABSTRACT: Role for criticizing database schemas
 
-use English '-no_match_vars';
 use Moose::Role;
 use MooseX::Has::Sugar;
 use MooseX::Types::Moose 'ArrayRef';
@@ -28,6 +27,10 @@ s indicating what part(s) of the schema the policy is interested in.  Select
 from the list defined in
 L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 
+=cut
+
+has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
+
 =head2 violates
 
 Role consumers must implement a C<violates> method that returns true if the
@@ -51,10 +54,10 @@ object if it doesn't.
 requires qw(description explanation applies_to violates);
 
 around violates => sub {
-    my ( $orig, $self ) = splice @ARG, 0, 2;
+    my ( $orig, $self, $element, $schema ) = splice @_, 0, 2;
     $self->_set_element(shift);
     $self->_set_schema(shift);
-    return $self->violation if $self->$orig(@ARG);
+    return $self->violation if $self->$orig(@_);
     return;
 };
 
@@ -66,11 +69,8 @@ as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 
 =cut
 
-has element => ( ro,
-    init_arg => undef,
-    isa      => DBICType,
-    writer   => '_set_element',
-);
+has element =>
+    ( ro, init_arg => undef, isa => DBICType, writer => '_set_element' );
 
 =attr schema
 
@@ -90,8 +90,9 @@ object based on the state of the current policy.
 =cut
 
 sub violation {
+    my $self = shift;
     return DBIx::Class::Schema::Critic::Violation->new(
-        map { $ARG => $ARG[0]->$ARG } qw(description explanation element) );
+        map { $_ => $self->$_ } qw(description explanation element) );
 }
 
 1;
