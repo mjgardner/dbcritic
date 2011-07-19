@@ -6,6 +6,10 @@ VERSION
     version 0.001
 
 SYNOPSIS
+        use DBIx::Class::Schema::Critic;
+        my $critic = DBIx::Class::Schema::Critic->new();
+        $critic->critique();
+
 DESCRIPTION
     This package is used to scan a database schema and catalog any
     violations of best practices as defined by a set of policy plugins. It
@@ -37,10 +41,6 @@ METHODS
   violations
     Returns a list of all DBIx::Class::Schema::Critic::Violations picked up
     by the various policies.
-
-        use DBIx::Class::Schema::Critic;
-        my $critic = DBIx::Class::Schema::Critic->new(schema => $schema);
-        $critic->critique();
 
 SEE ALSO
     Perl::Critic
