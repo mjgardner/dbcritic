@@ -61,7 +61,8 @@ has schema => ( ro, required, coerce, lazy,
     isa     => LoadingSchema,
     traits  => ['NoGetopt'],
     default => sub {
-        Schema->coerce( [ map { $_[0]->$_ } qw(dsn username password) ] );
+        LoadingSchema->coerce(
+            [ map { $_[0]->$_ } qw(dsn username password) ] );
     },
 );
 

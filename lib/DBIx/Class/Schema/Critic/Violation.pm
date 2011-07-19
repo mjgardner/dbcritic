@@ -42,9 +42,13 @@ sub stringify {
     my $type    = ref $element;
 
     $type =~ s/\A .* :://xms;
-    if ( $type eq 'Table' ) { $type .= q{ } . $element->from }
-
-    return "[$type] " . $self->description . "\n" . $self->explanation;
+    my %TYPE_MAP = (
+        Table     => sub { $element->from },
+        ResultSet => sub { $element->result_class },
+        Schema    => sub {'schema'},
+    );
+    return "[$type " . $TYPE_MAP{$type}->() . '] ' . join "\n",
+        map { $self->$_ } qw(description explanation);
 }
 
 __PACKAGE__->meta->make_immutable();
