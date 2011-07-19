@@ -28,8 +28,7 @@ use MooseX::Types::Moose qw(ArrayRef HashRef Str);
 use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
 with 'MooseX::Getopt';
 
-has dsn =>
-    ( ro, required, isa => Str, traits => ['Getopt'], cmd_aliases => 'd' );
+has dsn => ( ro, isa => Str, traits => ['Getopt'], cmd_aliases => 'd' );
 has username =>
     ( ro, isa => Str, traits => ['Getopt'], cmd_aliases => [qw(u user)] );
 has password =>
