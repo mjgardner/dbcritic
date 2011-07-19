@@ -20,9 +20,28 @@ use Module::Pluggable
 use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::Moose qw(ArrayRef HashRef);
+use MooseX::Types::Moose qw(ArrayRef HashRef Str);
 use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
 with 'MooseX::Getopt';
+
+=attr dsn
+
+=attr username
+
+=attr password
+
+Instead of providing a schema object, you can provide a L<DBI|DBI> data source
+name and optional username and password.
+L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
+schema classes dynamically to be critiqued.
+
+=cut
+
+my %attr = ( dsn => 'd', username => [qw(u user)], password => [qw(p pass)] );
+while ( my ( $attr, $cmd ) = each %attr ) {
+    has $attr =>
+        ( ro, isa => Str, traits => ['Getopt'], cmd_aliases => $cmd );
+}
 
 =attr schema
 
@@ -31,21 +50,19 @@ Only settable at construction time.
 
 =cut
 
-has schema => ( ro, required, coerce,
-    isa         => Schema,
-    traits      => ['Getopt'],
-    cmd_aliases => 's',
-    writer      => '_set_schema',
+has schema => ( ro, required, coerce, lazy,
+    isa     => Schema,
+    traits  => ['NoGetopt'],
+    default => sub {
+        Schema->coerce( [ map { $ARG[0]->$ARG } qw(dsn username password) ] );
+    },
 );
 
 has _elements => ( ro,
     lazy_build,
     isa     => HashRef,
     traits  => ['Hash'],
-    handles => {
-        _element_names => 'keys',
-        _element       => 'get',
-    },
+    handles => { _element_names => 'keys', _element => 'get' },
 );
 
 sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)

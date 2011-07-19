@@ -15,6 +15,17 @@ version 0.001
 
 =head1 ATTRIBUTES
 
+=head2 dsn
+
+=head2 username
+
+=head2 password
+
+Instead of providing a schema object, you can provide a L<DBI|DBI> data source
+name and optional username and password.
+L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
+schema classes dynamically to be critiqued.
+
 =head2 schema
 
 A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
