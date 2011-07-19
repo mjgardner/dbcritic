@@ -23,6 +23,8 @@ use DBIx::Class::Schema::Critic::Types 'DBICType';
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean;
 
+has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
+
 requires qw(description explanation applies_to violates);
 
 around violates => sub {

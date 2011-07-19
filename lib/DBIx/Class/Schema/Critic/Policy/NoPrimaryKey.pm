@@ -15,33 +15,25 @@ BEGIN {
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-use English '-no_match_vars';
-use Const::Fast;
 use Moose;
-use MooseX::Has::Sugar;
 use MooseX::Types::DBIx::Class 'ResultSource';
-use MooseX::Types::Moose qw(ArrayRef Str);
 use namespace::autoclean;
 
-const my %ATTR => (
+my %ATTR = (
     description => 'No primary key',
     explanation =>
-        'ResultSource tables should have one or more columns defined as a primary key.',
+        'Tables should have one or more columns defined as a primary key.',
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( ro, isa => Str, default => $default );
+    has $name => ( is => 'ro', isa => 'Str', default => $default );
 }
 
-has applies_to => ( ro,
-    isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
-    default => sub { [ResultSource] },
-);
+has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
+
+sub violates { return !scalar $_[0]->element->primary_columns }
 
 with 'DBIx::Class::Schema::Critic::Policy';
-
-sub violates { return !scalar $ARG[0]->element->primary_columns }
-
 __PACKAGE__->meta->make_immutable();
 1;
 
@@ -75,25 +67,10 @@ L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
 
 =head1 ATTRIBUTES
 
-=head2 description
-
-Returns the short description of what this policy checks.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-
-=head2 explanation
-
-Returns the long description of what this policy checks.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-
 =head2 applies_to
 
-Returns a reference to an array with one element: a
-L<Moose::Meta::TypeConstraint|Moose::Meta::TypeConstraint> for a
-L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class> I<ResultSource>.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
+I<ResultSource>s.
 
 =head1 METHODS
 
@@ -101,8 +78,6 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
 C<primary_columns> method returns nothing.
-Required by
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =head1 SUPPORT
 

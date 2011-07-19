@@ -36,7 +36,6 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'perl',
   'NAME' => 'DBIx::Class::Schema::Critic',
   'PREREQ_PM' => {
-    'Const::Fast' => '0',
     'DBIx::Class::Schema::Loader' => '0',
     'English' => '0',
     'List::MoreUtils' => '0',
