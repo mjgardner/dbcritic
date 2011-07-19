@@ -40,8 +40,9 @@ has element =>
 has schema => ( ro, isa => Schema, writer => '_set_schema' );
 
 sub violation {
+    my $self = shift;
     return DBIx::Class::Schema::Critic::Violation->new(
-        map { $_ => $_[0]->$_ } qw(description explanation element) );
+        map { $_ => $self->$_ } qw(description explanation element) );
 }
 
 1;
