@@ -5,23 +5,55 @@ NAME
 VERSION
     version 0.001
 
-USAGE
-        dbic-critic --help
-        dbic-critic --dsn dbi:Oracle:HR --username scott --password tiger
+SYNOPSIS
+        use DBIx::Class::Schema::Critic;
+        my $critic = DBIx::Class::Schema::Critic->new();
+        $critic->critique();
 
 DESCRIPTION
-    This is the command line interface to DBIx::Class::Schema::Critic, a
-    utility for scanning a database schema for violations of best practices.
+    This package is used to scan a database schema and catalog any
+    violations of best practices as defined by a set of policy plugins. It
+    takes conceptual and API inspiration from Perl::Critic.
 
-CONFIGURATION
-    Any command line options can also be specified in a configuration file
-    and loaded with the *--configfile* option as per MooseX::SimpleConfig.
+    dbic_critic is the command line interface.
+
+ATTRIBUTES
+  dsn
+  username
+  password
+    Instead of providing a schema object, you can provide a DBI data source
+    name and optional username and password. DBIx::Class::Schema::Loader
+    will then construct schema classes dynamically to be critiqued.
+
+  schema
+    A DBIx::Class::Schema object you wish to "critique". Only settable at
+    construction time.
+
+METHODS
+  policies
+    Returns an array of loaded policy names that will be applied during
+    "critique". By default all modules under the
+    "DBIx::Class::Schema::Critic::Policy" namespace are loaded.
+
+  critique
+    Runs the "schema" through the DBIx::Class::Schema::Critic engine using
+    all the policies that have been loaded and dumps a string representation
+    of "violations" to "STDOUT".
+
+  violations
+    Returns a list of all DBIx::Class::Schema::Critic::Violations picked up
+    by the various policies.
+
+SEE ALSO
+    Perl::Critic
+    DBIx::Class
+    DBIx::Class::Schema::Loader
 
 SUPPORT
   Perldoc
     You can find documentation for this module with the perldoc command.
 
-      perldoc bin::dbic_critic
+      perldoc DBIx::Class::Schema::Critic
 
   Websites
     The following websites have more information about this module, and may
@@ -74,7 +106,7 @@ SUPPORT
         The CPAN Testers Dependencies is a website that shows a chart of the
         test results of all dependencies for a distribution.
 
-        <http://deps.cpantesters.org/?module=bin::dbic_critic>
+        <http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
 
   Bugs / Feature Requests
     Please report any bugs or feature requests through the web interface at
