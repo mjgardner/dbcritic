@@ -67,8 +67,7 @@ L</violations> to C<STDOUT>.
 =cut
 
 sub critique {
-    my $self = shift;
-    for ( $self->violations ) { say "$ARG" }
+    for ( shift->violations ) { say "$ARG" }
     return;
 }
 
@@ -80,17 +79,15 @@ picked up by the various policies.
 
 =cut
 
-has _violations => ( ro, lazy_build,
+has _violations => ( ro, lazy,
     isa     => ArrayRef,
     traits  => ['Array'],
     handles => { violations => 'elements' },
+    default => sub {
+        [ map { $ARG[0]->_policy_loop( $ARG, $ARG[0]->_element($ARG) ) }
+                $ARG[0]->_element_names ];
+    },
 );
-
-sub _build__violations {    ## no critic (ProhibitUnusedPrivateSubroutines)
-    my $self = shift;
-    return [ map { $self->_policy_loop( $ARG, $self->_element($ARG) ) }
-            $self->_element_names ];
-}
 
 sub _policy_loop {
     my ( $self, $policy_type, $elements_ref ) = @ARG;

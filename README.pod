@@ -30,16 +30,15 @@ C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
 
 =head2 critique
 
-=over
-
-=item Arguments: none
-
-=item Return value: none
-
-=back
-
 Runs the L</schema> through the DBIx::Class::Schema::Critic engine using all
-the policies that have been loaded.
+the policies that have been loaded and dumps a string representation of
+L</violations> to C<STDOUT>.
+
+=head2 violations
+
+Returns a list of all
+L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
+picked up by the various policies.
 
 =head1 SUPPORT
 
