@@ -62,6 +62,13 @@ DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schem
 
 version 0.001
 
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+This policy returns a violation if a
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
+
 =head1 ATTRIBUTES
 
 =head2 description
@@ -88,8 +95,13 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 =head2 violates
 
-This policy returns a violation if a
-L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
+Returns true if L</element>'s C<primary_columns> method returns nothing.
+Required by
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=for test_synopsis 1;
+
+See L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 =head1 SUPPORT
 

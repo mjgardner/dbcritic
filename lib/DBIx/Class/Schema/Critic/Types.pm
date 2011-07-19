@@ -61,6 +61,19 @@ DBIx::Class::Schema::Critic::Types - Type library for DBIx::Class::Schema::Criti
 
 version 0.001
 
+=head1 SYNOPSIS
+
+    use Moose;
+    use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
+
+    has policy => (isa => Policy);
+    has schema => (isa => Schema);
+
+=head1 DESCRIPTION
+
+This is a L<"Moose type library"|MooseX::Types> for
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+
 =head1 TYPES
 
 =head2 Policy

@@ -61,6 +61,23 @@ DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::C
 
 version 0.001
 
+=head1 SYNOPSIS
+
+    use DBIx::Class::Schema::Critic::Violation;
+
+    my $violation = DBIx::Class::Schema::Critic::Violation->new(
+        description => 'Violated policy',
+        explanation => 'Consult the rulebook',
+    );
+    print "$violation\n";
+
+=head1 DESCRIPTION
+
+This class represents
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
+violations flagged by
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+
 =head1 ATTRIBUTES
 
 =head2 description
