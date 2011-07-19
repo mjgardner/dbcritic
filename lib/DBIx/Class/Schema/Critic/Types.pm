@@ -3,8 +3,9 @@ package DBIx::Class::Schema::Critic::Types;
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
 use English '-no_match_vars';
-use MooseX::Types -declare => [qw(DBICType Policy)];
-use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
+use MooseX::Types -declare => [qw(DBICType Policy Schema)];
+use MooseX::Types::Moose 'ArrayRef';
+use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row);
 use namespace::autoclean;
 
 =type Policy
@@ -16,6 +17,27 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     { role => 'DBIx::Class::Schema::Critic::Policy' };
+
+=type Schema
+
+A subtype of
+L<MooseX::Types::DBIx::Class::Schema|MooseX::Types::DBIx::Class>
+that can create new schemas from an array reference containing a DSN, user name,
+password, and hash references to attributes recognized by L<DBI|DBI> and
+L<DBIx::Class|DBIx::Class>.
+
+=cut
+
+{
+    ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
+    subtype Schema, as MooseX::Types::DBIx::Class::Schema;
+    coerce Schema, from ArrayRef, via {
+        my $loader = Moose::Meta::Class->create_anon_class(
+            superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
+        $loader->loader_options( naming => 'current' );
+        $loader->connect( @{$ARG} );
+    };
+}
 
 =type DBICType
 
@@ -36,8 +58,10 @@ An instance of any of the following:
 =cut
 
 {
-    ## no critic (ProhibitCallsToUndeclaredSubs, ProhibitBitwiseOperators)
-    subtype DBICType, as ResultSet | ResultSource | Row | Schema;
+    ## no critic (ProhibitCallsToUndeclaredSubs,ProhibitCallsToUnexportedSubs)
+    ## no critic (Bangs::ProhibitBitwiseOperators)
+    subtype DBICType, as ResultSet | ResultSource | Row
+        | MooseX::Types::DBIx::Class::Schema;
 }
 
 __PACKAGE__->meta->make_immutable();
