@@ -15,6 +15,7 @@ BEGIN {
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
 use MooseX::Types -declare => [qw(DBICType Policy Schema)];
+use MooseX::Types::DBIx::Class;
 use namespace::autoclean;
 
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
