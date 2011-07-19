@@ -23,13 +23,15 @@ use namespace::autoclean;
 role_type Policy,    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
     { role => 'DBIx::Class::Schema::Critic::Policy' };
 
-subtype Schema, as MooseX::Types::DBIx::Class::Schema;
-coerce Schema, from ArrayRef, via {
+subtype Schema,      ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    as MooseX::Types::DBIx::Class::Schema;
+coerce Schema,       ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    from ArrayRef, via {
     my $loader = Moose::Meta::Class->create_anon_class(
         superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
     $loader->loader_options( naming => 'current' );
     $loader->connect( @{$ARG} );
-};
+    };
 
 {
     ## no critic (ProhibitCallsToUndeclaredSubs, ProhibitBitwiseOperators)
@@ -67,7 +69,7 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 =head2 Schema
 
 A subtype of
-L<MooseX::Types::DBIx::Class::Schema|MooseX::Types::DBIx::Class/Schema>
+L<MooseX::Types::DBIx::Class::Schema|MooseX::Types::DBIx::Class>
 that can create new schemas from an array reference containing a DSN, user name,
 password, and hash references to attributes recognized by L<DBI|DBI> and
 L<DBIx::Class|DBIx::Class>.
