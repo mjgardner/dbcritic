@@ -6,6 +6,13 @@ VERSION
     version 0.001
 
 ATTRIBUTES
+  dsn
+  username
+  password
+    Instead of providing a schema object, you can provide a DBI data source
+    name and optional username and password. DBIx::Class::Schema::Loader
+    will then construct schema classes dynamically to be critiqued.
+
   schema
     A DBIx::Class::Schema object you wish to "critique". Only settable at
     construction time.

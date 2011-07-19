@@ -24,15 +24,25 @@ use Module::Pluggable
 use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::Moose qw(ArrayRef HashRef);
+use MooseX::Types::Moose qw(ArrayRef HashRef Str);
 use DBIx::Class::Schema::Critic::Types qw(Policy Schema);
 with 'MooseX::Getopt';
 
-has schema => ( ro, required, coerce,
+has dsn =>
+    ( ro, required, isa => Str, traits => ['Getopt'], cmd_aliases => 'd' );
+has username =>
+    ( ro, isa => Str, traits => ['Getopt'], cmd_aliases => [qw(u user)] );
+has password =>
+    ( ro, isa => Str, traits => ['Getopt'], cmd_aliases => [qw(p pass)] );
+
+has schema => ( ro, required, coerce, lazy,
     isa         => Schema,
     traits      => ['Getopt'],
     cmd_aliases => 's',
     writer      => '_set_schema',
+    default     => sub {
+        Schema->coerce( [ map { $ARG[0]->$ARG } qw(dsn username password) ] );
+    },
 );
 
 has _elements => ( ro,
@@ -111,6 +121,17 @@ DBIx::Class::Schema::Critic - Critique a database schema for best practices
 version 0.001
 
 =head1 ATTRIBUTES
+
+=head2 dsn
+
+=head2 username
+
+=head2 password
+
+Instead of providing a schema object, you can provide a L<DBI|DBI> data source
+name and optional username and password.
+L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
+schema classes dynamically to be critiqued.
 
 =head2 schema
 
