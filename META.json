@@ -21,7 +21,6 @@
       },
       "runtime" : {
          "requires" : {
-            "Carp::Clan" : 0,
             "DBIx::Class::Schema::Loader" : 0,
             "List::MoreUtils" : 0,
             "Modern::Perl" : 0,
@@ -34,6 +33,7 @@
             "MooseX::Types" : 0,
             "MooseX::Types::DBIx::Class" : 0,
             "MooseX::Types::Moose" : 0,
+            "Try::Tiny" : 0,
             "namespace::autoclean" : 0,
             "overload" : 0,
             "perl" : "5.010",

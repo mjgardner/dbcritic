@@ -10,7 +10,6 @@ BEGIN {
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
-use Carp::Clan qw/^DBIx::Class/;
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use namespace::autoclean;

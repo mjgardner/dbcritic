@@ -10,7 +10,6 @@ BEGIN {
 
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
-use Carp::Clan qw/^DBIx::Class/;
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;

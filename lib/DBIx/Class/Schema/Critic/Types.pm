@@ -10,10 +10,10 @@ BEGIN {
 
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
-use Carp::Clan qw/^DBIx::Class/;
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
+use Try::Tiny;
 use namespace::autoclean;
 ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
 ## no critic (ProhibitBitwiseOperators)
@@ -24,8 +24,12 @@ subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
     my $loader = Moose::Meta::Class->create_anon_class(
         superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
-    $loader->loader_options( generate_pod => 0, naming => 'v4' );
-    $loader->connect( @{$_} );
+    $loader->loader_options( naming => 'current' );
+
+    my $schema;
+    try { $schema = $loader->connect( @{$_} ) }
+    catch { my $exception = $ARG };
+    return $schema;
 };
 
 subtype DBICType, as ResultSet | ResultSource | Row | Schema;
