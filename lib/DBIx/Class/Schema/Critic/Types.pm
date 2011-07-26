@@ -10,6 +10,7 @@ BEGIN {
 
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
+use Carp::Clan qw/^DBIx::Class/;
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);

@@ -10,6 +10,8 @@ BEGIN {
 
 # ABSTRACT: Critique a database schema for best practices
 
+use Carp::Clan qw/^DBIx::Class/;
+
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',

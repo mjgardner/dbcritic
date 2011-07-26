@@ -10,6 +10,7 @@ BEGIN {
 
 # ABSTRACT: Role for criticizing database schemas
 
+use Carp::Clan qw/^DBIx::Class/;
 use Moose::Role;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types 'DBICType';

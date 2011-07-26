@@ -37,6 +37,7 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'perl',
   'NAME' => 'DBIx::Class::Schema::Critic',
   'PREREQ_PM' => {
+    'Carp::Clan' => '0',
     'DBIx::Class::Schema::Loader' => '0',
     'List::MoreUtils' => '0',
     'Modern::Perl' => '0',
