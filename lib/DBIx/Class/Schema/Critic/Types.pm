@@ -26,7 +26,6 @@ coerce LoadingSchema, from ArrayRef, via {
     $loader->loader_options( naming => 'current' );
     local $SIG{__WARN__} = sub { };
     $loader->connect( @{$_} );
-}
 };
 
 subtype DBICType, as ResultSet | ResultSource | Row | Schema;
