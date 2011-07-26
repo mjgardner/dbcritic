@@ -31,15 +31,28 @@ has password => (
     cmd_aliases   => [qw(p pass)],
     documentation => 'Password for connecting to the database',
 );
-
-has schema => ( ro, required, coerce, lazy,
-    isa     => LoadingSchema,
-    traits  => ['NoGetopt'],
-    default => sub {
-        LoadingSchema->coerce(
-            [ map { $_[0]->$_ } qw(dsn username password) ] );
-    },
+has class_name => (
+    %string_options,
+    cmd_aliases   => [qw(c class)],
+    documentation => 'Name of DBIx::Class::Schema subclass to critique',
 );
+
+has schema => ( ro, required, coerce, lazy_build,
+    isa    => LoadingSchema,
+    traits => ['NoGetopt'],
+);
+
+sub _build_schema {
+    my $self = shift;
+
+    my @connect_info = map { $_[0]->$_ } qw(dsn username password);
+
+    my $class_name = $self->class_name;
+    return $class_name->connect(@connect_info) if $class_name;
+
+    return LoadingSchema->coerce(
+        [ map { $_[0]->$_ } qw(dsn username password) ] );
+}
 
 has _elements => ( ro, lazy_build,
     isa     => 'HashRef',
