@@ -4,11 +4,7 @@ use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Violation;
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Violation::VERSION = '0.001';
-}
-
-# ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
+our $VERSION = '0.001';    # VERSION
 
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
@@ -35,6 +31,8 @@ sub stringify {
 
 __PACKAGE__->meta->make_immutable();
 1;
+
+# ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
 __END__
 

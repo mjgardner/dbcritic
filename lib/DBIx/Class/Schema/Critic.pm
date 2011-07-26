@@ -4,11 +4,7 @@ use Modern::Perl;
 
 package DBIx::Class::Schema::Critic;
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::VERSION = '0.001';
-}
-
-# ABSTRACT: Critique a database schema for best practices
+our $VERSION = '0.001';    # VERSION
 
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
@@ -99,6 +95,8 @@ sub _policy_applies_to {
 
 __PACKAGE__->meta->make_immutable();
 1;
+
+# ABSTRACT: Critique a database schema for best practices
 
 __END__
 

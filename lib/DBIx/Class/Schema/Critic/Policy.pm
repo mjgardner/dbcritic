@@ -4,11 +4,7 @@ use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Policy;
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::VERSION = '0.001';
-}
-
-# ABSTRACT: Role for criticizing database schemas
+our $VERSION = '0.001';    # VERSION
 
 use Moose::Role;
 use MooseX::Has::Sugar;
@@ -31,15 +27,17 @@ around violates => sub {
 has element =>
     ( ro, init_arg => undef, isa => DBICType, writer => '_set_element' );
 
-has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
-
 sub violation {
     my $self = shift;
     return DBIx::Class::Schema::Critic::Violation->new(
         map { $_ => $self->$_ } qw(description explanation element) );
 }
 
+has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
+
 1;
+
+# ABSTRACT: Role for criticizing database schemas
 
 __END__
 

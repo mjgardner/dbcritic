@@ -4,11 +4,7 @@ use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::NoPrimaryKey::VERSION = '0.001';
-}
-
-# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
+our $VERSION = '0.001';    # VERSION
 
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
@@ -31,6 +27,8 @@ sub violates { return !scalar shift->element->primary_columns }
 with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
 1;
+
+# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 __END__
 

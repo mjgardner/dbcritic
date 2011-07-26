@@ -4,11 +4,7 @@ use Modern::Perl;
 
 package DBIx::Class::Schema::Critic::Types;
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Types::VERSION = '0.001';
-}
-
-# ABSTRACT: Type library for DBIx::Class::Schema::Critic
+our $VERSION = '0.001';    # VERSION
 
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
@@ -40,6 +36,8 @@ subtype DBICType, as ResultSet | ResultSource | Row | Schema;
 
 __PACKAGE__->meta->make_immutable();
 1;
+
+# ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
 __END__
 
