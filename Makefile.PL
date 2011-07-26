@@ -50,7 +50,8 @@ my %WriteMakefileArgs = (
     'MooseX::Types::DBIx::Class' => '0',
     'MooseX::Types::Moose' => '0',
     'namespace::autoclean' => '0',
-    'overload' => '0'
+    'overload' => '0',
+    'utf8' => '0'
   },
   'VERSION' => '0.001',
   'test' => {

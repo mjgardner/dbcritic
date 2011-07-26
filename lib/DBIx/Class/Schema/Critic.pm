@@ -1,6 +1,7 @@
 package DBIx::Class::Schema::Critic;
 
 use Modern::Perl;
+use utf8;
 
 our $VERSION = '0.001';    # VERSION
 use Module::Pluggable
