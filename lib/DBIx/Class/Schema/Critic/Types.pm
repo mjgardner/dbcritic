@@ -27,8 +27,7 @@ coerce LoadingSchema, from ArrayRef, via {
     $loader->loader_options( naming => 'current' );
 
     my $schema;
-    try { $schema = $loader->connect( @{$_} ) }
-    catch { my $exception = $ARG };
+    try { $schema = $loader->connect( @{$_} ) } catch { my $exception = $_ };
     return $schema;
 };
 
