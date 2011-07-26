@@ -17,6 +17,7 @@ perlcritic.rc
 t/00-compile.t
 t/000-report-versions.t
 t/author-critic.t
+t/loader.t
 t/policy/noprimarykey.t
 t/policy/noprimarykey/lib/perl5/MySchema.pm
 t/policy/noprimarykey/lib/perl5/MySchema/Result/HasPrimaryKey.pm
@@ -36,5 +37,8 @@ t/release-pod-syntax.t
 t/release-synopsis.t
 t/release-test-version.t
 t/release-unused-vars.t
+t/schema.t
+t/schema/lib/perl5/MySchema.pm
+t/schema/lib/perl5/MySchema/Result/Item.pm
 weaver.ini
 xt/author/perltidy.rc
