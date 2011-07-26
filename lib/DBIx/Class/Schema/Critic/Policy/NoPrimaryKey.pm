@@ -1,7 +1,10 @@
 package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
-# VERSION
+use strict;
+use utf8;
+use Modern::Perl;
 
+# VERSION
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use namespace::autoclean;

@@ -1,7 +1,10 @@
 package DBIx::Class::Schema::Critic::Violation;
 
-# VERSION
+use strict;
+use utf8;
+use Modern::Perl;
 
+# VERSION
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;

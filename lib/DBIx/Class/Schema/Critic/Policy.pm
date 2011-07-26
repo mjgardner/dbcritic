@@ -1,7 +1,10 @@
 package DBIx::Class::Schema::Critic::Policy;
 
-# VERSION
+use strict;
+use utf8;
+use Modern::Perl;
 
+# VERSION
 use Moose::Role;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types 'DBICType';

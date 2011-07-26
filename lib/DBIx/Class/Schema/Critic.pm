@@ -1,7 +1,10 @@
 package DBIx::Class::Schema::Critic;
 
-# VERSION
+use strict;
+use utf8;
+use Modern::Perl;
 
+# VERSION
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',

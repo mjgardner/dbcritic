@@ -1,5 +1,6 @@
 #!perl
 
+use Modern::Perl;
 use Test::Most tests => 1;
 use Path::Class;
 use FindBin;
