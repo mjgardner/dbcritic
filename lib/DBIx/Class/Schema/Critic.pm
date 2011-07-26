@@ -45,13 +45,12 @@ has schema => ( ro, required, coerce, lazy_build,
 sub _build_schema {
     my $self = shift;
 
-    my @connect_info = map { $_[0]->$_ } qw(dsn username password);
+    my @connect_info = map { $self->$_ } qw(dsn username password);
 
     my $class_name = $self->class_name;
     return $class_name->connect(@connect_info) if $class_name;
 
-    return LoadingSchema->coerce(
-        [ map { $_[0]->$_ } qw(dsn username password) ] );
+    return LoadingSchema->coerce( \@connect_info );
 }
 
 has _elements => ( ro, lazy_build,
