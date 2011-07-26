@@ -33,8 +33,17 @@ coerce LoadingSchema, from ArrayRef, via {
     my $loader = Moose::Meta::Class->create_anon_class(
         superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
     $loader->loader_options( naming => 'current' );
+    local $SIG{__WARN__} = \&_loader_warn;
     $loader->connect( @{$_} );
 };
+
+sub _loader_warn {
+    my $warning = shift;
+    if ( $warning !~ / has no primary key at /ms ) {
+        print {*STDERR} "$warning";
+    }
+    return;
+}
 
 =type DBICType
 
