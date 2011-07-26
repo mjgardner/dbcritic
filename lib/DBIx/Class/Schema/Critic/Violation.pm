@@ -8,11 +8,6 @@ BEGIN {
     $DBIx::Class::Schema::Critic::Violation::VERSION = '0.001';
 }
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Violation::DIST
-        = 'DBIx-Class-Schema-Critic';
-}
-
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
 
 use Moose;

@@ -8,10 +8,6 @@ BEGIN {
     $DBIx::Class::Schema::Critic::VERSION = '0.001';
 }
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::DIST = 'DBIx-Class-Schema-Critic';
-}
-
 # ABSTRACT: Critique a database schema for best practices
 
 use Module::Pluggable

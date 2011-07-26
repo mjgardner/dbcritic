@@ -7,6 +7,10 @@ use Modern::Perl;
 # ABSTRACT: Critique a database schema for best practices
 
 package main;
+
+BEGIN {
+    $main::VERSION = '0.001';
+}
 use DBIx::Class::Schema::Critic;
 my $critic = DBIx::Class::Schema::Critic->new_with_options();
 $critic->critique();

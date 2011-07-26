@@ -8,10 +8,6 @@ BEGIN {
     $DBIx::Class::Schema::Critic::Types::VERSION = '0.001';
 }
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Types::DIST = 'DBIx-Class-Schema-Critic';
-}
-
 # ABSTRACT: Type library for DBIx::Class::Schema::Critic
 
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];

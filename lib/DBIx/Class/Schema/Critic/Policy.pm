@@ -8,10 +8,6 @@ BEGIN {
     $DBIx::Class::Schema::Critic::Policy::VERSION = '0.001';
 }
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::DIST = 'DBIx-Class-Schema-Critic';
-}
-
 # ABSTRACT: Role for criticizing database schemas
 
 use Moose::Role;

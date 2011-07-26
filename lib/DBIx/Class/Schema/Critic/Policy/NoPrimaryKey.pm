@@ -8,11 +8,6 @@ BEGIN {
     $DBIx::Class::Schema::Critic::Policy::NoPrimaryKey::VERSION = '0.001';
 }
 
-BEGIN {
-    $DBIx::Class::Schema::Critic::Policy::NoPrimaryKey::DIST
-        = 'DBIx-Class-Schema-Critic';
-}
-
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 use Moose;
