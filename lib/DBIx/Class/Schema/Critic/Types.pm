@@ -31,7 +31,7 @@ coerce LoadingSchema, from ArrayRef, via {
 sub _loader_warn {
     my $warning = shift;
     if ( $warning !~ /has no primary key$/ ) {
-        print {STDERR} "$warning\n";
+        print STDERR "$warning\n";
     }
     return;
 }
