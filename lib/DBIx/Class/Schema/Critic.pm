@@ -160,7 +160,7 @@ Only settable at construction time.
 =head2 password
 
 The L<DBI|DBI> data source name and optional username and password used to
-connect to the database.  If no L<class_name> or L<schema> is provided,
+connect to the database.  If no L</class_name> or L</schema> is provided,
 L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
 schema classes dynamically to be critiqued.
 
