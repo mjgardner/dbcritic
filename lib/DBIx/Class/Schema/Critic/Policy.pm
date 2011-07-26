@@ -1,7 +1,8 @@
 package DBIx::Class::Schema::Critic::Policy;
 
-use Modern::Perl;
+use strict;
 use utf8;
+use Modern::Perl;
 
 our $VERSION = '0.001';    # VERSION
 use Moose::Role;
