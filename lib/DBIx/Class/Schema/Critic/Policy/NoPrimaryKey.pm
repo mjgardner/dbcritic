@@ -1,8 +1,8 @@
 package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
-our $VERSION = '0.001';    # VERSION
-
 use Modern::Perl;
+
+our $VERSION = '0.001';    # VERSION
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use namespace::autoclean;

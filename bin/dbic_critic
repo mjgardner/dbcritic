@@ -1,8 +1,8 @@
 #!perl
 
 package main;
-our $VERSION = '0.001';    # VERSION
 use Modern::Perl;
+our $VERSION = '0.001';    # VERSION
 use DBIx::Class::Schema::Critic;
 my $critic = DBIx::Class::Schema::Critic->new_with_options();
 $critic->critique();

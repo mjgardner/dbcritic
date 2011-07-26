@@ -1,8 +1,8 @@
 package DBIx::Class::Schema::Critic::Policy;
 
-our $VERSION = '0.001';    # VERSION
-
 use Modern::Perl;
+
+our $VERSION = '0.001';    # VERSION
 use Moose::Role;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types 'DBICType';

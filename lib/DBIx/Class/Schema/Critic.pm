@@ -1,8 +1,8 @@
 package DBIx::Class::Schema::Critic;
 
-our $VERSION = '0.001';    # VERSION
-
 use Modern::Perl;
+
+our $VERSION = '0.001';    # VERSION
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',

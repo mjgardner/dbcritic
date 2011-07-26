@@ -1,8 +1,8 @@
 package DBIx::Class::Schema::Critic::Types;
 
-our $VERSION = '0.001';    # VERSION
-
 use Modern::Perl;
+
+our $VERSION = '0.001';    # VERSION
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
