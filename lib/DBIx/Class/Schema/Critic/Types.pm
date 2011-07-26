@@ -1,6 +1,6 @@
 package DBIx::Class::Schema::Critic::Types;
 
-# ABSTRACT: Type library for DBIx::Class::Schema::Critic
+# VERSION
 
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
@@ -9,24 +9,7 @@ use namespace::autoclean;
 ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
 ## no critic (ProhibitBitwiseOperators)
 
-=type Policy
-
-An instance of a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-
-=cut
-
 role_type Policy, { role => 'DBIx::Class::Schema::Critic::Policy' };
-
-=type LoadingSchema
-
-A subtype of
-L<MooseX::Types::DBIx::Class::Schema|MooseX::Types::DBIx::Class>
-that can create new schemas from an array reference containing a DSN, user name,
-password, and hash references to attributes recognized by L<DBI|DBI> and
-L<DBIx::Class|DBIx::Class>.
-
-=cut
 
 subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
@@ -45,6 +28,39 @@ sub _loader_warn {
     return;
 }
 
+subtype DBICType, as ResultSet | ResultSource | Row | Schema;
+
+__PACKAGE__->meta->make_immutable();
+1;
+
+# ABSTRACT: Type library for DBIx::Class::Schema::Critic
+
+=head1 SYNOPSIS
+
+    use Moose;
+    use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
+
+    has policy => (isa => Policy);
+    has schema => (isa => LoadingSchema);
+
+=head1 DESCRIPTION
+
+This is a L<"Moose type library"|MooseX::Types> for
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+
+=type Policy
+
+An instance of a
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+
+=type LoadingSchema
+
+A subtype of
+L<MooseX::Types::DBIx::Class::Schema|MooseX::Types::DBIx::Class>
+that can create new schemas from an array reference containing a DSN, user name,
+password, and hash references to attributes recognized by L<DBI|DBI> and
+L<DBIx::Class|DBIx::Class>.
+
 =type DBICType
 
 An instance of any of the following:
@@ -60,23 +76,3 @@ An instance of any of the following:
 =item L<DBIx::Class::Schema|DBIx::Class::Schema>
 
 =back
-
-=cut
-
-subtype DBICType, as ResultSet | ResultSource | Row | Schema;
-
-__PACKAGE__->meta->make_immutable();
-1;
-
-=head1 SYNOPSIS
-
-    use Moose;
-    use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
-
-    has policy => (isa => Policy);
-    has schema => (isa => LoadingSchema);
-
-=head1 DESCRIPTION
-
-This is a L<"Moose type library"|MooseX::Types> for
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.

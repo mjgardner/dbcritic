@@ -1,12 +1,14 @@
 #!perl
 
-# PODNAME: dbic_critic
-# ABSTRACT: Critique a database schema for best practices
+# VERSION
 
 package main;
 use DBIx::Class::Schema::Critic;
 my $critic = DBIx::Class::Schema::Critic->new_with_options();
 $critic->critique();
+
+# PODNAME: dbic_critic
+# ABSTRACT: Critique a database schema for best practices
 
 =head1 USAGE
 

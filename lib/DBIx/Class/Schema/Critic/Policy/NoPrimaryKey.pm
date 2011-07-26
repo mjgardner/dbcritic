@@ -1,6 +1,6 @@
 package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
-# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
+# VERSION
 
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
@@ -16,27 +16,15 @@ while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( is => 'ro', isa => 'Str', default => $default );
 }
 
-=attr applies_to
-
-This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
-I<ResultSource>s.
-
-=cut
-
 has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
-
-=method violates
-
-Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
-C<primary_columns> method returns nothing.
-
-=cut
 
 sub violates { return !scalar shift->element->primary_columns }
 
 with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
 1;
+
+# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 =head1 SYNOPSIS
 
@@ -48,3 +36,13 @@ __PACKAGE__->meta->make_immutable();
 
 This policy returns a violation if a
 L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
+
+=attr applies_to
+
+This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
+I<ResultSource>s.
+
+=method violates
+
+Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
+C<primary_columns> method returns nothing.
