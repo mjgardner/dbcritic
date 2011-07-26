@@ -1,7 +1,3 @@
-use utf8;
-use strict;
-use Modern::Perl;
-
 package MySchema::Result::HasPrimaryKey;
 use base 'DBIx::Class::Core';
 __PACKAGE__->table('has_primary_key');

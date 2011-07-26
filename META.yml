@@ -42,7 +42,6 @@ requires:
   namespace::autoclean: 0
   overload: 0
   perl: 5.010
-  utf8: 0
 resources:
   bugtracker: https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues
   repository: git://github.com/mjgardner/DBIx-Class-Schema-Critic.git

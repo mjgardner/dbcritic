@@ -1,11 +1,8 @@
-use utf8;
-use strict;
-use Modern::Perl;
-
 package DBIx::Class::Schema::Critic::Policy;
 
 our $VERSION = '0.001';    # VERSION
 
+use Modern::Perl;
 use Moose::Role;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types 'DBICType';

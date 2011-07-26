@@ -1,11 +1,8 @@
-use utf8;
-use strict;
-use Modern::Perl;
-
 package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
 
 our $VERSION = '0.001';    # VERSION
 
+use Modern::Perl;
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use namespace::autoclean;

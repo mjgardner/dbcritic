@@ -1,7 +1,4 @@
 #!perl
-use utf8;
-use strict;
-use Modern::Perl;
 use warnings;
 use strict;
 use Test::More 0.94;

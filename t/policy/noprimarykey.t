@@ -1,8 +1,6 @@
 #!perl
-use utf8;
-use strict;
-use Modern::Perl;
 
+use Modern::Perl;
 use Test::Most tests => 1;
 use Path::Class;
 use FindBin;
