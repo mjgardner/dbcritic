@@ -23,7 +23,7 @@ subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
     my $loader = Moose::Meta::Class->create_anon_class(
         superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
-    $loader->loader_options( naming => 'current' );
+    $loader->loader_options( generate_pod => 0 );
     $loader->connect( @{$_} );
 };
 
