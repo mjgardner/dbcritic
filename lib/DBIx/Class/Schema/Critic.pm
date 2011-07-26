@@ -42,7 +42,7 @@ has schema => ( ro, required, coerce, lazy_build,
     traits => ['NoGetopt'],
 );
 
-sub _build_schema {
+sub _build_schema {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self = shift;
 
     my @connect_info = map { $self->$_ } qw(dsn username password);
