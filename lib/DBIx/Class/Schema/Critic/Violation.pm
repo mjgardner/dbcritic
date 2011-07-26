@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.001';    # VERSION
+our $VERSION = '0.002';    # VERSION
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;
@@ -48,7 +48,7 @@ DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::C
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 

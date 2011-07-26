@@ -69,6 +69,6 @@
          "web" : "https://github.com/mjgardner/DBIx-Class-Schema-Critic"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002"
 }
 

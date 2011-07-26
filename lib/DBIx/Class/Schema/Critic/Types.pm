@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.001';    # VERSION
+our $VERSION = '0.002';    # VERSION
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
@@ -53,7 +53,7 @@ DBIx::Class::Schema::Critic::Types - Type library for DBIx::Class::Schema::Criti
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
