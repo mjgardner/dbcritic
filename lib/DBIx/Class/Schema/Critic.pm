@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.002';    # VERSION
+our $VERSION = '0.003';    # VERSION
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
@@ -124,7 +124,7 @@ DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -142,21 +142,27 @@ B<dbic_critic> is the command line interface.
 
 =head1 ATTRIBUTES
 
+=head2 class_name
+
+The name of a L<DBIx::Class::Schema|DBIx::Class::Schema> class you wish to
+L</critique>.
+Only settable at construction time.
+
+=head2 schema
+
+A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
+Only settable at construction time.
+
 =head2 dsn
 
 =head2 username
 
 =head2 password
 
-Instead of providing a schema object, you can provide a L<DBI|DBI> data source
-name and optional username and password.
+The L<DBI|DBI> data source name and optional username and password used to
+connect to the database.  If no L<class_name> or L<schema> is provided,
 L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
 schema classes dynamically to be critiqued.
-
-=head2 schema
-
-A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
-Only settable at construction time.
 
 =head1 METHODS
 

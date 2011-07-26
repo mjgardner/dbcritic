@@ -3,7 +3,7 @@ NAME
     practices
 
 VERSION
-    version 0.002
+    version 0.003
 
 SYNOPSIS
         use DBIx::Class::Schema::Critic;
@@ -18,16 +18,21 @@ DESCRIPTION
     dbic_critic is the command line interface.
 
 ATTRIBUTES
-  dsn
-  username
-  password
-    Instead of providing a schema object, you can provide a DBI data source
-    name and optional username and password. DBIx::Class::Schema::Loader
-    will then construct schema classes dynamically to be critiqued.
+  class_name
+    The name of a DBIx::Class::Schema class you wish to "critique". Only
+    settable at construction time.
 
   schema
     A DBIx::Class::Schema object you wish to "critique". Only settable at
     construction time.
+
+  dsn
+  username
+  password
+    The DBI data source name and optional username and password used to
+    connect to the database. If no class_name or schema is provided,
+    DBIx::Class::Schema::Loader will then construct schema classes
+    dynamically to be critiqued.
 
 METHODS
   policies
