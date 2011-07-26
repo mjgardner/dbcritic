@@ -13,7 +13,6 @@ BEGIN {
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
-use Try::Tiny;
 use namespace::autoclean;
 ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
 ## no critic (ProhibitBitwiseOperators)
@@ -25,10 +24,9 @@ coerce LoadingSchema, from ArrayRef, via {
     my $loader = Moose::Meta::Class->create_anon_class(
         superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
     $loader->loader_options( naming => 'current' );
-
-    my $schema;
-    try { $schema = $loader->connect( @{$_} ) } catch { my $exception = $_ };
-    return $schema;
+    local $SIG{__WARN__} = sub { };
+    $loader->connect( @{$_} );
+}
 };
 
 subtype DBICType, as ResultSet | ResultSource | Row | Schema;
