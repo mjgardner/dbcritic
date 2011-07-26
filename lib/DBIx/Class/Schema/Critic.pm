@@ -129,21 +129,27 @@ Returns an array of loaded policy names that will be applied during
 L</critique>.  By default all modules under the
 C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
 
+=attr class_name
+
+The name of a L<DBIx::Class::Schema|DBIx::Class::Schema> class you wish to
+L</critique>.
+Only settable at construction time.
+
+=attr schema
+
+A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
+Only settable at construction time.
+
 =attr dsn
 
 =attr username
 
 =attr password
 
-Instead of providing a schema object, you can provide a L<DBI|DBI> data source
-name and optional username and password.
+The L<DBI|DBI> data source name and optional username and password used to
+connect to the database.  If no L</class_name> or L</schema> is provided,
 L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
 schema classes dynamically to be critiqued.
-
-=attr schema
-
-A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
-Only settable at construction time.
 
 =method critique
 
