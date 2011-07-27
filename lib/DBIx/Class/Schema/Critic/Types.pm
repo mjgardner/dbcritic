@@ -4,7 +4,8 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.003';    # VERSION
+our $VERSION = '0.004';    # VERSION
+use DBIx::Class::Schema::Loader;
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
@@ -24,8 +25,7 @@ sub _loader_warn {
 
 subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
-    my $loader = Moose::Meta::Class->create_anon_class(
-        superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
+    my $loader = DBIx::Class::Schema::Loader->new();
     $loader->loader_options( naming => 'v4', generate_pod => 0 );
     local $SIG{__WARN__} = \&_loader_warn;
     $loader->connect( @{$_} );
@@ -53,7 +53,7 @@ DBIx::Class::Schema::Critic::Types - Type library for DBIx::Class::Schema::Criti
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 

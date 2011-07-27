@@ -46,4 +46,4 @@ requires:
 resources:
   bugtracker: https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues
   repository: git://github.com/mjgardner/DBIx-Class-Schema-Critic.git
-version: 0.003
+version: 0.004
