@@ -26,9 +26,8 @@ sub _loader_warn {
 subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
     my $loader = DBIx::Class::Schema::Loader->new();
-    $loader->loader_options( naming => 'v4', generate_pod => 0 );
     local $SIG{__WARN__} = \&_loader_warn;
-    $loader->connect( @{$_} );
+    $loader->connect( @{$_}, { naming => 'v4', generate_pod => 0 } );
 };
 
 subtype DBICType, as ResultSet | ResultSource | Row | Schema;
