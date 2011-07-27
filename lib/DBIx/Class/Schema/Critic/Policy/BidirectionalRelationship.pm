@@ -26,7 +26,8 @@ sub violates {
 
     my @details;
     for my $relationship ( $source->relationships ) {
-        if ( !defined $source->reverse_relationship_info($relationship) ) {
+        my $rev_rel_ref = $source->reverse_relationship_info($relationship);
+        if ( !keys %{$rev_rel_ref} ) {
             my $related = $source->related_source($relationship);
             push @details, "$relationship to $related not reciprocated";
         }
