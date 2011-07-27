@@ -5,7 +5,6 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.004';    # VERSION
-use DBIx::Class::Schema::Loader;
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
@@ -17,11 +16,13 @@ role_type Policy, { role => 'DBIx::Class::Schema::Critic::Policy' };
 
 subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
+    my $loader = Moose::Meta::Class->create_anon_class(
+        superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
+    $loader->loader_options( naming => 'v4', generate_pod => 0 );
     local $SIG{__WARN__} = sub {
         if ( $_[0] !~ / has no primary key at /ms ) { print {*STDERR} $_[0] }
     };
-    DBIx::Class::Schema::Loader->connect( @{$_},
-        { naming => 'v4', generate_pod => 0 } );
+    $loader->connect( @{$_} );
 };
 
 subtype DBICType, as ResultSet | ResultSource | Row | Schema;
