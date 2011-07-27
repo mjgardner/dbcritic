@@ -24,10 +24,16 @@ has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
 sub violates {
     my $source = shift->element;
 
-    my %reverse_relationship
-        = map { $_ => $source->reverse_relationship_info($_) }
-        $source->relationships;
-    return !values %reverse_relationship;
+    my @details;
+    for my $relationship ( $source->relationships ) {
+        if ( !defined $source->reverse_relationship_info($_) ) {
+            my $related = $source->related_source($relationship);
+            push @details, "$relationship to $related not reciprocated";
+        }
+    }
+
+    return join "\n", @details if @details;
+    return;
 }
 
 with 'DBIx::Class::Schema::Critic::Policy';
