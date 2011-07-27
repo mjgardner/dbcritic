@@ -19,7 +19,10 @@ around violates => sub {
     my ( $orig, $self ) = splice @_, 0, 2;
     $self->_set_element(shift);
     $self->_set_schema(shift);
-    return $self->violation if $self->$orig(@_);
+
+    my $details = $self->$orig(@_);
+    return $self->violation($details) if $details;
+
     return;
 };
 
