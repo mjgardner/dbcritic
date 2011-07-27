@@ -18,8 +18,9 @@ role_type Policy, { role => 'DBIx::Class::Schema::Critic::Policy' };
 subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
     my $loader = DBIx::Class::Schema::Loader->new();
-    local $SIG{__WARN__}
-        = sub { print {*STDERR} $_[0] if $_[0] !~ / has no primary key at /ms };
+    local $SIG{__WARN__} = sub {
+        if ( $_[0] !~ / has no primary key at /ms ) { print {*STDERR} $_[0] }
+    };
     $loader->connect( @{$_}, { naming => 'v4', generate_pod => 0 } );
 };
 
