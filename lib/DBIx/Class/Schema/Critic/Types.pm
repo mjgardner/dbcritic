@@ -14,20 +14,14 @@ use namespace::autoclean;
 
 role_type Policy, { role => 'DBIx::Class::Schema::Critic::Policy' };
 
-sub _loader_warn {
-    my $warning = shift;
-    if ( $warning !~ / has no primary key at /ms ) {
-        print {*STDERR} "$warning";
-    }
-    return;
-}
-
 subtype LoadingSchema, as Schema;
 coerce LoadingSchema, from ArrayRef, via {
     my $loader = Moose::Meta::Class->create_anon_class(
         superclasses => ['DBIx::Class::Schema::Loader'] )->new_object();
     $loader->loader_options( naming => 'v4', generate_pod => 0 );
-    local $SIG{__WARN__} = \&_loader_warn;
+    local $SIG{__WARN__} = sub {
+        if ( $_[0] !~ / has no primary key at /ms ) { print {*STDERR} $_[0] }
+    };
     $loader->connect( @{$_} );
 };
 
