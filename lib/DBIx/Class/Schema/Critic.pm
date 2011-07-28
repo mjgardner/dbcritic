@@ -122,6 +122,10 @@ and API inspiration from L<Perl::Critic|Perl::Critic>.
 
 B<dbic_critic> is the command line interface.
 
+This is a work in progress - please see the L</SUPPORT> section below for
+information on how to contribute.  It especially needs ideas (and
+implementations!) of new policies!
+
 =method policies
 
 Returns an array of loaded policy names that will be applied during

@@ -39,7 +39,7 @@ sub violates {
 
     my %column = %{ $source->columns_info };
     return join "\n", map {"$_ is a nullable text column."} grep {
-        uc( $column{$_}{data_type} ) ~~ @text_types
+        uc( $column{$_}{data_type} // q{} ) ~~ @text_types
             and $column{$_}{is_nullable}
     } keys %column;
 }
