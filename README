@@ -17,6 +17,10 @@ DESCRIPTION
 
     dbic_critic is the command line interface.
 
+    This is a work in progress - please see the "SUPPORT" section below for
+    information on how to contribute. It especially needs ideas (and
+    implementations!) of new policies!
+
 ATTRIBUTES
   class_name
     The name of a DBIx::Class::Schema class you wish to "critique". Only
