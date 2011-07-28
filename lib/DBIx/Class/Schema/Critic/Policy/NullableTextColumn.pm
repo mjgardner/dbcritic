@@ -25,13 +25,17 @@ has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
 sub violates {
     my $source = shift->element;
 
-    my @text_types
-        = map { $_->{TYPE_NAME} }   ## no critic (ProhibitAccessOfPrivateData)
-        map { $source->storage->dbh->type_info($_) } (
-        SQL_CHAR,        SQL_CLOB,
-        SQL_VARCHAR,     SQL_WVARCHAR,
-        SQL_LONGVARCHAR, SQL_WLONGVARCHAR,
-        );
+    {
+        ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
+        my @text_types
+            = map { $_->{TYPE_NAME} } ## no critic (ProhibitAccessOfPrivateData)
+            map { $source->storage->dbh->type_info($_) } (
+            SQL_CHAR,        SQL_CLOB,
+            SQL_VARCHAR,     SQL_WVARCHAR,
+            SQL_LONGVARCHAR, SQL_WLONGVARCHAR,
+            );
+    }
+
     my %column = %{ $source->columns_info };
     return join "\n", map {"$_ is a nullable text column."} grep {
                 $column{$_}{data_type} ~~ @text_types
