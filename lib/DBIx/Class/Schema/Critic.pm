@@ -48,6 +48,7 @@ sub _build_schema {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my @connect_info = map { $self->$_ } qw(dsn username password);
 
     my $class_name = $self->class_name;
+    eval "require $class_name";
     return $class_name->connect(@connect_info) if $class_name;
 
     return LoadingSchema->coerce( \@connect_info );
@@ -90,8 +91,9 @@ sub _policy_loop {
         $self->policies )
     {
         for my $element ( @{$elements_ref} ) {
-            if ( $policy->violates( $element, $self->schema ) ) {
-                push @violations, $policy->violation;
+            my $violation = $policy->violates( $element, $self->schema );
+            if ($violation) {
+                push @violations, $violation;
             }
         }
     }

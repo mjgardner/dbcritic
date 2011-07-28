@@ -24,18 +24,13 @@ has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
 sub violates {
     my $source = shift->element;
 
-    my @details;
-    for my $relationship ( $source->relationships ) {
-        my $rev_rel_ref = $source->reverse_relationship_info($relationship);
-        if ( !keys %{$rev_rel_ref} ) {
-            my $related = $source->related_source($relationship);
-            push @details, "$relationship to $related not reciprocated";
-        }
-    }
-
-    return join "\n", @details if @details;
-    return;
+    return join "\n",
+        map { _message( $source->name, $source->related_source($_)->name ) }
+        grep { !keys %{ $source->reverse_relationship_info($_) } }
+        $source->relationships;
 }
+
+sub _message {"$_[0] to $_[1] not reciprocated"}
 
 with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
