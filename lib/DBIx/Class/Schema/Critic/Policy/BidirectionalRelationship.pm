@@ -30,7 +30,7 @@ sub violates {
         $source->relationships;
 }
 
-sub _message {"$_[0] to $_[1] not reciprocated"}
+sub _message { return "$_[0] to $_[1] not reciprocated" }
 
 with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
