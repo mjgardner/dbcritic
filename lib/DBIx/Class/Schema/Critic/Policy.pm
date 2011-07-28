@@ -33,7 +33,7 @@ sub violation {
     my $self = shift;
     return DBIx::Class::Schema::Critic::Violation->new(
         details => shift,
-        map { $_ => $self->$_ } qw(description explanation element)
+        map { $_ => $self->$_ } qw(description explanation element),
     );
 }
 

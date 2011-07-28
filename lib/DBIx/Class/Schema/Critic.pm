@@ -47,9 +47,10 @@ sub _build_schema {    ## no critic (ProhibitUnusedPrivateSubroutines)
 
     my @connect_info = map { $self->$_ } qw(dsn username password);
 
-    my $class_name = $self->class_name;
-    eval "require $class_name";
-    return $class_name->connect(@connect_info) if $class_name;
+    if ( my $class_name = $self->class_name ) {
+        return $class_name->connect(@connect_info)
+            if eval "require $class_name";
+    }
 
     return LoadingSchema->coerce( \@connect_info );
 }

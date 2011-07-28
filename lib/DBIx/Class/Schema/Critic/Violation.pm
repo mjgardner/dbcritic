@@ -10,8 +10,8 @@ use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;
 
-const my @text_fields => qw(description explanation details);
-has \@text_fields => ( is => 'ro', isa => 'Str', default => q{} );
+const my @TEXT_FIELDS => qw(description explanation details);
+has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
 
 has element => ( is => 'ro', isa => DBICType );
 
@@ -27,7 +27,7 @@ sub stringify {
         Schema    => 'schema',
     );
     return "[$type $TYPE_MAP{$type}] " . join "\n",
-        map { $self->$_ } @text_fields;
+        map { $self->$_ } @TEXT_FIELDS;
 }
 
 __PACKAGE__->meta->make_immutable();
