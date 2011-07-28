@@ -9,7 +9,7 @@ use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
-use namespace::autoclean -also => qr(^_);
+use namespace::autoclean;
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
