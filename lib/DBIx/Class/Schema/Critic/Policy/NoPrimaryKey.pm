@@ -51,5 +51,6 @@ I<ResultSource>s.
 
 =method violates
 
-Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
-C<primary_columns> method returns nothing.
+Returns details if the
+L<"current element"|DBIx::Class::Schema::Critic::Policy>'s C<primary_columns>
+method returns nothing.
