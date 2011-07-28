@@ -1,6 +1,6 @@
 severity = brutal
 verbose = 8
-exclude = Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion Modules::RequireExplicitPackage Modules::RequirePerlVersion Tics::ProhibitLongLines
+exclude = Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion Modules::RequireExplicitPackage Modules::RequirePerlVersion Tics::ProhibitLongLines BuiltInFunctions::ProhibitStringyEval
 
 [CodeLayout::RequireTidyCode]
 perltidyrc = xt/author/perltidy.rc
