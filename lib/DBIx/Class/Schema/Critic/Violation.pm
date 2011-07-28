@@ -5,11 +5,13 @@ use utf8;
 use Modern::Perl;
 
 # VERSION
+use Const::Fast;
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use overload q{""} => \&stringify;
 
-has [qw(description explanation)] => ( is => 'ro', isa => 'Str' );
+const my @TEXT_FIELDS => qw(description explanation details);
+has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
 
 has element => ( is => 'ro', isa => DBICType );
 
@@ -20,12 +22,12 @@ sub stringify {
 
     $type =~ s/\A .* :://xms;
     my %TYPE_MAP = (
-        Table     => sub { $element->from },
-        ResultSet => sub { $element->result_class },
-        Schema    => sub {'schema'},
+        Table     => $element->from,
+        ResultSet => $element->result_class,
+        Schema    => 'schema',
     );
-    return "[$type " . $TYPE_MAP{$type}->() . '] ' . join "\n",
-        map { $self->$_ } qw(description explanation);
+    return "[$type $TYPE_MAP{$type}] " . join "\n",
+        map { $self->$_ } @TEXT_FIELDS;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -40,6 +42,7 @@ __PACKAGE__->meta->make_immutable();
     my $violation = DBIx::Class::Schema::Critic::Violation->new(
         description => 'Violated policy',
         explanation => 'Consult the rulebook',
+        description => 'The frob table is improperly swizzled.',
     );
     print "$violation\n";
 
@@ -52,11 +55,18 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 =attr description
 
-A short string describing what's wrong.  Only settable at construction.
+A short string briefly describing what's wrong.
+Only settable at construction.
 
 =attr explanation
 
-A string giving further details.  Only settable at construction.
+A string giving a longer general description of the problem.
+Only settable at construction.
+
+=attr details
+
+A string describing the issue as it specifically applies to the L</element>
+being critiqued.
 
 =attr element
 

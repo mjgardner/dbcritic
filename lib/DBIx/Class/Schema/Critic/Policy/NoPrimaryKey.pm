@@ -21,7 +21,11 @@ while ( my ( $name, $default ) = each %ATTR ) {
 
 has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
 
-sub violates { return !scalar shift->element->primary_columns }
+sub violates {
+    my $source = shift->element;
+    return $source->name . ' has no primary key' if !$source->primary_columns;
+    return;
+}
 
 with 'DBIx::Class::Schema::Critic::Policy';
 __PACKAGE__->meta->make_immutable();
