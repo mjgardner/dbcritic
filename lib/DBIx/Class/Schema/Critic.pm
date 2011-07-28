@@ -91,12 +91,8 @@ sub _policy_loop {
     for my $policy ( grep { _policy_applies_to( $_, $policy_type ) }
         $self->policies )
     {
-        for my $element ( @{$elements_ref} ) {
-            my $violation = $policy->violates( $element, $self->schema );
-            if ($violation) {
-                push @violations, $violation;
-            }
-        }
+        push @violations, grep {$_}
+            map { $policy->violates( $_, $self->schema ) } @{$elements_ref};
     }
     return @violations;
 }
