@@ -7,7 +7,7 @@ __PACKAGE__->add_columns(
         is_auto_increment => 1,
         is_nullable       => 0,
     },
-    text => { data_type => 'varchar2', is_nullable => 1 },
+    text => { data_type => 'text', is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key('id');
 1;
