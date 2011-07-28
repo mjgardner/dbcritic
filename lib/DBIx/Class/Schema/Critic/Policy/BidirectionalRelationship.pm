@@ -7,7 +7,7 @@ use Modern::Perl;
 our $VERSION = '0.004';    # VERSION
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
-use namespace::autoclean;
+use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
     description => 'Missing bidirectional relationship',
