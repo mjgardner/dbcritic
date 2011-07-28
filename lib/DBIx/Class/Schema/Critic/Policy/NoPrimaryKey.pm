@@ -7,7 +7,7 @@ use Modern::Perl;
 # VERSION
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
-use namespace::autoclean;
+use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
     description => 'No primary key',

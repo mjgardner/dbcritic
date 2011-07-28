@@ -5,11 +5,11 @@ use utf8;
 use Modern::Perl;
 
 # VERSION
+use List::MoreUtils 'any';
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
     instantiate => 'new';
-use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);

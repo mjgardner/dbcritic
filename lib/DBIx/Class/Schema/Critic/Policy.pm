@@ -9,7 +9,7 @@ use Moose::Role;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 use DBIx::Class::Schema::Critic::Violation;
-use namespace::autoclean;
+use namespace::autoclean -also => qr{\A _}xms;
 
 has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 

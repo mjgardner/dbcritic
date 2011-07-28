@@ -8,7 +8,7 @@ use Modern::Perl;
 use MooseX::Types -declare => [qw(DBICType Policy LoadingSchema)];
 use MooseX::Types::Moose 'ArrayRef';
 use MooseX::Types::DBIx::Class qw(ResultSet ResultSource Row Schema);
-use namespace::autoclean;
+use namespace::autoclean -also => qr{\A _}xms;
 ## no critic (ProhibitCallsToUnexportedSubs,ProhibitCallsToUndeclaredSubs)
 ## no critic (ProhibitBitwiseOperators)
 
