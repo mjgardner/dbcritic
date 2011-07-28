@@ -12,6 +12,7 @@ lib/DBIx/Class/Schema/Critic.pm
 lib/DBIx/Class/Schema/Critic/Policy.pm
 lib/DBIx/Class/Schema/Critic/Policy/BidirectionalRelationship.pm
 lib/DBIx/Class/Schema/Critic/Policy/NoPrimaryKey.pm
+lib/DBIx/Class/Schema/Critic/Policy/NullableTextColumn.pm
 lib/DBIx/Class/Schema/Critic/Types.pm
 lib/DBIx/Class/Schema/Critic/Violation.pm
 perlcritic.rc
