@@ -5,6 +5,7 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.004';    # VERSION
+use DBI ':sql_types';
 use Moose;
 use MooseX::Types::DBIx::Class 'ResultSource';
 use namespace::autoclean -also => qr{\A _}xms;
@@ -26,11 +27,11 @@ sub violates {
 
     my @text_types
         = map { $_->{TYPE_NAME} }   ## no critic (ProhibitAccessOfPrivateData)
-        map { $source->storage->dbh->type_info($_) } qw(
-        SQL_CHAR        SQL_CLOB
-        SQL_VARCHAR     SQL_LONGVARCHAR
-        SQL_WVARCHAR    SQL_WLONGVARCHAR
-    );
+        map { $source->storage->dbh->type_info($_) } (
+        SQL_CHAR,        SQL_CLOB,
+        SQL_VARCHAR,     SQL_WVARCHAR,
+        SQL_LONGVARCHAR, SQL_WLONGVARCHAR,
+        );
     my %column = %{ $source->columns_info };
     return join "\n", map {"$_ is a nullable text column."} grep {
                 $column{$_}{data_type} ~~ @text_types

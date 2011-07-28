@@ -38,6 +38,7 @@ my %WriteMakefileArgs = (
   'NAME' => 'DBIx::Class::Schema::Critic',
   'PREREQ_PM' => {
     'Const::Fast' => '0',
+    'DBI' => '0',
     'DBIx::Class::Schema::Loader' => '0',
     'List::MoreUtils' => '0',
     'Modern::Perl' => '0',
