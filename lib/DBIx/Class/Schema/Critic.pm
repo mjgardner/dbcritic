@@ -5,15 +5,15 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.004';    # VERSION
-use Module::Pluggable
-    search_path => [ __PACKAGE__ . '::Policy' ],
-    sub_name    => 'policies',
-    instantiate => 'new';
 use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
-use namespace::autoclean;
+use namespace::autoclean -also => qr(^_);
+use Module::Pluggable
+    search_path => [ __PACKAGE__ . '::Policy' ],
+    sub_name    => 'policies',
+    instantiate => 'new';
 with qw(MooseX::Getopt MooseX::SimpleConfig);
 
 my %string_options = ( ro, isa => 'Str', traits => ['Getopt'] );
