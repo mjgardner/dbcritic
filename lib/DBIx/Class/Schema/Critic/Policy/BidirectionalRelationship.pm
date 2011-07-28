@@ -78,10 +78,11 @@ I<ResultSource>s.
 
 =head2 violates
 
-Returns true if the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
+If the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
 L<relationships|DBIx::Class::ResultSource/relationships> do not all have
 corresponding
-L<"reverse relationships"|DBIx::Class::ResultSource/reverse_relationship_info>.
+L<"reverse relationships"|DBIx::Class::ResultSource/reverse_relationship_info>,
+returns a string describing details of the issue.
 
 =head1 SUPPORT
 

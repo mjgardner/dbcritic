@@ -98,9 +98,10 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 =head2 violation
 
-Read-only accessor for a
+Given a string description of a violation that has been encountered, creates a
+new
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object based on the state of the current policy.
+object from the current policy.
 
 =head1 REQUIRED METHODS
 
