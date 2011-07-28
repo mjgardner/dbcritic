@@ -13,6 +13,7 @@ use List::MoreUtils 'any';
 use Moose;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
+use namespace::autoclean;
 with qw(MooseX::Getopt MooseX::SimpleConfig);
 
 my %string_options = ( ro, isa => 'Str', traits => ['Getopt'] );
