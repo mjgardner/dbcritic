@@ -9,25 +9,26 @@ use Const::Fast;
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
 
-const my @TEXT_FIELDS => qw(description explanation details);
-has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
+BEGIN {
+    const my @TEXT_FIELDS => qw(description explanation details);
+    has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default    => q{} );
+    has element       => ( is => 'ro', isa => DBICType );
+    has stringify     => ( is => 'ro', isa => 'Str', lazy_build => 1 );
 
-has element => ( is => 'ro', isa => DBICType );
-has stringify => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+    sub _build_stringify {    ## no critic (ProhibitUnusedPrivateSubroutines)
+        my $self    = shift;
+        my $element = $self->element;
+        my $type    = ref $element;
 
-sub _build_stringify {     ## no critic (ProhibitUnusedPrivateSubroutines)
-    my $self    = shift;
-    my $element = $self->element;
-    my $type    = ref $element;
-
-    $type =~ s/\A .* :://xms;
-    const my %TYPE_MAP => (
-        Table     => $element->from,
-        ResultSet => $element->result_class,
-        Schema    => 'schema',
-    );
-    return "[$type $TYPE_MAP{$type}] " . join "\n",
-        map { $self->$_ } @TEXT_FIELDS;
+        $type =~ s/\A .* :://xms;
+        const my %TYPE_MAP => (
+            Table     => $element->from,
+            ResultSet => $element->result_class,
+            Schema    => 'schema',
+        );
+        return "[$type $TYPE_MAP{$type}] " . join "\n",
+            map { $self->$_ } @TEXT_FIELDS;
+    }
 }
 use overload q{""} => \&stringify;
 
