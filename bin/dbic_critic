@@ -3,7 +3,7 @@
 package main;
 use Modern::Perl;
 use utf8;
-our $VERSION = '0.004';    # VERSION
+our $VERSION = '0.005';    # VERSION
 use DBIx::Class::Schema::Critic;
 my $critic = DBIx::Class::Schema::Critic->new_with_options();
 $critic->critique();
@@ -26,7 +26,7 @@ dbic_critic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 USAGE
 

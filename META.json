@@ -65,12 +65,13 @@
       "bugtracker" : {
          "web" : "https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues"
       },
+      "homepage" : "http://metacpan.org/release/DBIx-Class-Schema-Critic/",
       "repository" : {
          "type" : "git",
          "url" : "git://github.com/mjgardner/DBIx-Class-Schema-Critic.git",
          "web" : "https://github.com/mjgardner/DBIx-Class-Schema-Critic"
       }
    },
-   "version" : "0.004"
+   "version" : "0.005"
 }
 

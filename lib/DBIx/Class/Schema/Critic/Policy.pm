@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.004';    # VERSION
+our $VERSION = '0.005';    # VERSION
 use Moose::Role;
 use MooseX::Has::Sugar;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
@@ -58,7 +58,7 @@ DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

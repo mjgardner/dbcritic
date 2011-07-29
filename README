@@ -3,7 +3,7 @@ NAME
     practices
 
 VERSION
-    version 0.004
+    version 0.005
 
 SYNOPSIS
         use DBIx::Class::Schema::Critic;
@@ -33,9 +33,9 @@ ATTRIBUTES
   dsn
   username
   password
-    The DBI data source name and optional username and password used to
-    connect to the database. If no "class_name" or "schema" is provided,
-    DBIx::Class::Schema::Loader will then construct schema classes
+    The DBI data source name (required) and optional username and password
+    used to connect to the database. If no "class_name" or "schema" is
+    provided, DBIx::Class::Schema::Loader will then construct schema classes
     dynamically to be critiqued.
 
 METHODS
