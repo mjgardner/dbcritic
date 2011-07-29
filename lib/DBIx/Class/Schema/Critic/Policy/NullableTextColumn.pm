@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.010';    # VERSION
+our $VERSION = '0.011';    # VERSION
 use DBI ':sql_types';
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
@@ -63,7 +63,7 @@ DBIx::Class::Schema::Critic::Policy::NullableTextColumn - Check for ResultSource
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
@@ -96,9 +96,47 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 =head2 violates
 
 Returns details of each column from the
-L<"current element"|DBIx::Class::Schema::Critic::Policy> that maps to the
-following standard SQL types and
-L<"is nullable"|DBIx::Class::ResultSource/is_nullable>.
+L<"current element"|DBIx::Class::Schema::Critic::Policy> that maps to
+following data types and
+L<"is nullable"|DBIx::Class::ResultSource/is_nullable>:
+
+=over
+
+=item C<TEXT>
+
+=item C<NTEXT>
+
+=item C<CLOB>
+
+=item C<NCLOB>
+
+=item C<CHARACTER>
+
+=item C<CHAR>
+
+=item C<NCHAR>
+
+=item C<VARCHAR>
+
+=item C<VARCHAR2>
+
+=item C<NVARCHAR2>
+
+=item C<CHARACTER VARYING>
+
+=item C<SQL_CHAR>
+
+=item C<SQL_CLOB>
+
+=item C<SQL_VARCHAR>
+
+=item C<SQL_WVARCHAR>
+
+=item C<SQL_LONGVARCHAR>
+
+=item C<SQL_WLONGVARCHAR>
+
+=back
 
 =head1 SUPPORT
 

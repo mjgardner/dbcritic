@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.010';    # VERSION
+our $VERSION = '0.011';    # VERSION
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
@@ -51,7 +51,7 @@ DBIx::Class::Schema::Critic::Policy::BidirectionalRelationship - Check for missi
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 

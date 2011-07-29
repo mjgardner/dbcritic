@@ -45,4 +45,4 @@ resources:
   bugtracker: https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues
   homepage: http://metacpan.org/release/DBIx-Class-Schema-Critic/
   repository: git://github.com/mjgardner/DBIx-Class-Schema-Critic.git
-version: 0.010
+version: 0.011
