@@ -75,6 +75,44 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 =method violates
 
 Returns details of each column from the
-L<"current element"|DBIx::Class::Schema::Critic::Policy> that maps to the
-following standard SQL types and
-L<"is nullable"|DBIx::Class::ResultSource/is_nullable>.
+L<"current element"|DBIx::Class::Schema::Critic::Policy> that maps to
+following data types and
+L<"is nullable"|DBIx::Class::ResultSource/is_nullable>:
+
+=over
+
+=item C<TEXT>
+
+=item C<NTEXT>
+
+=item C<CLOB>
+
+=item C<NCLOB>
+
+=item C<CHARACTER>
+
+=item C<CHAR>
+
+=item C<NCHAR>
+
+=item C<VARCHAR>
+
+=item C<VARCHAR2>
+
+=item C<NVARCHAR2>
+
+=item C<CHARACTER VARYING>
+
+=item C<SQL_CHAR>
+
+=item C<SQL_CLOB>
+
+=item C<SQL_VARCHAR>
+
+=item C<SQL_WVARCHAR>
+
+=item C<SQL_LONGVARCHAR>
+
+=item C<SQL_WLONGVARCHAR>
+
+=back
