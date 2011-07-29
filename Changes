@@ -1,4 +1,6 @@
 Revision history for DBIx-Class-Schema-Critic
 
 {{$NEXT}}
+
+0.004     2011-07-28 18:29:40 America/New_York
     initial release

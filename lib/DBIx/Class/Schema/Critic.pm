@@ -16,11 +16,18 @@ use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
 with qw(MooseX::Getopt MooseX::SimpleConfig);
 
 my %string_options = ( ro, isa => 'Str', traits => ['Getopt'] );
-has dsn => (
+has dsn => ( required, lazy_build,
     %string_options,
     cmd_aliases   => 'd',
     documentation => 'Data source name in Perl DBI format',
 );
+
+sub _build_dsn {    ## no critic (ProhibitUnusedPrivateSubroutines)
+    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
+    my $dbh = shift->schema->storage->dbh;
+    return join q{:} => 'dbi', $dbh->{Driver}{Name}, $dbh->{Name};
+}
+
 has username => (
     %string_options,
     cmd_aliases   => [qw(u user)],
@@ -149,10 +156,10 @@ Only settable at construction time.
 
 =attr password
 
-The L<DBI|DBI> data source name and optional username and password used to
-connect to the database.  If no L</class_name> or L</schema> is provided,
-L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
-schema classes dynamically to be critiqued.
+The L<DBI|DBI> data source name (required) and optional username and password
+used to connect to the database.  If no L</class_name> or L</schema> is
+provided, L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then
+construct schema classes dynamically to be critiqued.
 
 =method critique
 

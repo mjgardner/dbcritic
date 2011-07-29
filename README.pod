@@ -11,7 +11,7 @@ DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 
@@ -50,10 +50,10 @@ Only settable at construction time.
 
 =head2 password
 
-The L<DBI|DBI> data source name and optional username and password used to
-connect to the database.  If no L</class_name> or L</schema> is provided,
-L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then construct
-schema classes dynamically to be critiqued.
+The L<DBI|DBI> data source name (required) and optional username and password
+used to connect to the database.  If no L</class_name> or L</schema> is
+provided, L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then
+construct schema classes dynamically to be critiqued.
 
 =head1 METHODS
 
