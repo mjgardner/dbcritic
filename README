@@ -7,7 +7,7 @@ VERSION
 
 SYNOPSIS
         use DBIx::Class::Schema::Critic;
-        my $critic = DBIx::Class::Schema::Critic->new();
+        my $critic = DBIx::Class::Schema::Critic->new(schema => $schema);
         $critic->critique();
 
 DESCRIPTION

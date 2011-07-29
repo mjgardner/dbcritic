@@ -1,6 +1,6 @@
 Revision history for DBIx-Class-Schema-Critic
 
-0.011     2011-07-29 17:35:37 America/New_York
+0.011     2011-07-29 17:39:28 America/New_York
 
 0.010     2011-07-29 16:44:18 America/New_York
     converted from Moose to Moo object framework

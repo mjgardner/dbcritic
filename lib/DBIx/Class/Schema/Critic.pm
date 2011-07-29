@@ -130,7 +130,7 @@ version 0.011
 =head1 SYNOPSIS
 
     use DBIx::Class::Schema::Critic;
-    my $critic = DBIx::Class::Schema::Critic->new();
+    my $critic = DBIx::Class::Schema::Critic->new(schema => $schema);
     $critic->critique();
 
 =head1 DESCRIPTION
