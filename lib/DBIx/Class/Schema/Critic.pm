@@ -129,11 +129,10 @@ version 0.011
 
 =head1 SYNOPSIS
 
-    use MySchema;
     use DBIx::Class::Schema::Critic;
 
-    my $schema = MySchema->connect('dbi:Oracle:HR', 'scott', 'tiger');
-    my $critic = DBIx::Class::Schema::Critic->new(schema => $schema);
+    my $critic = DBIx::Class::Schema::Critic->new(
+        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
 =head1 DESCRIPTION
