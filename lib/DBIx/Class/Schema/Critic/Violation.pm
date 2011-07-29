@@ -14,8 +14,9 @@ const my @TEXT_FIELDS => qw(description explanation details);
 has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
 
 has element => ( is => 'ro', isa => DBICType );
+has stringify => ( is => 'ro', isa => 'Str', lazy_build => 1 );
 
-sub stringify {
+sub _build_stringify {     ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self    = shift;
     my $element = $self->element;
     my $type    = ref $element;
