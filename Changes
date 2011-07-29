@@ -1,7 +1,7 @@
 Revision history for DBIx-Class-Schema-Critic
 
 {{$NEXT}}
-
+    converted from Moose to Moo object framework
 0.005     2011-07-29 13:04:52 America/New_York
     dsn is now a required attribute, defaults to schema object's storage.
     cache stringification of Violation objects
