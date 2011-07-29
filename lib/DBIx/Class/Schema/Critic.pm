@@ -16,11 +16,17 @@ use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
 with qw(MooseX::Getopt MooseX::SimpleConfig);
 
 my %string_options = ( ro, isa => 'Str', traits => ['Getopt'] );
-has dsn => ( required,
+has dsn => ( required, lazy_build,
     %string_options,
     cmd_aliases   => 'd',
     documentation => 'Data source name in Perl DBI format',
 );
+
+sub _build_dsn {    ## no critic (ProhibitUnusedPrivateSubroutines)
+    my $dbh = shift->schema->storage->dbh;
+    return join( ':', 'dbi', $dbh->{Driver}{Name}, $dbh->{Name} );
+}
+
 has username => (
     %string_options,
     cmd_aliases   => [qw(u user)],
