@@ -21,7 +21,7 @@ sub stringify {
     my $type    = ref $element;
 
     $type =~ s/\A .* :://xms;
-    my %TYPE_MAP = (
+    const my %TYPE_MAP => (
         Table     => $element->from,
         ResultSet => $element->result_class,
         Schema    => 'schema',
