@@ -46,7 +46,6 @@ my %WriteMakefileArgs = (
     'Module::Pluggable' => '0',
     'Moo' => '0',
     'Moo::Role' => '0',
-    'MooseX::Types::DBIx::Class' => '0',
     'Scalar::Util' => '0',
     'namespace::autoclean' => '0',
     'overload' => '0',
