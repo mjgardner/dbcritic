@@ -8,29 +8,29 @@ our $VERSION = '0.005';    # VERSION
 use Const::Fast;
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
-
-BEGIN {
-    const my @TEXT_FIELDS => qw(description explanation details);
-    has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default    => q{} );
-    has element       => ( is => 'ro', isa => DBICType );
-    has stringify     => ( is => 'ro', isa => 'Str', lazy_build => 1 );
-
-    sub _build_stringify {    ## no critic (ProhibitUnusedPrivateSubroutines)
-        my $self    = shift;
-        my $element = $self->element;
-        my $type    = ref $element;
-
-        $type =~ s/\A .* :://xms;
-        const my %TYPE_MAP => (
-            Table     => $element->from,
-            ResultSet => $element->result_class,
-            Schema    => 'schema',
-        );
-        return "[$type $TYPE_MAP{$type}] " . join "\n",
-            map { $self->$_ } @TEXT_FIELDS;
-    }
-}
 use overload q{""} => \&stringify;
+
+const my @TEXT_FIELDS => qw(description explanation details);
+has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
+
+has element => ( is => 'ro', isa => DBICType );
+has as_string => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+
+sub _build_as_string {     ## no critic (ProhibitUnusedPrivateSubroutines)
+    my $self    = shift;
+    my $element = $self->element;
+    my $type    = ref $element;
+
+    $type =~ s/\A .* :://xms;
+    const my %TYPE_MAP => (
+        Table     => $element->from,
+        ResultSet => $element->result_class,
+        Schema    => 'schema',
+    );
+    return "[$type $TYPE_MAP{$type}] " . join "\n",
+        map { $self->$_ } @TEXT_FIELDS;
+}
+sub stringify { shift->as_string }
 
 __PACKAGE__->meta->make_immutable();
 1;
