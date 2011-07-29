@@ -8,7 +8,7 @@ use Modern::Perl;
 use Const::Fast;
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
-use overload q{""} => \&stringify;
+use overload q{""} => sub { shift->as_string };
 
 const my @TEXT_FIELDS => qw(description explanation details);
 has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
@@ -30,7 +30,6 @@ sub _build_as_string {    ## no critic (ProhibitUnusedPrivateSubroutines)
     return "[$type $TYPE_MAP{$type}] " . join "\n",
         map { $self->$_ } @TEXT_FIELDS;
 }
-sub stringify { return shift->as_string }
 
 __PACKAGE__->meta->make_immutable();
 1;
@@ -78,10 +77,6 @@ as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 Only settable at construction.
 
 =attr as_string
-
-The same result as L</stringify> as a read-only attribute.
-
-=method stringify
 
 Returns a string representation of the object.  The same method is called if
 the object appears in double quotes.
