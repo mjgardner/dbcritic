@@ -9,11 +9,11 @@ README
 bin/dbic_critic
 dist.ini
 lib/DBIx/Class/Schema/Critic.pm
+lib/DBIx/Class/Schema/Critic/Loader.pm
 lib/DBIx/Class/Schema/Critic/Policy.pm
 lib/DBIx/Class/Schema/Critic/Policy/BidirectionalRelationship.pm
 lib/DBIx/Class/Schema/Critic/Policy/NoPrimaryKey.pm
 lib/DBIx/Class/Schema/Critic/Policy/NullableTextColumn.pm
-lib/DBIx/Class/Schema/Critic/Types.pm
 lib/DBIx/Class/Schema/Critic/Violation.pm
 perlcritic.rc
 t/00-compile.t
@@ -49,5 +49,6 @@ t/release-unused-vars.t
 t/schema.t
 t/schema/lib/perl5/MySchema.pm
 t/schema/lib/perl5/MySchema/Result/Item.pm
+t/script.t
 weaver.ini
 xt/author/perltidy.rc

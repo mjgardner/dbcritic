@@ -3,7 +3,7 @@ NAME
     practices
 
 VERSION
-    version 0.005
+    version 0.006
 
 SYNOPSIS
         use DBIx::Class::Schema::Critic;
@@ -50,8 +50,9 @@ METHODS
     of "violations" to "STDOUT".
 
   violations
-    Returns a list of all DBIx::Class::Schema::Critic::Violations picked up
-    by the various policies.
+    Returns an array reference of all
+    DBIx::Class::Schema::Critic::Violations picked up by the various
+    policies.
 
 SEE ALSO
     Perl::Critic

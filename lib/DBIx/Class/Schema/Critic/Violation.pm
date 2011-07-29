@@ -4,19 +4,20 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.005';    # VERSION
+our $VERSION = '0.006';    # VERSION
 use Const::Fast;
-use Moose;
-use DBIx::Class::Schema::Critic::Types 'DBICType';
+use Moo;
 use overload q{""} => sub { shift->as_string };
 
 const my @TEXT_FIELDS => qw(description explanation details);
-has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
+for (@TEXT_FIELDS) {
+    has $_ => ( is => 'ro', default => sub {q{}} );
+}
 
-has element => ( is => 'ro', isa => DBICType );
-has as_string => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+has element => ( is => 'ro' );
+has as_string => ( is => 'ro', lazy => 1, default => \&_build_as_string );
 
-sub _build_as_string {     ## no critic (ProhibitUnusedPrivateSubroutines)
+sub _build_as_string {
     my $self    = shift;
     my $element = $self->element;
     my $type    = ref $element;
@@ -31,7 +32,6 @@ sub _build_as_string {     ## no critic (ProhibitUnusedPrivateSubroutines)
         map { $self->$_ } @TEXT_FIELDS;
 }
 
-__PACKAGE__->meta->make_immutable();
 1;
 
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
@@ -51,7 +51,7 @@ DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::C
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -91,8 +91,7 @@ being critiqued.
 =head2 element
 
 The schema element that violated a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
-as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 Only settable at construction.
 
 =head2 as_string

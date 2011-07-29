@@ -4,14 +4,10 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.005';    # VERSION
-use Moose::Role;
-use MooseX::Has::Sugar;
-use DBIx::Class::Schema::Critic::Types 'DBICType';
+our $VERSION = '0.006';    # VERSION
+use Moo::Role;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
-
-has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 
 requires qw(description explanation applies_to violates);
 
@@ -26,8 +22,7 @@ around violates => sub {
     return;
 };
 
-has element =>
-    ( ro, init_arg => undef, isa => DBICType, writer => '_set_element' );
+has element => ( is => 'ro', init_arg => undef, writer => '_set_element' );
 
 sub violation {
     my $self = shift;
@@ -37,7 +32,7 @@ sub violation {
     );
 }
 
-has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
+has schema => ( is => 'ro', writer => '_set_schema' );
 
 1;
 
@@ -58,27 +53,23 @@ DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
     package DBIx::Class::Schema::Critic::Policy::MyPolicy;
-    use Moose;
-    use MooseX::Types::DBIx::Class 'ResultSource';
+    use Moo;
 
-    has description => (default => 'Follow my policy');
-    has explanation => (default => 'My way or the highway');
-    has applies_to => (
-        isa     => 'ArrayRef[Moose::Meta::TypeConstraint]',
-        default => sub { [ResultSource] },
-    );
+    has description => ( default => sub{'Follow my policy'} );
+    has explanation => ( default => {'My way or the highway'} );
+    has applies_to  => ( default => sub { ['ResultSource'] } );
     with 'DBIx::Class::Schema::Critic::Policy';
 
     sub violates { $_[0]->element ne '' }
 
 =head1 DESCRIPTION
 
-This is a L<Moose::Role|Moose::Role> consumed by all
+This is a L<role|Moo::Role> consumed by all
 L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy plugins.
 
 =head1 ATTRIBUTES
@@ -86,8 +77,7 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy plugins.
 =head2 element
 
 Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>,
-as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
 
 =head2 schema
 
@@ -115,10 +105,8 @@ Returns a string giving further details.
 
 =head2 applies_to
 
-Returns an array reference of L<TypeConstraint|Moose::Meta::TypeConstraint>s
-s indicating what part(s) of the schema the policy is interested in.  Select
-from the list defined in
-L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
+Returns an array reference of types of L<DBIx::Class|DBIx::Class> objects
+indicating what part(s) of the schema the policy is interested in.
 
 =head2 violates
 

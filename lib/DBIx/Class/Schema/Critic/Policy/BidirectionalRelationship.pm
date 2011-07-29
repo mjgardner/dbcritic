@@ -4,9 +4,8 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.005';    # VERSION
-use Moose;
-use MooseX::Types::DBIx::Class 'ResultSource';
+our $VERSION = '0.006';    # VERSION
+use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
@@ -16,10 +15,10 @@ my %ATTR = (
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', isa => 'Str', default => $default );
+    has $name => ( is => 'ro', default => sub {$default} );
 }
 
-has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
+has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
 
 sub violates {
     my $source = shift->element;
@@ -33,7 +32,6 @@ sub violates {
 sub _message { return "$_[0] to $_[1] not reciprocated" }
 
 with 'DBIx::Class::Schema::Critic::Policy';
-__PACKAGE__->meta->make_immutable();
 1;
 
 # ABSTRACT: Check for missing bidirectional relationships in ResultSources
@@ -53,7 +51,7 @@ DBIx::Class::Schema::Critic::Policy::BidirectionalRelationship - Check for missi
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -69,10 +67,17 @@ have a corresponding reverse relationship in the other class.
 
 =head1 ATTRIBUTES
 
+=head2 description
+
+"Missing bidirectional relationship"
+
+=head2 explanation
+
+"Related tables should have relationships defined in both classes."
+
 =head2 applies_to
 
-This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
-I<ResultSource>s.
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =head1 METHODS
 

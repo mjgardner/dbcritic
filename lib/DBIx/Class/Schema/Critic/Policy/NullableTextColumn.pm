@@ -4,10 +4,9 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.005';    # VERSION
+our $VERSION = '0.006';    # VERSION
 use DBI ':sql_types';
-use Moose;
-use MooseX::Types::DBIx::Class 'ResultSource';
+use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
@@ -17,10 +16,10 @@ my %ATTR = (
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', isa => 'Str', default => $default );
+    has $name => ( is => 'ro', default => sub {$default} );
 }
 
-has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
+has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
 
 sub violates {
     my $source = shift->element;
@@ -45,7 +44,6 @@ sub violates {
 }
 
 with 'DBIx::Class::Schema::Critic::Policy';
-__PACKAGE__->meta->make_immutable();
 1;
 
 # ABSTRACT: Check for ResultSources with nullable text columns
@@ -65,7 +63,7 @@ DBIx::Class::Schema::Critic::Policy::NullableTextColumn - Check for ResultSource
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -81,10 +79,17 @@ columns.
 
 =head1 ATTRIBUTES
 
+=head2 description
+
+"Nullable text column"
+
+=head2 explanation
+
+"Text columns should not be nullable. Default to empty string instead."
+
 =head2 applies_to
 
-This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
-I<ResultSource>s.
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =head1 METHODS
 
