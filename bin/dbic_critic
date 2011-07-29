@@ -47,6 +47,5 @@ scanning a database schema for violations of best practices.
 
 =head1 CONFIGURATION
 
-Any command line options can also be specified in a configuration file and
-loaded with the I<--configfile> option as per
-L<MooseX::SimpleConfig|MooseX::SimpleConfig>.
+All configuration is done via the command line options described by
+C<dbic-critic --help>.
