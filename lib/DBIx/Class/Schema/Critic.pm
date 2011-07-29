@@ -23,8 +23,9 @@ has dsn => ( required, lazy_build,
 );
 
 sub _build_dsn {    ## no critic (ProhibitUnusedPrivateSubroutines)
+    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
     my $dbh = shift->schema->storage->dbh;
-    return join( ':', 'dbi', $dbh->{Driver}{Name}, $dbh->{Name} );
+    return join q{:} => 'dbi', $dbh->{Driver}{Name}, $dbh->{Name};
 }
 
 has username => (
