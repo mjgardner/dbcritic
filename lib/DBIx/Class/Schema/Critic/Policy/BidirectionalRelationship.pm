@@ -48,10 +48,17 @@ This policy returns a violation if one or more of a
 L<DBIx::Class::ResultSource|DBIx::Class::ResultSource>'s relationships does not
 have a corresponding reverse relationship in the other class.
 
+=attr description
+
+"Missing bidirectional relationship"
+
+=attr explanation
+
+"Related tables should have relationships defined in both classes."
+
 =attr applies_to
 
-This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
-I<ResultSource>s.
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =method violates
 

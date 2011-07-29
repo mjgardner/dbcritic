@@ -42,10 +42,17 @@ with 'DBIx::Class::Schema::Critic::Policy';
 This policy returns a violation if a
 L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
 
+=attr description
+
+"No primary key"
+
+=attr explanation
+
+"Tables should have one or more columns defined as a primary key."
+
 =attr applies_to
 
-This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
-I<ResultSource>s.
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =method violates
 

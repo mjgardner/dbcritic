@@ -5,6 +5,7 @@ use utf8;
 use Modern::Perl;
 
 # VERSION
+use Carp;
 use List::MoreUtils 'any';
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
@@ -55,6 +56,8 @@ sub _coerce_schema {
     };
     return DBIx::Class::Schema::Critic::Loader->connect( @{$schema} )
         if ref $schema eq 'ARRAY';
+    ## no critic (ErrorHandling::RequireUseOfExceptions)
+    croak q{don't know how to make a schema from a } . ref $schema;
 }
 
 has _elements => ( is => 'ro', lazy => 1, default => \&_build__elements );
@@ -79,7 +82,7 @@ has violations => (
     lazy    => 1,
     default => sub {
         [   map { $_[0]->_policy_loop( $_, $_[0]->_elements->{$_} ) }
-                keys %{ $_[0]->_elements }
+                keys %{ $_[0]->_elements },
         ];
     },
 );
@@ -98,7 +101,6 @@ sub _policy_loop {
 
 sub _policy_applies_to {
     my ( $policy, $type ) = @_;
-    $DB::single = 1;
     return any { $_ eq $type } @{ $policy->applies_to };
 }
 
@@ -154,7 +156,8 @@ construct schema classes dynamically to be critiqued.
 
 =method critique
 
-Runs the L</schema> through the DBIx::Class::Schema::Critic engine using all
+Runs the L</schema> through the
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> engine using all
 the policies that have been loaded and dumps a string representation of
 L</violations> to C<STDOUT>.
 

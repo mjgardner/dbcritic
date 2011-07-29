@@ -60,10 +60,17 @@ This policy returns a violation if a
 L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has nullable text
 columns.
 
+=attr description
+
+"Nullable text column"
+
+=attr explanation
+
+"Text columns should not be nullable. Default to empty string instead."
+
 =attr applies_to
 
-This policy applies to L<MooseX::Types::DBIx::Class|MooseX::Types::DBIx::Class>
-I<ResultSource>s.
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =method violates
 

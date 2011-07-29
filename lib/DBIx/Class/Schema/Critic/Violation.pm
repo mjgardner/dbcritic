@@ -72,8 +72,7 @@ being critiqued.
 =attr element
 
 The schema element that violated a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
-as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
+L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
 Only settable at construction.
 
 =attr as_string

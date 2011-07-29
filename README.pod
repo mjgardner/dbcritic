@@ -11,7 +11,7 @@ DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -65,13 +65,14 @@ C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
 
 =head2 critique
 
-Runs the L</schema> through the DBIx::Class::Schema::Critic engine using all
+Runs the L</schema> through the
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> engine using all
 the policies that have been loaded and dumps a string representation of
 L</violations> to C<STDOUT>.
 
 =head2 violations
 
-Returns a list of all
+Returns an array reference of all
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
 picked up by the various policies.
 
