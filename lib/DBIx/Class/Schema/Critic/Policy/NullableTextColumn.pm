@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.006';    # VERSION
+our $VERSION = '0.010';    # VERSION
 use DBI ':sql_types';
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
@@ -63,7 +63,7 @@ DBIx::Class::Schema::Critic::Policy::NullableTextColumn - Check for ResultSource
 
 =head1 VERSION
 
-version 0.006
+version 0.010
 
 =head1 SYNOPSIS
 
