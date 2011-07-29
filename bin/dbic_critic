@@ -13,7 +13,7 @@ my ( $opt, $usage ) = describe_options(
     [ 'dsn|d=s'           => 'DBI data source name' ],
     [ 'username|user|u:s' => 'name of user to use to connect to database' ],
     [ 'password|pass|p:s' => 'password for connecting to database' ],
-    [   'class_name|c:s' =>
+    [   'class_name|class|c:s' =>
             'DBIx::Class::Schema to use rather than generating one',
     ],
     [ 'help|h' => 'print usage message and exit' ],
