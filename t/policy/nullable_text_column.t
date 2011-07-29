@@ -10,5 +10,5 @@ use DBIx::Class::Schema::Critic;
 
 my $schema = DBICx::TestDatabase->new('MySchema');
 my $critic = DBIx::Class::Schema::Critic->new( schema => $schema );
-cmp_bag( [ map { $_->element->name } $critic->violations ],
+cmp_bag( [ map { $_->element->name } @{ $critic->violations } ],
     ['nullable_text_column'] );

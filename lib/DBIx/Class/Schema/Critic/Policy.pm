@@ -5,13 +5,9 @@ use utf8;
 use Modern::Perl;
 
 # VERSION
-use Moose::Role;
-use MooseX::Has::Sugar;
-use DBIx::Class::Schema::Critic::Types 'DBICType';
+use Moo::Role;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
-
-has applies_to => ( ro, isa => 'ArrayRef[Moose::Meta::TypeConstraint]' );
 
 requires qw(description explanation applies_to violates);
 
@@ -26,8 +22,7 @@ around violates => sub {
     return;
 };
 
-has element =>
-    ( ro, init_arg => undef, isa => DBICType, writer => '_set_element' );
+has element => ( is => 'ro', init_arg => undef, writer => '_set_element' );
 
 sub violation {
     my $self = shift;
@@ -37,7 +32,7 @@ sub violation {
     );
 }
 
-has schema => ( ro, isa => 'DBIx::Class::Schema', writer => '_set_schema' );
+has schema => ( is => 'ro', writer => '_set_schema' );
 
 1;
 

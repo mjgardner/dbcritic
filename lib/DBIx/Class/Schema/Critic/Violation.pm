@@ -6,17 +6,18 @@ use Modern::Perl;
 
 # VERSION
 use Const::Fast;
-use Moose;
-use DBIx::Class::Schema::Critic::Types 'DBICType';
+use Moo;
 use overload q{""} => sub { shift->as_string };
 
 const my @TEXT_FIELDS => qw(description explanation details);
-has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
+for (@TEXT_FIELDS) {
+    has $_ => ( is => 'ro', default => sub {q{}} );
+}
 
-has element => ( is => 'ro', isa => DBICType );
-has as_string => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+has element => ( is => 'ro' );
+has as_string => ( is => 'ro', lazy => 1, default => \&_build_as_string );
 
-sub _build_as_string {    ## no critic (ProhibitUnusedPrivateSubroutines)
+sub _build_as_string {
     my $self    = shift;
     my $element = $self->element;
     my $type    = ref $element;
@@ -31,7 +32,6 @@ sub _build_as_string {    ## no critic (ProhibitUnusedPrivateSubroutines)
         map { $self->$_ } @TEXT_FIELDS;
 }
 
-__PACKAGE__->meta->make_immutable();
 1;
 
 # ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy

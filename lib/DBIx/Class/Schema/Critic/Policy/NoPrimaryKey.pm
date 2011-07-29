@@ -5,8 +5,7 @@ use utf8;
 use Modern::Perl;
 
 # VERSION
-use Moose;
-use MooseX::Types::DBIx::Class 'ResultSource';
+use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
@@ -16,10 +15,10 @@ my %ATTR = (
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', isa => 'Str', default => $default );
+    has $name => ( is => 'ro', default => sub {$default} );
 }
 
-has applies_to => ( is => 'ro', default => sub { [ResultSource] } );
+has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
 
 sub violates {
     my $source = shift->element;
@@ -28,7 +27,6 @@ sub violates {
 }
 
 with 'DBIx::Class::Schema::Critic::Policy';
-__PACKAGE__->meta->make_immutable();
 1;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys

@@ -10,46 +10,29 @@ use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
     instantiate => 'new';
-use Moose;
-use MooseX::Has::Sugar;
-use DBIx::Class::Schema::Critic::Types qw(Policy LoadingSchema);
-with qw(MooseX::Getopt MooseX::SimpleConfig);
+use Moo;
 
-my %string_options = ( ro, isa => 'Str', traits => ['Getopt'] );
-has dsn => ( required, lazy_build,
-    %string_options,
-    cmd_aliases   => 'd',
-    documentation => 'Data source name in Perl DBI format',
-);
+for (qw(username password class_name)) { has $_ => ( is => 'ro' ) }
 
-sub _build_dsn {    ## no critic (ProhibitUnusedPrivateSubroutines)
+has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn );
+
+sub _build_dsn {
+    my $self = shift;
+
     ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
-    my $dbh = shift->schema->storage->dbh;
+    my $dbh = $self->schema->storage->dbh;
     return join q{:} => 'dbi', $dbh->{Driver}{Name}, $dbh->{Name};
 }
 
-has username => (
-    %string_options,
-    cmd_aliases   => [qw(u user)],
-    documentation => 'User name for connecting to the database',
-);
-has password => (
-    %string_options,
-    cmd_aliases   => [qw(p pass)],
-    documentation => 'Password for connecting to the database',
-);
-has class_name => (
-    %string_options,
-    cmd_aliases   => [qw(c class)],
-    documentation => 'Name of DBIx::Class::Schema subclass to critique',
+has schema => (
+    is      => 'ro',
+    coerce  => 1,
+    lazy    => 1,
+    default => \&_build_schema,
+    coerce  => \&_coerce_schema,
 );
 
-has schema => ( ro, required, coerce, lazy_build,
-    isa    => LoadingSchema,
-    traits => ['NoGetopt'],
-);
-
-sub _build_schema {    ## no critic (ProhibitUnusedPrivateSubroutines)
+sub _build_schema {
     my $self = shift;
 
     my @connect_info = map { $self->$_ } qw(dsn username password);
@@ -59,17 +42,26 @@ sub _build_schema {    ## no critic (ProhibitUnusedPrivateSubroutines)
             if eval "require $class_name";
     }
 
-    return LoadingSchema->coerce( \@connect_info );
+    return $self->_coerce_schema( \@connect_info );
 }
 
-has _elements => ( ro, lazy_build,
-    isa     => 'HashRef',
-    traits  => ['Hash'],
-    handles => { _element_names => 'keys', _element => 'get' },
-);
+sub _coerce_schema {
+    my $schema = shift;
 
-sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
-    my $schema = shift->schema;
+    return $schema if $schema->isa('DBIx::Class::Schema');
+
+    local $SIG{__WARN__} = sub {
+        if ( $_[0] !~ / has no primary key at /ms ) { print {*STDERR} $_[0] }
+    };
+    return DBIx::Class::Schema::Critic::Loader->connect( @{$schema} )
+        if ref $schema eq 'ARRAY';
+}
+
+has _elements => ( is => 'ro', lazy => 1, default => \&_build__elements );
+
+sub _build__elements {
+    my $self   = shift;
+    my $schema = $self->schema;
     return {
         Schema       => [$schema],
         ResultSource => [ map { $schema->source($_) } $schema->sources ],
@@ -78,17 +70,17 @@ sub _build__elements {    ## no critic (ProhibitUnusedPrivateSubroutines)
 }
 
 sub critique {
-    for ( shift->violations ) {say}
+    for ( @{ shift->violations } ) {say}
     return;
 }
 
-has _violations => ( ro, lazy,
-    isa     => 'ArrayRef',
-    traits  => ['Array'],
-    handles => { violations => 'elements' },
+has violations => (
+    is      => 'ro',
+    lazy    => 1,
     default => sub {
-        [ map { $_[0]->_policy_loop( $_, $_[0]->_element($_) ) }
-                $_[0]->_element_names ];
+        [   map { $_[0]->_policy_loop( $_, $_[0]->_elements->{$_} ) }
+                keys %{ $_[0]->_elements }
+        ];
     },
 );
 
@@ -106,11 +98,10 @@ sub _policy_loop {
 
 sub _policy_applies_to {
     my ( $policy, $type ) = @_;
-    return any { $_->name eq "MooseX::Types::DBIx::Class::$type" }
-    @{ $policy->applies_to };
+    $DB::single = 1;
+    return any { $_ eq $type } @{ $policy->applies_to };
 }
 
-__PACKAGE__->meta->make_immutable();
 1;
 
 # ABSTRACT: Critique a database schema for best practices
@@ -169,7 +160,7 @@ L</violations> to C<STDOUT>.
 
 =method violations
 
-Returns a list of all
+Returns an array reference of all
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
 picked up by the various policies.
 
