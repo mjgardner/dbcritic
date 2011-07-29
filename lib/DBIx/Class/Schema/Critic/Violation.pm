@@ -14,14 +14,15 @@ const my @TEXT_FIELDS => qw(description explanation details);
 has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
 
 has element => ( is => 'ro', isa => DBICType );
+has as_string => ( is => 'ro', isa => 'Str', lazy_build => 1 );
 
-sub stringify {
+sub _build_as_string {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self    = shift;
     my $element = $self->element;
     my $type    = ref $element;
 
     $type =~ s/\A .* :://xms;
-    my %TYPE_MAP = (
+    const my %TYPE_MAP => (
         Table     => $element->from,
         ResultSet => $element->result_class,
         Schema    => 'schema',
@@ -29,6 +30,7 @@ sub stringify {
     return "[$type $TYPE_MAP{$type}] " . join "\n",
         map { $self->$_ } @TEXT_FIELDS;
 }
+sub stringify { return shift->as_string }
 
 __PACKAGE__->meta->make_immutable();
 1;
@@ -74,6 +76,10 @@ The schema element that violated a
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
 as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 Only settable at construction.
+
+=attr as_string
+
+The same result as L</stringify> as a read-only attribute.
 
 =method stringify
 
