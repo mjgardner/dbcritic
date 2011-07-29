@@ -30,7 +30,7 @@ sub _build_as_string {     ## no critic (ProhibitUnusedPrivateSubroutines)
     return "[$type $TYPE_MAP{$type}] " . join "\n",
         map { $self->$_ } @TEXT_FIELDS;
 }
-sub stringify { shift->as_string }
+sub stringify { return shift->as_string }
 
 __PACKAGE__->meta->make_immutable();
 1;
@@ -95,6 +95,10 @@ The schema element that violated a
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>,
 as an instance of L<DBICType|DBIx::Class::Schema::Critic::Types/DBICType>.
 Only settable at construction.
+
+=head2 as_string
+
+The same result as L</stringify> as a read-only attribute.
 
 =head1 METHODS
 
