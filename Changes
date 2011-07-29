@@ -1,6 +1,7 @@
 Revision history for DBIx-Class-Schema-Critic
 
-0.005     2011-07-29 12:59:08 America/New_York
-
+0.005     2011-07-29 13:04:52 America/New_York
+    dsn is now a required attribute, defaults to schema object's storage.
+    cache stringification of Violation objects
 0.004     2011-07-28 18:29:40 America/New_York
     initial release
