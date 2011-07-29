@@ -3,9 +3,31 @@
 package main;
 use Modern::Perl;
 use utf8;
+
 # VERSION
+use Getopt::Long::Descriptive;
 use DBIx::Class::Schema::Critic;
-my $critic = DBIx::Class::Schema::Critic->new_with_options();
+
+my ( $opt, $usage ) = describe_options(
+    '%c %o',
+    [ 'dsn|d=s'           => 'DBI data source name' ],
+    [ 'username|user|u:s' => 'name of user to use to connect to database' ],
+    [ 'password|pass|p:s' => 'password for connecting to database' ],
+    [   'class_name|c:s' =>
+            'DBIx::Class::Schema to use rather than generating one',
+    ],
+    [ 'help|h' => 'print usage message and exit' ],
+);
+
+if ( $opt->help ) {
+    print $usage->text;
+    exit;
+}
+
+my $critic = DBIx::Class::Schema::Critic->new(
+    map { $_ => $opt->$_ }
+    grep { defined $opt->$_ } qw(dsn username password class_name),
+);
 $critic->critique();
 
 # PODNAME: dbic_critic
@@ -15,6 +37,7 @@ $critic->critique();
 
     dbic-critic --help
     dbic-critic --dsn dbi:Oracle:HR --username scott --password tiger
+    dbic-critic --class_name My::Schema --dsn dbi:mysql:database=db --username perl --password pass
 
 =head1 DESCRIPTION
 

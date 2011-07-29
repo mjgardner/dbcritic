@@ -12,6 +12,8 @@ use Module::Pluggable
     sub_name    => 'policies',
     instantiate => 'new';
 use Moo;
+use Scalar::Util 'blessed';
+use DBIx::Class::Schema::Critic::Loader;
 
 for (qw(username password class_name)) { has $_ => ( is => 'ro' ) }
 
@@ -43,13 +45,13 @@ sub _build_schema {
             if eval "require $class_name";
     }
 
-    return $self->_coerce_schema( \@connect_info );
+    return _coerce_schema( \@connect_info );
 }
 
 sub _coerce_schema {
     my $schema = shift;
 
-    return $schema if $schema->isa('DBIx::Class::Schema');
+    return $schema if blessed $schema and $schema->isa('DBIx::Class::Schema');
 
     local $SIG{__WARN__} = sub {
         if ( $_[0] !~ / has no primary key at /ms ) { print {*STDERR} $_[0] }
