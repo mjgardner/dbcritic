@@ -8,7 +8,6 @@ our $VERSION = '0.005';    # VERSION
 use Const::Fast;
 use Moose;
 use DBIx::Class::Schema::Critic::Types 'DBICType';
-use overload q{""} => \&stringify;
 
 const my @TEXT_FIELDS => qw(description explanation details);
 has \@TEXT_FIELDS => ( is => 'ro', isa => 'Str', default => q{} );
@@ -30,6 +29,7 @@ sub _build_stringify {     ## no critic (ProhibitUnusedPrivateSubroutines)
     return "[$type $TYPE_MAP{$type}] " . join "\n",
         map { $self->$_ } @TEXT_FIELDS;
 }
+use overload q{""} => \&stringify;
 
 __PACKAGE__->meta->make_immutable();
 1;
