@@ -33,7 +33,7 @@ sub violates {
             if !Compare( map { $source->relationship_info($_) }
                         @relationships );
     }
-    return join "\n", @out if @out;
+    return join( "\n", @out ) if @out;
     return;
 }
 
