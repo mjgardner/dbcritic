@@ -56,7 +56,9 @@ version 0.012
 =head1 SYNOPSIS
 
     use DBIx::Class::Schema::Critic;
-    my $critic = DBIx::Class::Schema::Critic->new();
+
+    my $critic = DBIx::Class::Schema::Critic->new(
+        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
 =head1 DESCRIPTION

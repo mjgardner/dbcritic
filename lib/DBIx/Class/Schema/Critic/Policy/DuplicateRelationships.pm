@@ -1,17 +1,19 @@
-package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
+package DBIx::Class::Schema::Critic::Policy::DuplicateRelationships;
 
 use strict;
 use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.012';    # VERSION
+use Algorithm::Combinatorics 'combinations';
+use Data::Compare;
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
-    description => 'No primary key',
+    description => 'Duplicate relationships',
     explanation =>
-        'Tables should have one or more columns defined as a primary key.',
+        'Each connection between tables should only be expressed once.',
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
@@ -22,14 +24,20 @@ has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
 
 sub violates {
     my $source = shift->element;
-    return $source->name . ' has no primary key' if !$source->primary_columns;
+
+    my $iterator = combinations( [ $source->relationships ], 2 );
+    while ( my @relationships = ( @{ $iterator->next } ) ) {
+        return sprintf '%s and %s are duplicates', @relationships
+            if !Compare( map { $source->relationship_info($_) }
+                        @relationships );
+    }
     return;
 }
 
 with 'DBIx::Class::Schema::Critic::Policy';
 1;
 
-# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
+# ABSTRACT: Check for ResultSources with unnecessary duplicate relationships
 
 __END__
 
@@ -42,7 +50,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schema::ResultSources without primary keys
+DBIx::Class::Schema::Critic::Policy::DuplicateRelationships - Check for ResultSources with unnecessary duplicate relationships
 
 =head1 VERSION
 
@@ -59,17 +67,18 @@ version 0.012
 =head1 DESCRIPTION
 
 This policy returns a violation if a
-L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has relationships to
+other tables that are identical in everything but name.
 
 =head1 ATTRIBUTES
 
 =head2 description
 
-"No primary key"
+"Duplicate relationships"
 
 =head2 explanation
 
-"Tables should have one or more columns defined as a primary key."
+"Each connection between tables should only be expressed once."
 
 =head2 applies_to
 
@@ -80,8 +89,8 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 =head2 violates
 
 Returns details if the
-L<"current element"|DBIx::Class::Schema::Critic::Policy>'s C<primary_columns>
-method returns nothing.
+L<"current element"|DBIx::Class::Schema::Critic::Policy>'s C<relationship_info>
+hashes for any defined relationships are duplicated.
 
 =head1 SUPPORT
 
