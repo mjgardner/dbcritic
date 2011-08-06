@@ -27,11 +27,13 @@ sub violates {
     return if $source->relationships < 2;
 
     my $iterator = combinations( [ $source->relationships ], 2 );
+    my @out;
     while ( my @relationships = ( @{ $iterator->next } ) ) {
-        return sprintf '%s and %s are duplicates', @relationships
+        push @out, sprintf '%s and %s are duplicates', @relationships
             if !Compare( map { $source->relationship_info($_) }
                         @relationships );
     }
+    return join "\n", @out if @out;
     return;
 }
 
