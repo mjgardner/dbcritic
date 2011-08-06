@@ -29,7 +29,7 @@ functions = :builtins
 exclude_functions = print say
 
 [Subroutines::ProhibitCallsToUndeclaredSubs]
-exempt_subs = Carp::croak Const::Fast::const Getopt::Long::Descriptive::describe_options Moo::extends Moo::has Moo::with Moo::Role::around Moo::Role::has Moo::Role::requires
+exempt_subs = Carp::croak Const::Fast::const Data::Compare::Compare Getopt::Long::Descriptive::describe_options Moo::extends Moo::has Moo::with Moo::Role::around Moo::Role::has Moo::Role::requires
 
 [TestingAndDebugging::RequireUseStrict]
 equivalent_modules = Modern::Perl

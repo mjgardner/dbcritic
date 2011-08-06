@@ -24,6 +24,7 @@ has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
 
 sub violates {
     my $source = shift->element;
+    return if $source->relationships < 2;
 
     my $iterator = combinations( [ $source->relationships ], 2 );
     while ( my @relationships = ( @{ $iterator->next } ) ) {
