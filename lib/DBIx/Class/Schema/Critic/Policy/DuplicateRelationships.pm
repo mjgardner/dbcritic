@@ -26,15 +26,10 @@ sub violates {
     my $source = shift->element;
     return if $source->relationships < 2;
 
-    my $iterator = combinations( [ $source->relationships ], 2 );
-    my @out;
-    while ( my @relationships = ( @{ $iterator->next } ) ) {
-        push @out, sprintf '%s and %s are duplicates', @relationships
-            if !Compare( map { $source->relationship_info($_) }
-                        @relationships );
-    }
-    return join( "\n", @out ) if @out;
-    return;
+    return join "\n" => map { sprintf '%s and %s are duplicates', @{$_} }
+        grep {
+        !Compare( map { $source->relationship_info($_) } @{$_} )
+        } combinations( [ $source->relationships ], 2 );
 }
 
 with 'DBIx::Class::Schema::Critic::Policy';
