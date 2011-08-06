@@ -1,7 +1,8 @@
 Revision history for DBIx-Class-Schema-Critic
 
-0.012     2011-08-06 18:07:15 America/New_York
+0.012     2011-08-06 18:09:55 America/New_York
     bump DBIC::Schema::Loader requirement to 0.07007
+    add DBICSC::Policy::DuplicateRelationships
 0.011     2011-08-06 13:49:04 America/New_York
     require more recent version of DBIx::Class
     fix synopsis (frew++)
