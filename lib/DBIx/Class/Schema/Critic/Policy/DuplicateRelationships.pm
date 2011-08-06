@@ -28,7 +28,7 @@ sub violates {
 
     return join "\n" => map { sprintf '%s and %s are duplicates', @{$_} }
         grep {
-        !Compare( map { $source->relationship_info($_) } @{$_} )
+        Compare( map { $source->relationship_info($_) } @{$_} )
         } combinations( [ $source->relationships ], 2 );
 }
 
