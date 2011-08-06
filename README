@@ -3,7 +3,7 @@ NAME
     practices
 
 VERSION
-    version 0.011
+    version 0.012
 
 SYNOPSIS
         use DBIx::Class::Schema::Critic;
