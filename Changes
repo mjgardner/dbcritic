@@ -1,6 +1,8 @@
 Revision history for DBIx-Class-Schema-Critic
 
 {{$NEXT}}
+
+0.011     2011-08-06 13:49:04 America/New_York
     require more recent version of DBIx::Class
 0.010     2011-07-29 16:44:18 America/New_York
     converted from Moose to Moo object framework
