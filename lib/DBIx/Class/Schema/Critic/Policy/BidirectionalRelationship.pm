@@ -23,13 +23,13 @@ has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
 sub violates {
     my $source = shift->element;
 
-    return join "\n" => map {
-        sprintf '%s to %s not reciprocated', $source->name,
-            $source->related_source($_)->name,
-        }
+    return join "\n",
+        map { _message( $source->name, $source->related_source($_)->name ) }
         grep { !keys %{ $source->reverse_relationship_info($_) } }
         $source->relationships;
 }
+
+sub _message { return "$_[0] to $_[1] not reciprocated" }
 
 with 'DBIx::Class::Schema::Critic::Policy';
 1;

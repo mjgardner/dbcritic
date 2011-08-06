@@ -25,6 +25,10 @@ t/policy/bidirectional_relationship.t
 t/policy/bidirectional_relationship/lib/perl5/MySchema.pm
 t/policy/bidirectional_relationship/lib/perl5/MySchema/Result/OneWay.pm
 t/policy/bidirectional_relationship/lib/perl5/MySchema/Result/Reciprocates.pm
+t/policy/duplicate_relationships.t
+t/policy/duplicate_relationships/lib/perl5/MySchema.pm
+t/policy/duplicate_relationships/lib/perl5/MySchema/Result/Duplicates.pm
+t/policy/duplicate_relationships/lib/perl5/MySchema/Result/NoDuplicates.pm
 t/policy/no_primary_key.t
 t/policy/no_primary_key/lib/perl5/MySchema.pm
 t/policy/no_primary_key/lib/perl5/MySchema/Result/HasPrimaryKey.pm
