@@ -1,6 +1,6 @@
 Revision history for DBIx-Class-Schema-Critic
 
-0.013     2011-08-15 17:25:51 America/New_York
+0.013     2011-08-15 17:27:57 America/New_York
 
 0.012     2011-08-06 18:57:20 America/New_York
     bump DBIC::Schema::Loader requirement to 0.07007
