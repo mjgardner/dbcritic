@@ -12,16 +12,12 @@ use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 with 'DBIx::Class::Schema::Critic::Policy';
 
-has applies_to => (
-    is      => 'ro',
-    lazy    => 1,
-    default => quote_sub q{
-        [   List::MoreUtils::apply {s/\A .+ :://xms}
-            grep { shift->does($_) } Devel::Symdump->packages(
-                'DBIx::Class::Schema::Critic::PolicyType'),
-        ];
-        },
-);
+has applies_to => ( is => 'ro', lazy => 1, default => quote_sub <<'END_SUB' );
+    [   List::MoreUtils::apply {s/\A .+ :://xms}
+        grep { shift->does($_) } Devel::Symdump->packages(
+            'DBIx::Class::Schema::Critic::PolicyType'),
+    ];
+END_SUB
 
 1;
 
