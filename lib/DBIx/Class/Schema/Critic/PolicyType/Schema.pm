@@ -40,8 +40,6 @@ version 0.013
 
     with 'DBIx::Class::Schema::Critic::PolicyType::Schema';
 
-    1;
-
 =head1 DESCRIPTION
 
 This is a role composed into
@@ -50,6 +48,8 @@ that are interested in L<Schema|DBIx::Class::Schema>s.  It takes
 care of composing the
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
 for you.
+
+=for test_synopsis no warnings 'redefine'
 
 =head1 SUPPORT
 

@@ -67,8 +67,6 @@ version 0.013
 
     sub violates { $_[0]->element ne '' }
 
-    1;
-
 =head1 DESCRIPTION
 
 This is a L<role|Moo::Role> consumed by all
@@ -94,6 +92,8 @@ Given a string description of a violation that has been encountered, creates a
 new
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object from the current policy.
+
+=for test_synopsis no warnings 'redefine'
 
 =head1 REQUIRED METHODS
 
