@@ -18,8 +18,6 @@ while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( is => 'ro', default => sub {$default} );
 }
 
-has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
-
 sub violates {
     my $source = shift->element;
 
@@ -31,7 +29,7 @@ sub violates {
 
 sub _message { return "$_[0] to $_[1] not reciprocated" }
 
-with 'DBIx::Class::Schema::Critic::Policy';
+with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for missing bidirectional relationships in ResultSources

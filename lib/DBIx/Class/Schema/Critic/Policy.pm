@@ -9,7 +9,7 @@ use Moo::Role;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
-requires qw(description explanation applies_to violates);
+requires qw(description explanation violates);
 
 around violates => sub {
     my ( $orig, $self ) = splice @_, 0, 2;
@@ -49,6 +49,7 @@ has schema => ( is => 'ro', writer => '_set_schema' );
     with 'DBIx::Class::Schema::Critic::Policy';
 
     sub violates { $_[0]->element ne '' }
+
 
 =head1 DESCRIPTION
 

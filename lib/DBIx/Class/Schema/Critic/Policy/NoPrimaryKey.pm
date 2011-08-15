@@ -18,15 +18,13 @@ while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( is => 'ro', default => sub {$default} );
 }
 
-has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
-
 sub violates {
     my $source = shift->element;
     return $source->name . ' has no primary key' if !$source->primary_columns;
     return;
 }
 
-with 'DBIx::Class::Schema::Critic::Policy';
+with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys

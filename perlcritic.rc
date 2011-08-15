@@ -18,7 +18,7 @@ above_version = 5.010
 flowcontrol = carp cluck confess croak die exit goto warn exit
 
 [Documentation::PodSpelling]
-stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas DBICType TypeConstraints ResultSources namespace stringify DSN DBI dsn username plugins API configfile LoadingSchema nullable SQL
+stop_words = Perldoc perldoc annonations PASSed DBIx accessor schemas DBICType TypeConstraints ResultSources namespace stringify DSN DBI dsn username plugins API configfile LoadingSchema nullable SQL ResultSet ResultSets ResultSource
 
 [Documentation::RequirePodSections]
 lib_sections = NAME | VERSION | SYNOPSIS | DESCRIPTION | SUPPORT | AUTHOR | COPYRIGHT AND LICENSE
@@ -29,7 +29,7 @@ functions = :builtins
 exclude_functions = print say
 
 [Subroutines::ProhibitCallsToUndeclaredSubs]
-exempt_subs = Carp::croak Const::Fast::const Data::Compare::Compare Getopt::Long::Descriptive::describe_options Moo::extends Moo::has Moo::with Moo::Role::around Moo::Role::has Moo::Role::requires
+exempt_subs = Carp::croak Const::Fast::const Data::Compare::Compare Getopt::Long::Descriptive::describe_options Moo::extends Moo::has Moo::with Moo::Role::around Moo::Role::has Moo::Role::requires Moo::Role::with Sub::Quote::quote_sub
 
 [TestingAndDebugging::RequireUseStrict]
 equivalent_modules = Modern::Perl
