@@ -67,6 +67,8 @@ version 0.013
 
     sub violates { $_[0]->element ne '' }
 
+    1;
+
 =head1 DESCRIPTION
 
 This is a L<role|Moo::Role> consumed by all

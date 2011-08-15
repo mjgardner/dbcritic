@@ -40,6 +40,8 @@ version 0.013
 
     with 'DBIx::Class::Schema::Critic::PolicyType::ResultSet';
 
+    1;
+
 =head1 DESCRIPTION
 
 This is a role composed into
