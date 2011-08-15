@@ -10,7 +10,7 @@ require Devel::Symdump;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
-requires qw(description explanation applies_to violates);
+requires qw(description explanation violates);
 
 has applies_to => ( is => 'ro', lazy => 1, builder => '_build_applies_to' );
 
