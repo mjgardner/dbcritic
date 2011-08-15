@@ -31,15 +31,6 @@ version 0.013
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
-    use Moo;
-
-    has description => ( default => sub{'Follow my policy'} );
-    has explanation => ( default => {'My way or the highway'} );
-    sub violates { $_[0]->element ne '' }
-
-    with 'DBIx::Class::Schema::Critic::PolicyType::Schema';
-
 =head1 DESCRIPTION
 
 This is a role composed into
@@ -50,6 +41,15 @@ L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
 for you.
 
 =for test_synopsis no warnings 'redefine'
+
+    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    use Moo;
+
+    has description => ( default => sub{'Follow my policy'} );
+    has explanation => ( default => {'My way or the highway'} );
+    sub violates { $_[0]->element ne '' }
+
+    with 'DBIx::Class::Schema::Critic::PolicyType::Schema';
 
 =head1 SUPPORT
 
