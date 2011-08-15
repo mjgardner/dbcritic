@@ -17,8 +17,7 @@ has applies_to => (
     lazy    => 1,
     default => quote_sub q{
         [   List::MoreUtils::apply {s/\A .+ :://xms}
-            grep { shift->does($_) } Devel::Symdump->packages(
-                'DBIx::Class::Schema::Critic::PolicyType'),
+            grep { shift->does($_) } Devel::Symdump->packages(__PACKAGE__),
         ];
         },
 );
