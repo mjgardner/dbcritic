@@ -4,7 +4,7 @@
       "Mark Gardner <mjgardner@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200013, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Dist::Zilla version 4.200015, CPAN::Meta::Converter version 2.112150",
    "license" : [
       "perl_5"
    ],
@@ -25,6 +25,7 @@
             "Carp" : 0,
             "Const::Fast" : 0,
             "DBI" : 0,
+            "DBIx::Class" : "0.08125",
             "DBIx::Class::Schema::Loader" : "0.07007",
             "Data::Compare" : 0,
             "Getopt::Long::Descriptive" : 0,
@@ -70,6 +71,6 @@
          "web" : "https://github.com/mjgardner/DBIx-Class-Schema-Critic"
       }
    },
-   "version" : "0.012"
+   "version" : "0.013"
 }
 

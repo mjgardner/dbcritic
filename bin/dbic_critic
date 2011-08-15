@@ -4,7 +4,7 @@ package main;
 use Modern::Perl;
 use utf8;
 
-our $VERSION = '0.012';    # VERSION
+our $VERSION = '0.013';    # VERSION
 use Getopt::Long::Descriptive;
 use DBIx::Class::Schema::Critic;
 
@@ -48,7 +48,7 @@ dbic_critic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 USAGE
 

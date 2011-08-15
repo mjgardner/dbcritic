@@ -40,6 +40,7 @@ my %WriteMakefileArgs = (
     'Carp' => '0',
     'Const::Fast' => '0',
     'DBI' => '0',
+    'DBIx::Class' => '0.08125',
     'DBIx::Class::Schema::Loader' => '0.07007',
     'Data::Compare' => '0',
     'Getopt::Long::Descriptive' => '0',
@@ -53,7 +54,7 @@ my %WriteMakefileArgs = (
     'overload' => '0',
     'utf8' => '0'
   },
-  'VERSION' => '0.012',
+  'VERSION' => '0.013',
   'test' => {
     'TESTS' => 't/*.t t/policy/*.t'
   }
