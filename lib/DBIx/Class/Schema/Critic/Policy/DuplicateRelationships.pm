@@ -20,8 +20,6 @@ while ( my ( $name, $default ) = each %ATTR ) {
     has $name => ( is => 'ro', default => sub {$default} );
 }
 
-has applies_to => ( is => 'ro', default => sub { ['ResultSource'] } );
-
 sub violates {
     my $source = shift->element;
     return if $source->relationships < 2;
@@ -32,7 +30,7 @@ sub violates {
         } combinations( [ $source->relationships ], 2 );
 }
 
-with 'DBIx::Class::Schema::Critic::Policy';
+with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for ResultSources with unnecessary duplicate relationships

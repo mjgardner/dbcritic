@@ -6,10 +6,21 @@ use Modern::Perl;
 
 our $VERSION = '0.013';    # VERSION
 use Moo::Role;
+require Devel::Symdump;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
 requires qw(description explanation applies_to violates);
+
+has applies_to => ( is => 'ro', lazy => 1, builder => '_build_applies_to' );
+
+sub _build_applies_to {
+    return [
+        map      {s/\A .+ :://xms}
+            grep { shift->does($_) } Devel::Symdump->packages(
+            'DBIx::Class::Schema::Critic::PolicyType')
+    ];
+}
 
 around violates => sub {
     my ( $orig, $self ) = splice @_, 0, 2;

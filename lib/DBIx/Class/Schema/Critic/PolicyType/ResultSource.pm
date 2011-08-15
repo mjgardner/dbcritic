@@ -1,33 +1,14 @@
-package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
+package DBIx::Class::Schema::Critic::PolicyType::ResultSource;
 
 use strict;
 use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.013';    # VERSION
-use Moo;
-use namespace::autoclean -also => qr{\A _}xms;
-
-my %ATTR = (
-    description => 'No primary key',
-    explanation =>
-        'Tables should have one or more columns defined as a primary key.',
-);
-
-while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', default => sub {$default} );
-}
-
-sub violates {
-    my $source = shift->element;
-    return $source->name . ' has no primary key' if !$source->primary_columns;
-    return;
-}
-
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+use Moo::Role;
+use namespace::autoclean;
+with 'DBIx::Class::Schema::Critic::Policy';
 1;
-
-# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 __END__
 
@@ -40,46 +21,11 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schema::ResultSources without primary keys
+DBIx::Class::Schema::Critic::PolicyType::ResultSource
 
 =head1 VERSION
 
 version 0.013
-
-=head1 SYNOPSIS
-
-    use DBIx::Class::Schema::Critic;
-
-    my $critic = DBIx::Class::Schema::Critic->new(
-        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
-    $critic->critique();
-
-=head1 DESCRIPTION
-
-This policy returns a violation if a
-L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
-
-=head1 ATTRIBUTES
-
-=head2 description
-
-"No primary key"
-
-=head2 explanation
-
-"Tables should have one or more columns defined as a primary key."
-
-=head2 applies_to
-
-This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
-
-=head1 METHODS
-
-=head2 violates
-
-Returns details if the
-L<"current element"|DBIx::Class::Schema::Critic::Policy>'s C<primary_columns>
-method returns nothing.
 
 =head1 SUPPORT
 
