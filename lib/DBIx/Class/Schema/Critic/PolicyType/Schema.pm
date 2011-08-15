@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::PolicyType::ResultSchema;
+package DBIx::Class::Schema::Critic::PolicyType::Schema;
 
 use strict;
 use utf8;
@@ -23,7 +23,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::PolicyType::ResultSchema - Role for Schema critic policies
+DBIx::Class::Schema::Critic::PolicyType::Schema - Role for Schema critic policies
 
 =head1 VERSION
 
