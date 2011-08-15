@@ -49,7 +49,7 @@ care of composing the
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
 for you.
 
-=for test_synopsis no warnings 'redefine';
+=for test_synopsis no warnings 'redefine'
 
 =head1 SUPPORT
 

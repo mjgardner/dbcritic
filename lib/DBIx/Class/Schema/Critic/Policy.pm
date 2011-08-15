@@ -93,7 +93,7 @@ new
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object from the current policy.
 
-=for test_synopsis no warnings 'redefine';
+=for test_synopsis no warnings 'redefine'
 
 =head1 REQUIRED METHODS
 
