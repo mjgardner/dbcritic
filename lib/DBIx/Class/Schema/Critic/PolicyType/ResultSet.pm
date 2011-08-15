@@ -30,7 +30,7 @@ DBIx::Class::Schema::Critic::PolicyType::ResultSet - Role for ResultSet critic p
 version 0.013
 
 =for test_synopsis
-no warnings 'redefine'
+no warnings 'redefine';
 
 =head1 SYNOPSIS
 
