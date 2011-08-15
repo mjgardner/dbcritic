@@ -55,8 +55,6 @@ DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
 
 version 0.013
 
-no warnings 'redefine'
-
 =head1 SYNOPSIS
 
     package DBIx::Class::Schema::Critic::Policy::MyPolicy;
@@ -94,6 +92,8 @@ Given a string description of a violation that has been encountered, creates a
 new
 L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
 object from the current policy.
+
+=for :test_synopsis no warnings 'redefine'
 
 =head1 REQUIRED METHODS
 

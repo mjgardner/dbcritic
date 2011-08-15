@@ -29,8 +29,6 @@ DBIx::Class::Schema::Critic::PolicyType::ResultSet - Role for ResultSet critic p
 
 version 0.013
 
-no warnings 'redefine'
-
 =head1 SYNOPSIS
 
     package DBIx::Class::Schema::Critic::Policy::MyPolicy;
@@ -50,6 +48,8 @@ that are interested in L<ResultSet|DBIx::Class::ResultSet>s.  It takes
 care of composing the
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
 for you.
+
+=for :test_synopsis no warnings 'redefine'
 
 =head1 SUPPORT
 
