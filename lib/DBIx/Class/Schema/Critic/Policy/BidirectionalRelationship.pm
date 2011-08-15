@@ -6,6 +6,7 @@ use Modern::Perl;
 
 our $VERSION = '0.013';    # VERSION
 use Moo;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 
 my %ATTR = (
@@ -15,7 +16,11 @@ my %ATTR = (
 );
 
 while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', default => sub {$default} );
+    has $name => (
+        is => 'ro',
+        default =>
+            quote_sub( q{ q{$default} } => { '$default' => \$default } ),
+    );
 }
 
 sub violates {

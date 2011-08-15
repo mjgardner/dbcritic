@@ -16,7 +16,7 @@ has applies_to => (
     is   => 'ro',
     lazy => 1,
     ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
-    default => quote_sub( <<'END_SUB', { '$package' => \__PACKAGE__ } ),
+    default => quote_sub( <<'END_SUB' => { '$package' => \__PACKAGE__ } ),
         [   List::MoreUtils::apply {s/\A .+ :://xms}
             grep { shift->does($_) } Devel::Symdump->packages($package),
         ];
