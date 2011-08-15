@@ -29,12 +29,9 @@ DBIx::Class::Schema::Critic::PolicyType::Schema - Role for Schema critic policie
 
 version 0.013
 
-=for test_synopsis
-no warnings 'redefine';
-
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    package DBIx::Class::Schema::Critic::Policy::MySchemaPolicy;
     use Moo;
 
     has description => ( default => sub{'Follow my policy'} );

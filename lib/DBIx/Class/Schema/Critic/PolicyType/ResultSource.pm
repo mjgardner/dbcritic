@@ -29,12 +29,9 @@ DBIx::Class::Schema::Critic::PolicyType::ResultSource - Role for ResultSource cr
 
 version 0.013
 
-=for test_synopsis
-no warnings 'redefine';
-
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    package DBIx::Class::Schema::Critic::Policy::MyResultSourcePolicy;
     use Moo;
 
     has description => ( default => sub{'Follow my policy'} );
