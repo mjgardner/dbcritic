@@ -5,8 +5,9 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.013';    # VERSION
-use Moo::Role;
 require Devel::Symdump;
+use List::MoreUtils 'apply';
+use Moo::Role;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean;
 
@@ -16,9 +17,9 @@ has applies_to => ( is => 'ro', lazy => 1, builder => '_build_applies_to' );
 
 sub _build_applies_to {
     return [
-        map      {s/\A .+ :://xms}
-            grep { shift->does($_) } Devel::Symdump->packages(
-            'DBIx::Class::Schema::Critic::PolicyType')
+        apply {s/\A .+ :://xms}
+        grep { shift->does($_) } Devel::Symdump->packages(
+            'DBIx::Class::Schema::Critic::PolicyType'),
     ];
 }
 
