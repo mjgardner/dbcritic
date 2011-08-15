@@ -51,6 +51,7 @@ my %WriteMakefileArgs = (
     'Moo' => '0',
     'Moo::Role' => '0',
     'Scalar::Util' => '0',
+    'Sub::Quote' => '0',
     'namespace::autoclean' => '0',
     'overload' => '0',
     'utf8' => '0'

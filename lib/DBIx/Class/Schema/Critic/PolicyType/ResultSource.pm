@@ -6,8 +6,8 @@ use Modern::Perl;
 
 our $VERSION = '0.013';    # VERSION
 use Moo::Role;
-use namespace::autoclean;
-with 'DBIx::Class::Schema::Critic::Policy';
+use namespace::autoclean -also => qr{\A _}xms;
+with 'DBIx::Class::Schema::Critic::PolicyType';
 1;
 
 __END__

@@ -1,42 +1,31 @@
-package DBIx::Class::Schema::Critic::Policy;
+package DBIx::Class::Schema::Critic::PolicyType;
 
 use strict;
 use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.013';    # VERSION
+require Devel::Symdump;
+use List::MoreUtils;
 use Moo::Role;
-use DBIx::Class::Schema::Critic::Violation;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
+with 'DBIx::Class::Schema::Critic::Policy';
 
-requires qw(description explanation violates);
-
-around violates => sub {
-    my ( $orig, $self ) = splice @_, 0, 2;
-    $self->_set_element(shift);
-    $self->_set_schema(shift);
-
-    my $details = $self->$orig(@_);
-    return $self->violation($details) if $details;
-
-    return;
-};
-
-has element => ( is => 'ro', init_arg => undef, writer => '_set_element' );
-
-sub violation {
-    my $self = shift;
-    return DBIx::Class::Schema::Critic::Violation->new(
-        details => shift,
-        map { $_ => $self->$_ } qw(description explanation element),
-    );
-}
-
-has schema => ( is => 'ro', writer => '_set_schema' );
+has applies_to => (
+    is      => 'ro',
+    lazy    => 1,
+    default => quote_sub q{
+        [   List::MoreUtils::apply {s/\A .+ :://xms}
+            grep { shift->does($_) } Devel::Symdump->packages(
+                'DBIx::Class::Schema::Critic::PolicyType'),
+        ];
+        },
+);
 
 1;
 
-# ABSTRACT: Role for criticizing database schemas
+# ABSTRACT: Role for types of database criticism policies
 
 __END__
 
@@ -49,7 +38,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
+DBIx::Class::Schema::Critic::PolicyType - Role for types of database criticism policies
 
 =head1 VERSION
 
@@ -57,74 +46,22 @@ version 0.013
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    package DBIx::Class::Schema::Critic::PolicyType::ResultClass;
     use Moo;
-
-    has description => ( default => sub{'Follow my policy'} );
-    has explanation => ( default => {'My way or the highway'} );
-    has applies_to  => ( default => sub { ['ResultSource'] } );
-    with 'DBIx::Class::Schema::Critic::Policy';
-
-    sub violates { $_[0]->element ne '' }
+    with 'DBIx::Class::Schema::Critic::PolicyType';
+    1;
 
 =head1 DESCRIPTION
 
 This is a L<role|Moo::Role> consumed by all
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy plugins.
+L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy types.
 
 =head1 ATTRIBUTES
-
-=head2 element
-
-Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
-
-=head2 schema
-
-Read-only accessor for the current schema object being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
-
-=head1 METHODS
-
-=head2 violation
-
-Given a string description of a violation that has been encountered, creates a
-new
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object from the current policy.
-
-=head1 REQUIRED METHODS
-
-=head2 description
-
-Returns a short string describing what's wrong.
-
-=head2 explanation
-
-Returns a string giving further details.
 
 =head2 applies_to
 
 Returns an array reference of types of L<DBIx::Class|DBIx::Class> objects
 indicating what part(s) of the schema the policy is interested in.
-
-=head2 violates
-
-Role consumers must implement a C<violates> method that returns true if the
-policy is violated and false otherwise, based on attributes provided by the
-role.  Callers should call the C<violates> method as the following:
-
-    $policy->violates($element, $schema);
-
-=over
-
-=item Arguments: I<$element>, I<$schema>
-
-=item Return value: nothing if the policy passes, or a
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
-object if it doesn't.
-
-=back
 
 =head1 SUPPORT
 
