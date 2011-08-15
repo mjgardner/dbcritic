@@ -55,6 +55,7 @@ DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
 
 version 0.013
 
+=for test_synopsis
 no warnings 'redefine'
 
 =head1 SYNOPSIS

@@ -29,6 +29,7 @@ DBIx::Class::Schema::Critic::PolicyType::Schema - Role for Schema critic policie
 
 version 0.013
 
+=for test_synopsis
 no warnings 'redefine'
 
 =head1 SYNOPSIS
