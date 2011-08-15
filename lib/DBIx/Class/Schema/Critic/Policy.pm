@@ -8,7 +8,7 @@ our $VERSION = '0.013';    # VERSION
 use Moo::Role;
 require Devel::Symdump;
 use DBIx::Class::Schema::Critic::Violation;
-use namespace::autoclean -also => qr{\A _}xms;
+use namespace::autoclean;
 
 requires qw(description explanation violates);
 
