@@ -10,15 +10,15 @@ use Data::Compare;
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
-my %ATTR = (
-    description => 'Duplicate relationships',
-    explanation =>
-        'Each connection between tables should only be expressed once.',
+has description => (
+    is      => 'ro',
+    default => quote_sub q{'Duplicate relationships'},
 );
-
-while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', default => sub {$default} );
-}
+has explanation => (
+    is      => 'ro',
+    default => quote_sub
+        q{'Each connection between tables should only be expressed once.'},
+);
 
 sub violates {
     my $source = shift->element;

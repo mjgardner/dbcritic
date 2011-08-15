@@ -6,17 +6,18 @@ use Modern::Perl;
 
 # VERSION
 use Moo;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 
-my %ATTR = (
-    description => 'Missing bidirectional relationship',
-    explanation =>
-        'Related tables should have relationships defined in both classes.',
+has description => (
+    is      => 'ro',
+    default => quote_sub q{'Missing bidirectional relationship'},
 );
-
-while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', default => sub {$default} );
-}
+has explanation => (
+    is      => 'ro',
+    default => quote_sub
+        q{'Related tables should have relationships defined in both classes.'},
+);
 
 sub violates {
     my $source = shift->element;

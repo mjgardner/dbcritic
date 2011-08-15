@@ -9,15 +9,15 @@ use DBI ':sql_types';
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
-my %ATTR = (
-    description => 'Nullable text column',
-    explanation =>
-        'Text columns should not be nullable. Default to empty string instead.',
+has description => (
+    is      => 'ro',
+    default => quote_sub q{'Nullable text column'},
 );
-
-while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', default => sub {$default} );
-}
+has explanation => (
+    is      => 'ro',
+    default => quote_sub
+        q{'Text columns should not be nullable. Default to empty string instead.'},
+);
 
 sub violates {
     my $source = shift->element;
