@@ -13,13 +13,15 @@ use namespace::autoclean -also => qr{\A _}xms;
 with 'DBIx::Class::Schema::Critic::Policy';
 
 has applies_to => (
-    is      => 'ro',
-    lazy    => 1,
-    default => quote_sub( <<'END_SUB', { '$package' => \__PACKAGE__ } ) );
+    is   => 'ro',
+    lazy => 1,
+    ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+    default => quote_sub( <<'END_SUB', { '$package' => \__PACKAGE__ } ),
         [   List::MoreUtils::apply {s/\A .+ :://xms}
             grep { shift->does($_) } Devel::Symdump->packages($package),
         ];
 END_SUB
+);
 
 1;
 
