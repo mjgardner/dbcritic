@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::PolicyType::ResultSource;
+package DBIx::Class::Schema::Critic::PolicyType::ResultSchema;
 
 use strict;
 use utf8;
@@ -10,7 +10,7 @@ use namespace::autoclean -also => qr{\A _}xms;
 with 'DBIx::Class::Schema::Critic::PolicyType';
 1;
 
-# ABSTRACT: Role for ResultSource critic policies
+# ABSTRACT: Role for Schema critic policies
 
 __END__
 
@@ -23,7 +23,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::PolicyType::ResultSource - Role for ResultSource critic policies
+DBIx::Class::Schema::Critic::PolicyType::ResultSchema - Role for Schema critic policies
 
 =head1 VERSION
 
@@ -38,13 +38,13 @@ version 0.013
     has explanation => ( default => {'My way or the highway'} );
     sub violates { $_[0]->element ne '' }
 
-    with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+    with 'DBIx::Class::Schema::Critic::PolicyType::Schema';
 
 =head1 DESCRIPTION
 
 This is a role composed into
 L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy classes
-that are interested in L<ResultSource|DBIx::Class::ResultSource>s.  It takes
+that are interested in L<Schema|DBIx::Class::Schema>s.  It takes
 care of composing the
 L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
 for you.

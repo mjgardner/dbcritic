@@ -16,7 +16,9 @@ lib/DBIx/Class/Schema/Critic/Policy/DuplicateRelationships.pm
 lib/DBIx/Class/Schema/Critic/Policy/NoPrimaryKey.pm
 lib/DBIx/Class/Schema/Critic/Policy/NullableTextColumn.pm
 lib/DBIx/Class/Schema/Critic/PolicyType.pm
+lib/DBIx/Class/Schema/Critic/PolicyType/ResultSet.pm
 lib/DBIx/Class/Schema/Critic/PolicyType/ResultSource.pm
+lib/DBIx/Class/Schema/Critic/PolicyType/Schema.pm
 lib/DBIx/Class/Schema/Critic/Violation.pm
 perlcritic.rc
 t/00-compile.t
