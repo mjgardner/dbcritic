@@ -6,6 +6,7 @@ use Modern::Perl;
 
 # VERSION
 use Moo;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 
 has description => ( is => 'ro', default => quote_sub q{'No primary key'} );

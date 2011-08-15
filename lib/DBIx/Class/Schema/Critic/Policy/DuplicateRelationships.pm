@@ -8,6 +8,7 @@ use Modern::Perl;
 use Algorithm::Combinatorics 'combinations';
 use Data::Compare;
 use Moo;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 
 has description => (
