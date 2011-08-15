@@ -7,6 +7,7 @@ use Modern::Perl;
 our $VERSION = '0.013';    # VERSION
 use DBI ':sql_types';
 use Moo;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 
 has description => (

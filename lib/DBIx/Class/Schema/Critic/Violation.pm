@@ -7,6 +7,7 @@ use Modern::Perl;
 our $VERSION = '0.013';    # VERSION
 use Const::Fast;
 use Moo;
+use Sub::Quote;
 use overload q{""} => sub { shift->as_string };
 
 const my @TEXT_FIELDS => qw(description explanation details);
