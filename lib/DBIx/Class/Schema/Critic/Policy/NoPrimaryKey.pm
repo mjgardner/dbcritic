@@ -8,15 +8,12 @@ our $VERSION = '0.013';    # VERSION
 use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 
-my %ATTR = (
-    description => 'No primary key',
-    explanation =>
-        'Tables should have one or more columns defined as a primary key.',
+has description => ( is => 'ro', default => quote_sub q{'No primary key'} );
+has explanation => (
+    is      => 'ro',
+    default => quote_sub
+        q{'Tables should have one or more columns defined as a primary key.'},
 );
-
-while ( my ( $name, $default ) = each %ATTR ) {
-    has $name => ( is => 'ro', default => sub {$default} );
-}
 
 sub violates {
     my $source = shift->element;

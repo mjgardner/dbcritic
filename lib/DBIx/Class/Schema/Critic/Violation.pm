@@ -11,7 +11,7 @@ use overload q{""} => sub { shift->as_string };
 
 const my @TEXT_FIELDS => qw(description explanation details);
 for (@TEXT_FIELDS) {
-    has $_ => ( is => 'ro', default => sub {q{}} );
+    has $_ => ( is => 'ro', default => quote_sub q{q{}} );
 }
 
 has element => ( is => 'ro' );
