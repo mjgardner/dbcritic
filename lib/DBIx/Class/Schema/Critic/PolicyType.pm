@@ -61,7 +61,7 @@ L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy types.
 =head2 applies_to
 
 Returns an array reference containing the last component of all the
-L<DBIx::Class::Schema::Critic::PolicyType|DBIx::Class::Schema::Critic::PolicyType>
+C<DBIx::Class::Schema::Critic::PolicyType>
 roles composed into the consuming class.
 
 =head1 SUPPORT

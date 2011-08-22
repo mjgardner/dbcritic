@@ -47,7 +47,7 @@ METHODS
     "DBIx::Class::Schema::Critic::Policy" namespace are loaded.
 
   critique
-    Runs the "schema" through the DBIx::Class::Schema::Critic engine using
+    Runs the "schema" through the "DBIx::Class::Schema::Critic" engine using
     all the policies that have been loaded and dumps a string representation
     of "violations" to "STDOUT".
 

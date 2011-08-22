@@ -182,7 +182,7 @@ C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
 =head2 critique
 
 Runs the L</schema> through the
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> engine using all
+C<DBIx::Class::Schema::Critic> engine using all
 the policies that have been loaded and dumps a string representation of
 L</violations> to C<STDOUT>.
 
