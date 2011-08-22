@@ -14,12 +14,14 @@ build_requires:
   Test::More: 0.94
   Test::Most: 0
   Test::Script: 0
+  base: 0
   local::lib: 0
   perl: 5.006
+  warnings: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200015, CPAN::Meta::Converter version 2.112150'
+generated_by: 'Dist::Zilla version 4.300000, CPAN::Meta::Converter version 2.112150'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -44,10 +46,11 @@ requires:
   Sub::Quote: 0
   namespace::autoclean: 0
   overload: 0
-  perl: 5.010
+  perl: 5.010001
+  strict: 0
   utf8: 0
 resources:
   bugtracker: https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues
   homepage: http://metacpan.org/release/DBIx-Class-Schema-Critic/
   repository: git://github.com/mjgardner/DBIx-Class-Schema-Critic.git
-version: 0.013
+version: 0.014

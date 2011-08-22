@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.013';    # VERSION
+our $VERSION = '0.014';    # VERSION
 use Algorithm::Combinatorics 'combinations';
 use Data::Compare;
 use Moo;
@@ -51,7 +51,7 @@ DBIx::Class::Schema::Critic::Policy::DuplicateRelationships - Check for ResultSo
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,7 @@
 Revision history for DBIx-Class-Schema-Critic
 
+0.014     2011-08-22 16:09:01 America/New_York
+
 0.013     2011-08-16 10:34:11 America/New_York
     use DBICSC::PolicyType roles for applies_to attributes in policies,
         should make writing plugins for multiple types of objects as easy

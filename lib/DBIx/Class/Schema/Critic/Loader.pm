@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.013';    # VERSION
+our $VERSION = '0.014';    # VERSION
 use Moo;
 extends 'DBIx::Class::Schema::Loader';
 __PACKAGE__->loader_options( naming => 'v4', generate_pod => 0 );
@@ -27,7 +27,7 @@ DBIx::Class::Schema::Critic::Loader - Loader class for schemas generated from a 
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 

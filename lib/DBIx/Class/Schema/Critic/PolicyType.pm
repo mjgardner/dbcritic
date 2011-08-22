@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.013';    # VERSION
+our $VERSION = '0.014';    # VERSION
 require Devel::Symdump;
 use List::MoreUtils;
 use Moo::Role;
@@ -42,7 +42,7 @@ DBIx::Class::Schema::Critic::PolicyType - Role for types of database criticism p
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 
