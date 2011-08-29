@@ -6,6 +6,7 @@ use Modern::Perl;
 
 # VERSION
 use Const::Fast;
+use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
 use overload q{""} => sub { shift->as_string };
@@ -30,7 +31,7 @@ sub _build_as_string {
         Schema    => 'schema',
     );
     return "[$type $TYPE_MAP{$type}] " . join "\n",
-        map { $self->$_ } @TEXT_FIELDS;
+        map { $self->$ARG } @TEXT_FIELDS;
 }
 
 1;

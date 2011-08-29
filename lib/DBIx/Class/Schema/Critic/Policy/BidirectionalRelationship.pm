@@ -5,6 +5,7 @@ use utf8;
 use Modern::Perl;
 
 # VERSION
+use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
@@ -23,12 +24,12 @@ sub violates {
     my $source = shift->element;
 
     return join "\n",
-        map { _message( $source->name, $source->related_source($_)->name ) }
-        grep { !keys %{ $source->reverse_relationship_info($_) } }
+        map { _message( $source->name, $source->related_source($ARG)->name ) }
+        grep { !keys %{ $source->reverse_relationship_info($ARG) } }
         $source->relationships;
 }
 
-sub _message { return "$_[0] to $_[1] not reciprocated" }
+sub _message { return "$ARG[0] to $ARG[1] not reciprocated" }
 
 with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
