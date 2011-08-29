@@ -21,7 +21,6 @@ lib/DBIx/Class/Schema/Critic/PolicyType/ResultSource.pm
 lib/DBIx/Class/Schema/Critic/PolicyType/Schema.pm
 lib/DBIx/Class/Schema/Critic/Violation.pm
 perlcritic.rc
-t/00-compile.t
 t/000-report-versions.t
 t/author-critic.t
 t/loader.t
@@ -52,6 +51,7 @@ t/release-no-tabs.t
 t/release-pod-coverage.t
 t/release-pod-linkcheck.t
 t/release-pod-syntax.t
+t/release-portability.t
 t/release-synopsis.t
 t/release-test-version.t
 t/release-unused-vars.t
