@@ -31,6 +31,12 @@ if ( -d 'bin' ) {
             my $found = $File::Find::name;
 
             # nothing to skip
+            open my $FH, '<', $_ or do {
+                note("Unable to open $found in ( $! ), skipping");
+                return;
+            };
+            my $shebang = <$FH>;
+            return unless $shebang =~ /^#!.*?\bperl\b\s*$/;
             push @scripts, $found;
         },
         'bin',

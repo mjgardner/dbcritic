@@ -5,6 +5,7 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.014';    # VERSION
+use English '-no_match_vars';
 use Moo::Role;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
@@ -12,11 +13,11 @@ use namespace::autoclean -also => qr{\A _}xms;
 requires qw(description explanation violates);
 
 around violates => sub {
-    my ( $orig, $self ) = splice @_, 0, 2;
+    my ( $orig, $self ) = splice @ARG, 0, 2;
     $self->_set_element(shift);
     $self->_set_schema(shift);
 
-    my $details = $self->$orig(@_);
+    my $details = $self->$orig(@ARG);
     return $self->violation($details) if $details;
 
     return;
@@ -28,7 +29,7 @@ sub violation {
     my $self = shift;
     return DBIx::Class::Schema::Critic::Violation->new(
         details => shift,
-        map { $_ => $self->$_ } qw(description explanation element),
+        map { $ARG => $self->$ARG } qw(description explanation element),
     );
 }
 

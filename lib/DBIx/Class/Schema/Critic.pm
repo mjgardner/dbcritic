@@ -6,6 +6,7 @@ use Modern::Perl;
 
 our $VERSION = '0.014';    # VERSION
 use Carp;
+use English '-no_match_vars';
 use List::MoreUtils 'any';
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
@@ -15,7 +16,7 @@ use Moo;
 use Scalar::Util 'blessed';
 use DBIx::Class::Schema::Critic::Loader;
 
-for (qw(username password class_name)) { has $_ => ( is => 'ro' ) }
+for (qw(username password class_name)) { has $ARG => ( is => 'ro' ) }
 
 has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn );
 
@@ -38,7 +39,7 @@ has schema => (
 sub _build_schema {
     my $self = shift;
 
-    my @connect_info = map { $self->$_ } qw(dsn username password);
+    my @connect_info = map { $self->$ARG } qw(dsn username password);
 
     if ( my $class_name = $self->class_name ) {
         return $class_name->connect(@connect_info)
@@ -54,7 +55,9 @@ sub _coerce_schema {
     return $schema if blessed $schema and $schema->isa('DBIx::Class::Schema');
 
     local $SIG{__WARN__} = sub {
-        if ( $_[0] !~ / has no primary key at /ms ) { print {*STDERR} $_[0] }
+        if ( $ARG[0] !~ / has no primary key at /ms ) {
+            print {*STDERR} $ARG[0];
+        }
     };
     return DBIx::Class::Schema::Critic::Loader->connect( @{$schema} )
         if ref $schema eq 'ARRAY';
@@ -69,8 +72,8 @@ sub _build__elements {
     my $schema = $self->schema;
     return {
         Schema       => [$schema],
-        ResultSource => [ map { $schema->source($_) } $schema->sources ],
-        ResultSet    => [ map { $schema->resultset($_) } $schema->sources ],
+        ResultSource => [ map { $schema->source($ARG) } $schema->sources ],
+        ResultSet    => [ map { $schema->resultset($ARG) } $schema->sources ],
     };
 }
 
@@ -83,8 +86,9 @@ has violations => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        [   map { $_[0]->_policy_loop( $_, $_[0]->_elements->{$_} ) }
-                keys %{ $_[0]->_elements },
+        my $self = shift;
+        [   map { $self->_policy_loop( $ARG, $self->_elements->{$ARG} ) }
+                keys %{ $self->_elements },
         ];
     },
 );
@@ -92,18 +96,18 @@ has violations => (
 sub _policy_loop {
     my ( $self, $policy_type, $elements_ref ) = @_;
     my @violations;
-    for my $policy ( grep { _policy_applies_to( $_, $policy_type ) }
+    for my $policy ( grep { _policy_applies_to( $ARG, $policy_type ) }
         $self->policies )
     {
-        push @violations, grep {$_}
-            map { $policy->violates( $_, $self->schema ) } @{$elements_ref};
+        push @violations, grep {$ARG}
+            map { $policy->violates( $ARG, $self->schema ) } @{$elements_ref};
     }
     return @violations;
 }
 
 sub _policy_applies_to {
     my ( $policy, $type ) = @_;
-    return any { $_ eq $type } @{ $policy->applies_to };
+    return any { $ARG eq $type } @{ $policy->applies_to };
 }
 
 1;
