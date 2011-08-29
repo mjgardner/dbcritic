@@ -6,7 +6,6 @@ use Modern::Perl;
 
 our $VERSION = '0.014';    # VERSION
 require Devel::Symdump;
-use English '-no_match_vars';
 use List::MoreUtils;
 use Moo::Role;
 use Sub::Quote;
@@ -19,7 +18,7 @@ has applies_to => (
     ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
     default => quote_sub( <<'END_SUB' => { '$package' => \__PACKAGE__ } ),
         [   List::MoreUtils::apply {s/\A .+ :://xms}
-            grep { shift->does($ARG) } Devel::Symdump->packages($package),
+            grep { shift->does($_) } Devel::Symdump->packages($package),
         ];
 END_SUB
 );
