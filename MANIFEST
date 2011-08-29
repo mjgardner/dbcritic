@@ -21,6 +21,7 @@ lib/DBIx/Class/Schema/Critic/PolicyType/ResultSource.pm
 lib/DBIx/Class/Schema/Critic/PolicyType/Schema.pm
 lib/DBIx/Class/Schema/Critic/Violation.pm
 perlcritic.rc
+t/00-compile.t
 t/000-report-versions.t
 t/author-critic.t
 t/loader.t
