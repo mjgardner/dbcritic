@@ -1,6 +1,6 @@
 Revision history for DBIx-Class-Schema-Critic
 
-0.014     2011-08-29 14:54:42 America/New_York
+0.014     2011-08-30 16:04:34 America/New_York
 
 0.013     2011-08-16 10:34:11 America/New_York
     use DBICSC::PolicyType roles for applies_to attributes in policies,
