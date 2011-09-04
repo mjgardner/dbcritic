@@ -5,17 +5,12 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use Carp;
 use English '-no_match_vars';
-use Moo;
+use Moo::Role;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
-for (qw(description explanation violates)) {
-    no strict 'refs';
-    next if defined *{ __PACKAGE__ . "::$ARG" }{'CODE'};
-    croak "no $ARG method defined";
-}
+requires qw(description explanation violates);
 
 around violates => sub {
     my ( $orig, $self ) = splice @ARG, 0, 2;
@@ -42,7 +37,7 @@ has schema => ( is => 'ro', writer => '_set_schema' );
 
 1;
 
-# ABSTRACT: Base class for criticizing database schemas
+# ABSTRACT: Role for criticizing database schemas
 
 __END__
 
@@ -55,7 +50,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy - Base class for criticizing database schemas
+DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
 
 =head1 VERSION
 
@@ -65,11 +60,11 @@ version 0.015
 
     package DBIx::Class::Schema::Critic::Policy::MyPolicy;
     use Moo;
-    extends 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 
     has description => ( default => sub{'Follow my policy'} );
     has explanation => ( default => {'My way or the highway'} );
     has applies_to  => ( default => sub { ['ResultSource'] } );
+    with 'DBIx::Class::Schema::Critic::Policy';
 
     sub violates { $_[0]->element ne '' }
 

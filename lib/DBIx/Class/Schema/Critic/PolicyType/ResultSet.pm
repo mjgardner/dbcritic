@@ -5,9 +5,9 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use Moo;
+use Moo::Role;
 use namespace::autoclean -also => qr{\A _}xms;
-extends 'DBIx::Class::Schema::Critic::PolicyType';
+with 'DBIx::Class::Schema::Critic::PolicyType';
 1;
 
 # ABSTRACT: Role for ResultSet critic policies

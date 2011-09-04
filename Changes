@@ -1,6 +1,6 @@
 Revision history for DBIx-Class-Schema-Critic
 
-0.015     2011-09-04 19:32:19 America/New_York
+0.015     2011-09-04 19:33:36 America/New_York
 
 0.014     2011-08-30 16:13:33 America/New_York
     bump up required perl to 5.10.1 to deal with Moo & Sub::Quote issues

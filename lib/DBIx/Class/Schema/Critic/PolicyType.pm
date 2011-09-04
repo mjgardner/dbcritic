@@ -7,10 +7,10 @@ use Modern::Perl;
 our $VERSION = '0.015';    # VERSION
 require Devel::Symdump;
 use List::MoreUtils;
-use Moo;
+use Moo::Role;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
-extends 'DBIx::Class::Schema::Critic::Policy';
+with 'DBIx::Class::Schema::Critic::Policy';
 
 has applies_to => (
     is   => 'ro',

@@ -9,7 +9,6 @@ use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
-extends 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 
 has description => (
     is      => 'ro',
@@ -32,6 +31,7 @@ sub violates {
 
 sub _message { return "$ARG[0] to $ARG[1] not reciprocated" }
 
+with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for missing bidirectional relationships in ResultSources
