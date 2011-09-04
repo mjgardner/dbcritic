@@ -11,9 +11,10 @@ use Moo;
 use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
-croak "no $ARG method defined"
-    unless defined *{ __PACKAGE__ . "::$ARG" }{CODE}
-        for qw(description explanation violates);
+for (qw(description explanation violates)) {
+    next if defined *{ __PACKAGE__ . "::$ARG" }{CODE};
+    croak "no $ARG method defined";
+}
 
 around violates => sub {
     my ( $orig, $self ) = splice @ARG, 0, 2;
