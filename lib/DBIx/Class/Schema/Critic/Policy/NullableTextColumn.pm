@@ -10,6 +10,7 @@ use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
+extends 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 
 has description => (
     is      => 'ro',
@@ -43,7 +44,6 @@ sub violates {
     } keys %column;
 }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for ResultSources with nullable text columns

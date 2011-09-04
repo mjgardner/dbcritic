@@ -7,7 +7,7 @@ use Modern::Perl;
 our $VERSION = '0.015';    # VERSION
 require Devel::Symdump;
 use List::MoreUtils;
-use Moo::Role;
+use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
 extends 'DBIx::Class::Schema::Critic::Policy';

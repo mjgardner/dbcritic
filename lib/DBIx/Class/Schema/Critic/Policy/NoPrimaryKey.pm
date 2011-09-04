@@ -8,6 +8,7 @@ our $VERSION = '0.015';    # VERSION
 use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
+extends 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 
 has description => ( is => 'ro', default => quote_sub q{'No primary key'} );
 has explanation => (
@@ -22,7 +23,6 @@ sub violates {
     return;
 }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
