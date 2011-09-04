@@ -12,7 +12,7 @@ use DBIx::Class::Schema::Critic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
 for (qw(description explanation violates)) {
-    next if defined *{ __PACKAGE__ . "::$ARG" }{CODE};
+    next if defined *{ __PACKAGE__ . "::$ARG" }{'CODE'};
     croak "no $ARG method defined";
 }
 
