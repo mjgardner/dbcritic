@@ -10,7 +10,7 @@ use List::MoreUtils;
 use Moo::Role;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
-with 'DBIx::Class::Schema::Critic::Policy';
+extends 'DBIx::Class::Schema::Critic::Policy';
 
 has applies_to => (
     is   => 'ro',
