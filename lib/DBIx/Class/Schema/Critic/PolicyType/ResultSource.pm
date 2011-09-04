@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.014';    # VERSION
+our $VERSION = '0.015';    # VERSION
 use Moo::Role;
 use namespace::autoclean -also => qr{\A _}xms;
 with 'DBIx::Class::Schema::Critic::PolicyType';
@@ -27,7 +27,7 @@ DBIx::Class::Schema::Critic::PolicyType::ResultSource - Role for ResultSource cr
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 

@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.014';    # VERSION
+our $VERSION = '0.015';    # VERSION
 use Const::Fast;
 use English '-no_match_vars';
 use Moo;
@@ -53,7 +53,7 @@ DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::C
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 

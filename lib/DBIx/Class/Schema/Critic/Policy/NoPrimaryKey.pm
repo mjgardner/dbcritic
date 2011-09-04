@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.014';    # VERSION
+our $VERSION = '0.015';    # VERSION
 use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
@@ -42,7 +42,7 @@ DBIx::Class::Schema::Critic::Policy::NoPrimaryKey - Check for DBIx::Class::Schem
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 

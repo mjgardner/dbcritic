@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.014';    # VERSION
+our $VERSION = '0.015';    # VERSION
 use Carp;
 use English '-no_match_vars';
 use List::MoreUtils 'any';
@@ -129,7 +129,7 @@ DBIx::Class::Schema::Critic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 
