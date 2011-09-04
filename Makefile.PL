@@ -51,7 +51,6 @@ my %WriteMakefileArgs = (
     "Modern::Perl" => 0,
     "Module::Pluggable" => 0,
     "Moo" => 0,
-    "Moo::Role" => 0,
     "Scalar::Util" => 0,
     "Sub::Quote" => 0,
     "namespace::autoclean" => 0,

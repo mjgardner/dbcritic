@@ -5,7 +5,7 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use Moo::Role;
+use Moo;
 use namespace::autoclean -also => qr{\A _}xms;
 extends 'DBIx::Class::Schema::Critic::PolicyType';
 1;
