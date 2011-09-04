@@ -5,6 +5,7 @@ use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
+use Carp;
 use English '-no_match_vars';
 use Moo;
 use DBIx::Class::Schema::Critic::Violation;
