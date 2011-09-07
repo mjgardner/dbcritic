@@ -9,7 +9,7 @@
 <meta name="generator" content="pod2s5 0.08" />
 <meta name="generator" content="S5" />
 <meta name="version" content="S5 1.1" />
-<meta name="presdate" content="September 12, 2011" />
+<meta name="presdate" content="Sep 12, 2011" />
 <meta name="author" content="Mark Gardner" />
 <meta name="company" content="&nbsp;" />
 <!-- configuration parameters -->
@@ -47,22 +47,82 @@ img#me05 {top: 43px;left: 36px;}
 <div id="currentSlide"></div>
 <div id="header"></div>
 <div id="footer">
-<h1>Philadelphia, PA &#8226; September 12, 2011</h1>
+<h1>Philadelphia, PA &#8226; Sep 12, 2011</h1>
 <h2>DBIx::Class::Schema::Critic</h2></div>
 </div><div class="slide">
 <h1>DBIx::Class::Schema::Critic
 
 </h1><p>Mark Gardner <mjgardner@cpan.org>
 
+
 </p></div>
+<div class="slide">
+<h1>I love Perl::Critic
+
+</h1><ul class="incremental"><li level="1"><p>makes sure I follow the same coding standards
+
+</p></li><li level="1"><p>catches potential maintenance problems and ambiguities
+
+</p></li><li level="1"><p>adjustable so I can bend the "rules" when I need to
+
+</p></li></ul class="incremental"></div>
+<div class="slide">
+<h1>I hate databases
+
+</h1><p><i>(specifically, relational database schemas)</i>
+
+</p><ul class="incremental"><li level="1"><p>a lot of details to get right when developing a schema
+
+</p></li><li level="1"><p>a lot of repetitive SQL to keep consistent
+
+</p></li><li level="1"><p>often thrown together by developers (like me) more focused on code
+
+</p></li></ul class="incremental"></div>
 <div class="slide">
 <h1>Quick Demo
 
-</h1><ul class="incremental"><li level="1">cpanm&nbsp;DBIx::Class::Schema::Critic&nbsp;<font color="#7f7f7f"><i>#&nbsp;install</i></font><font color="#7f7f7f"><i><BR>
-</i></font><BR>
-</li><li level="1">dbic_critic&nbsp;--dsn&nbsp;dbi:SQLite:demo.db&nbsp;<font color="#7f7f7f"><i>#&nbsp;run</i></font><font color="#7f7f7f"><i><BR>
-</i></font><BR>
-</li></ul class="incremental"></div>
+</h1><code>    $ dbic_critic --dsn dbi:SQLite:demo.db </code></div>
 <div class="slide">
 <h1>What just happened?
-</h1></div></body></html>
+
+</h1><ul class="incremental"><li level="1"><p>Connect to database
+
+</p></li><li level="1"><p>Turn database schema into Perl classes
+
+</p></li><li level="1"><p>Load plugins to process each type of class created
+
+</p></li><li level="1"><p>Loop over the classes, plugins report violations of a policy
+
+</p></li><li level="1"><p>(Perl::Critic works the same way, only with Perl documents)
+
+</p></li></ul class="incremental"></div>
+<div class="slide">
+<h1>Standing on the shoulders of CPAN
+
+</h1><ul><li level="1">DBIx::Class
+
+</li><li level="1">DBIx::Class::Schema::Loader
+
+</li><li level="1">Module::Pluggable
+
+</li><li level="1">Moo
+
+</li></ul></div>
+<div class="slide">
+<h1>Under the hood
+
+</h1><h2>Main classes
+
+</h2><ul><li level="1">Critic
+
+</li><li level="1">Critic::Loader
+
+</li><li level="1">Critic::Violation
+
+</li></ul><h2>Roles
+
+</h2><ul><li level="1">Critic::Policy
+
+</li><li level="1">Critic::PolicyType
+
+</li></ul></div></body></html>

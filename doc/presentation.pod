@@ -1,0 +1,115 @@
+=head1 DBIx::Class::Schema::Critic
+
+Mark Gardner <mjgardner@cpan.org>
+
+
+=head1 I love Perl::Critic
+
+=over
+
+=item *
+
+makes sure I follow the same coding standards
+
+=item *
+
+catches potential maintenance problems and ambiguities
+
+=item *
+
+adjustable so I can bend the "rules" when I need to
+
+=back
+
+
+=head1 I hate databases
+
+I<(specifically, relational database schemas)>
+
+=over
+
+=item *
+
+a lot of details to get right when developing a schema
+
+=item *
+
+a lot of repetitive SQL to keep consistent
+
+=item *
+
+often thrown together by developers (like me) more focused on code
+
+=back
+
+
+=head1 Quick Demo
+
+    $ dbic_critic --dsn dbi:SQLite:demo.db
+
+
+=head1 What just happened?
+
+=over
+
+=item *
+
+Connect to database
+
+=item *
+
+Turn database schema into Perl classes
+
+=item *
+
+Load plugins to process each type of class created
+
+=item *
+
+Loop over the classes, plugins report violations of a policy
+
+=item *
+
+(Perl::Critic works the same way, only with Perl documents)
+
+=back
+
+
+=head1 Standing on the shoulders of CPAN
+
+=over
+
+=item DBIx::Class
+
+=item DBIx::Class::Schema::Loader
+
+=item Module::Pluggable
+
+=item Moo
+
+=back
+
+
+=head1 Under the hood
+
+=head2 Main classes
+
+=over
+
+=item Critic
+
+=item Critic::Loader
+
+=item Critic::Violation
+
+=back
+
+=head2 Roles
+
+=over
+
+=item Critic::Policy
+
+=item Critic::PolicyType
+
+=back
