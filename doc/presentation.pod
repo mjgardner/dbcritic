@@ -112,4 +112,27 @@ Loop over the classes, plugins report violations of a policy
 
 =item Critic::PolicyType
 
+
+=head1 What is a policy?
+
+=over
+
+=item in DBIx::Class::Schema::Critic::Policy:: namespace
+
+=item has four methods
+
+=over
+
+=item description
+
+=item explanation
+
+=item applies_to
+
+=item violates
+
+=back
+
+=item That's it.
+
 =back
