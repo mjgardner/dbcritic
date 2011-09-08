@@ -46,12 +46,24 @@ often thrown together by developers (like me) more focused on code
 
 =head1 Quick Demo
 
-    $ dbic_critic --dsn dbi:SQLite:sample/demo.db
+=for Bash
+$ sqlite3 sample/demo.db .schema
 
+=for text
+CREATE TABLE person (name, title);
+
+=for Bash
+$ dbic_critic --dsn dbi:SQLite:sample/demo.db
 
 =head1 Quick Demo Results
 
-    $ dbic_critic --dsn dbi:SQLite:sample/demo.db
+=for Bash
+$ dbic_critic --dsn dbi:SQLite:sample/demo.db
+
+=for text
+[Table person] No primary key
+Tables should have one or more columns defined as a primary key.
+person has no primary key
 
 G<Critic-Main-600x314.jpg>
 

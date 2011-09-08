@@ -83,11 +83,19 @@ img#me05 {top: 43px;left: 36px;}
 <div class="slide">
 <h1>Quick Demo
 
-</h1><code>    $ dbic_critic --dsn dbi:SQLite:sample/demo.db </code></div>
+</h1>$&nbsp;sqlite3&nbsp;sample/demo.db&nbsp;.schema<BR>
+<BR>
+<pre>CREATE TABLE person (name, title); </pre>$&nbsp;dbic_critic&nbsp;--dsn&nbsp;dbi:SQLite:sample/demo.db<BR>
+<BR>
+</div>
 <div class="slide">
 <h1>Quick Demo Results
 
-</h1><code>    $ dbic_critic --dsn dbi:SQLite:sample/demo.db </code><p><img src="Critic-Main-600x314.jpg" />
+</h1>$&nbsp;dbic_critic&nbsp;--dsn&nbsp;dbi:SQLite:sample/demo.db<BR>
+<BR>
+<pre>[Table person] No primary key
+Tables should have one or more columns defined as a primary key.
+person has no primary key </pre><p><img src="Critic-Main-600x314.jpg" />
 
 
 
