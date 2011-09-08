@@ -171,7 +171,6 @@ returns a Violation object if the policy was violated
 =begin Perl
 
 use Moo;
-
 sub description {'Follow my policy'}
 sub explanation {'My way or the highway!'}
 sub violates {
@@ -180,7 +179,6 @@ sub violates {
     my $element = $self->element;
     return 'This policy always fails'; # becomes details of the Violation
 }
-
 # take care of applies_to and returning a Violation object
 with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
 
