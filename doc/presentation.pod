@@ -181,6 +181,8 @@ returns a Violation object if the policy was violated
 
 =item stringifies for Critic reports
 
+=back
+
 
 =head1 Moo and Roles make it easier
 
