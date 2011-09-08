@@ -1,6 +1,6 @@
 =head1 DBIx::Class::Schema::Critic
 
-Mark Gardner <mjgardner@cpan.org>
+Mark Gardner I<E<lt>L<mjgardner@cpan.org|mailto:mjgardner@cpan.org>E<gt>>
 
 G<The-Critic.jpg>
 
@@ -87,13 +87,13 @@ Loop over the classes, plugins report violations of a policy
 
 =over
 
-=item DBIx::Class
+=item C<DBIx::Class>
 
-=item DBIx::Class::Schema::Loader
+=item C<DBIx::Class::Schema::Loader>
 
-=item Module::Pluggable
+=item C<Module::Pluggable>
 
-=item Moo
+=item C<Moo>
 
 =back
 
@@ -104,11 +104,11 @@ Loop over the classes, plugins report violations of a policy
 
 =over
 
-=item Critic
+=item C<Critic>
 
-=item Critic::Loader
+=item C<Critic::Loader>
 
-=item Critic::Violation
+=item C<Critic::Violation>
 
 =back
 
@@ -116,16 +116,19 @@ Loop over the classes, plugins report violations of a policy
 
 =over
 
-=item Critic::Policy
+=item C<Critic::Policy>
 
-=item Critic::PolicyType
+=item C<Critic::PolicyType>
 
+=back
+
+I<(all under C<DBIx::Class::Schema::>)>
 
 =head1 What is a policy?
 
 =over
 
-=item in DBIx::Class::Schema::Critic::Policy:: namespace
+=item in C<DBIx::Class::Schema::Critic::Policy::> namespace
 
 =item has four methods
 
@@ -148,6 +151,19 @@ returns a Violation object if the policy was violated
 =item That's it.
 
 =back
+
+
+=head1 What Is A Violation?
+
+=over
+
+=item instance of C<DBIx::Class::Schema::Critic::Violation>
+
+=item has C<description>, C<explanation> and C<element> attributes from a violated Policy
+
+=item has a C<details> attribute for the specific issue found
+
+=item stringifies for Critic reports
 
 
 =head1 Moo and Roles make it easier
