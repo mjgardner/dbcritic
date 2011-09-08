@@ -172,7 +172,7 @@ Make installable outside of CPAN toolchain for non-Perl programmers.
 
 MOAR POLICIES
 
-(Pls send as L<issues on Github|http://github.com/mjgardner/DBIx-Class-Schema-Critic/issues> KTHX)
+(Have ideas? Pls submit on L<GitHub|http://github.com/mjgardner/DBIx-Class-Schema-Critic/issues> KTHX)
 
 =back
 
