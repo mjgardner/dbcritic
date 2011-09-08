@@ -131,13 +131,17 @@ Loop over the classes, plugins report violations of a policy
 
 =over
 
-=item description
+=item C<description>:
+returns a plain string
 
-=item explanation
+=item C<explanation>:
+returns a plain string
 
-=item applies_to
+=item C<applies_to>:
+returns a reference to a list of things the policy criticizes
 
-=item violates
+=item C<violates>:
+returns a Violation object if the policy was violated
 
 =back
 
@@ -145,6 +149,26 @@ Loop over the classes, plugins report violations of a policy
 
 =back
 
+
+=head1 Moo and Roles make it easier
+
+=begin Perl
+
+use Moo;
+
+sub description {'Follow my policy'}
+sub explanation {'My way or the highway!'}
+sub violates {
+    my $self = shift;
+    my $schema = $self->schema;
+    my $element = $self->element;
+    return 'This policy always fails'; # becomes details of the Violation
+}
+
+# take care of applies_to and returning a Violation object
+with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+
+=end Perl
 
 =head1 TODO
 

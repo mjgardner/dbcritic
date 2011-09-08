@@ -144,17 +144,39 @@ img#me05 {top: 43px;left: 36px;}
 
 </li><li level="1">has four methods
 
-<ul><li level="1">description
+<ul><li level="1"><code>description</code>:
+returns a plain string
 
-</li><li level="1">explanation
+</li><li level="1"><code>explanation</code>:
+returns a plain string
 
-</li><li level="1">applies_to
+</li><li level="1"><code>applies_to</code>:
+returns a reference to a list of things the policy criticizes
 
-</li><li level="1">violates
+</li><li level="1"><code>violates</code>:
+returns a Violation object if the policy was violated
 
 </li></ul></li><li level="1">That's it.
 
 </li></ul></div>
+<div class="slide">
+<h1>Moo and Roles make it easier
+
+</h1><b>use</b>&nbsp;Moo;<BR>
+<BR>
+<b>sub&nbsp;</b><font color="#007f00">description</font>&nbsp;{<font color="#ffa500">'</font><font color="#ff0000">Follow&nbsp;my&nbsp;policy</font><font color="#ffa500">'</font>}<BR>
+<b>sub&nbsp;</b><font color="#007f00">explanation</font>&nbsp;{<font color="#ffa500">'</font><font color="#ff0000">My&nbsp;way&nbsp;or&nbsp;the&nbsp;highway!</font><font color="#ffa500">'</font>}<BR>
+<b>sub&nbsp;</b><font color="#007f00">violates</font>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>my</b>&nbsp;<font color="#0000ff">$self</font>&nbsp;=&nbsp;<font color="#007f00">shift</font>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>my</b>&nbsp;<font color="#0000ff">$schema</font>&nbsp;=&nbsp;<font color="#0000ff">$self</font>-&gt;<font color="#0000ff">schema</font>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>my</b>&nbsp;<font color="#0000ff">$element</font>&nbsp;=&nbsp;<font color="#0000ff">$self</font>-&gt;<font color="#0000ff">element</font>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b>&nbsp;<font color="#ffa500">'</font><font color="#ff0000">This&nbsp;policy&nbsp;always&nbsp;fails</font><font color="#ffa500">'</font>;&nbsp;<font color="#7f7f7f"><i>#&nbsp;becomes&nbsp;details&nbsp;of&nbsp;the&nbsp;Violation</i></font><font color="#7f7f7f"><i><BR>
+</i></font>}<BR>
+<BR>
+<font color="#7f7f7f"><i>#&nbsp;take&nbsp;care&nbsp;of&nbsp;applies_to&nbsp;and&nbsp;returning&nbsp;a&nbsp;Violation&nbsp;object</i></font><font color="#7f7f7f"><i><BR>
+</i></font>with&nbsp;<font color="#ffa500">'</font><font color="#ff0000">DBIx::Class::Schema::Critic::PolicyType::ResultSource</font><font color="#ffa500">'</font>;<BR>
+<BR>
+</div>
 <div class="slide">
 <h1>TODO
 
