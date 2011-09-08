@@ -2,6 +2,7 @@
 
 Mark Gardner <mjgardner@cpan.org>
 
+G<The-Critic.jpg>
 
 =head1 I love Perl::Critic
 
@@ -48,6 +49,13 @@ often thrown together by developers (like me) more focused on code
     $ dbic_critic --dsn dbi:SQLite:demo.db
 
 
+=head1 Quick Demo Results
+
+    $ dbic_critic --dsn dbi:SQLite:demo.db
+
+G<Critic-Main-600x314.jpg>
+
+
 =head1 What just happened?
 
 =over
@@ -75,7 +83,7 @@ Loop over the classes, plugins report violations of a policy
 =back
 
 
-=head1 Standing on the shoulders of CPAN
+=head1 I Love CPAN
 
 =over
 
@@ -134,5 +142,71 @@ Loop over the classes, plugins report violations of a policy
 =back
 
 =item That's it.
+
+=back
+
+
+=head1 TODO
+
+=over
+
+=item *
+
+Steal more ideas from Perl::Critic!
+
+=over
+
+=item Configure which policies run, severity levels, themes, etc.
+
+=item Support configurable policies
+
+=back
+
+=item *
+
+Make installable outside of CPAN toolchain for non-Perl programmers.
+
+(I'm sure Ruby and PHP people have crappy databases too.)
+
+=item *
+
+MOAR POLICIES
+
+(Pls send as L<issues on Github|http://github.com/mjgardner/DBIx-Class-Schema-Critic/issues> KTHX)
+
+=back
+
+
+=head1 Where To Get it
+
+=over
+
+=item Download
+
+=over
+
+=item CPAN: L<http://search.cpan.org/dist/DBIx-Class-Schema-Critic/>
+
+=item MetaCPAN: L<http://metacpan.org/release/DBIx-Class-Schema-Critic/>
+
+=back
+
+=item Contribute ideas, policies and code
+
+=over
+
+=item GitHub: L<http://github.com/mjgardner/DBIx-Class-Schema-Critic>
+
+=item I use Dist::Zilla, but the default branch doesn't need it.
+
+=back
+
+=back
+
+=over
+
+=item *
+
+Questions?
 
 =back
