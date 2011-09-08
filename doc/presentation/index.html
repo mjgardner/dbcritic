@@ -83,11 +83,11 @@ img#me05 {top: 43px;left: 36px;}
 <div class="slide">
 <h1>Quick Demo
 
-</h1><code>    $ dbic_critic --dsn dbi:SQLite:demo.db </code></div>
+</h1><code>    $ dbic_critic --dsn dbi:SQLite:sample/demo.db </code></div>
 <div class="slide">
 <h1>Quick Demo Results
 
-</h1><code>    $ dbic_critic --dsn dbi:SQLite:demo.db </code><p><img src="Critic-Main-600x314.jpg" />
+</h1><code>    $ dbic_critic --dsn dbi:SQLite:sample/demo.db </code><p><img src="Critic-Main-600x314.jpg" />
 
 
 
@@ -103,7 +103,7 @@ img#me05 {top: 43px;left: 36px;}
 
 </p></li><li level="1"><p>Loop over the classes, plugins report violations of a policy
 
-</p></li><li level="1"><p>(Perl::Critic works the same way, only with Perl documents)
+</p></li><li level="1"><p>(structure borrowed from Perl::Critic's processing of Perl documents)
 
 </p></li></ul class="incremental"></div>
 <div class="slide">
@@ -141,7 +141,9 @@ img#me05 {top: 43px;left: 36px;}
 <div class="slide">
 <h1>What is a policy?
 
-</h1><ul><li level="1">in <code>DBIx::Class::Schema::Critic::Policy::</code> namespace
+</h1><ul><li level="1">concept borrowed from Perl::Critic
+
+</li><li level="1">in <code>DBIx::Class::Schema::Critic::Policy::</code> namespace
 
 </li><li level="1">has four methods
 
@@ -163,7 +165,9 @@ returns a Violation object if the policy was violated
 <div class="slide">
 <h1>What Is A Violation?
 
-</h1><ul><li level="1">instance of <code>DBIx::Class::Schema::Critic::Violation</code>
+</h1><ul><li level="1">concept borrowed from Perl::Critic
+
+</li><li level="1">instance of <code>DBIx::Class::Schema::Critic::Violation</code>
 
 </li><li level="1">has <code>description</code>, <code>explanation</code> and <code>element</code> attributes from a violated Policy
 

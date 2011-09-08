@@ -46,12 +46,12 @@ often thrown together by developers (like me) more focused on code
 
 =head1 Quick Demo
 
-    $ dbic_critic --dsn dbi:SQLite:demo.db
+    $ dbic_critic --dsn dbi:SQLite:sample/demo.db
 
 
 =head1 Quick Demo Results
 
-    $ dbic_critic --dsn dbi:SQLite:demo.db
+    $ dbic_critic --dsn dbi:SQLite:sample/demo.db
 
 G<Critic-Main-600x314.jpg>
 
@@ -78,7 +78,7 @@ Loop over the classes, plugins report violations of a policy
 
 =item *
 
-(Perl::Critic works the same way, only with Perl documents)
+(structure borrowed from Perl::Critic's processing of Perl documents)
 
 =back
 
@@ -128,6 +128,8 @@ I<(all under C<DBIx::Class::Schema::>)>
 
 =over
 
+=item concept borrowed from Perl::Critic
+
 =item in C<DBIx::Class::Schema::Critic::Policy::> namespace
 
 =item has four methods
@@ -156,6 +158,8 @@ returns a Violation object if the policy was violated
 =head1 What Is A Violation?
 
 =over
+
+=item concept borrowed from Perl::Critic
 
 =item instance of C<DBIx::Class::Schema::Critic::Violation>
 
