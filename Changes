@@ -1,6 +1,6 @@
 Revision history for App-DBCritic
 
-0.015     2011-09-15 15:04:47 America/New_York
+0.015     2011-09-15 15:07:27 America/New_York
     rename to App-DBCritic
 0.014     2011-08-30 16:13:33 America/New_York
     bump up required perl to 5.10.1 to deal with Moo & Sub::Quote issues

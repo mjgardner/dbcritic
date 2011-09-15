@@ -69,7 +69,7 @@
       "bugtracker" : {
          "web" : "https://github.com/mjgardner/dbcritic/issues"
       },
-      "homepage" : "http://mjgardner.github.com/DBIx-Class-Schema-Critic/",
+      "homepage" : "http://mjgardner.github.com/dbcritic/",
       "repository" : {
          "type" : "git",
          "url" : "git://github.com/mjgardner/dbcritic.git",
