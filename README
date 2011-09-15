@@ -1,69 +1,27 @@
 NAME
-    App::DBCritic - Critique a database schema for best practices
+    dbcritic - Critique a database schema for best practices
 
 VERSION
     version 0.015
 
-SYNOPSIS
-        use App::DBCritic;
-
-        my $critic = App::DBCritic->new(
-            dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
-        $critic->critique();
+USAGE
+        dbcritic --help
+        dbcritic --dsn dbi:Oracle:HR --username scott --password tiger
+        dbcritic --class_name My::Schema --dsn dbi:mysql:database=db --username perl --password pass
 
 DESCRIPTION
-    This package is used to scan a database schema and catalog any
-    violations of best practices as defined by a set of policy plugins. It
-    takes conceptual and API inspiration from Perl::Critic.
+    This is the command line interface to App::DBCritic, a utility for
+    scanning a database schema for violations of best practices.
 
-    dbcritic is the command line interface.
-
-    This is a work in progress - please see the "SUPPORT" section below for
-    information on how to contribute. It especially needs ideas (and
-    implementations!) of new policies!
-
-ATTRIBUTES
-  class_name
-    The name of a DBIx::Class::Schema class you wish to "critique". Only
-    settable at construction time.
-
-  schema
-    A DBIx::Class::Schema object you wish to "critique". Only settable at
-    construction time.
-
-  dsn
-  username
-  password
-    The DBI data source name (required) and optional username and password
-    used to connect to the database. If no "class_name" or "schema" is
-    provided, DBIx::Class::Schema::Loader will then construct schema classes
-    dynamically to be critiqued.
-
-METHODS
-  policies
-    Returns an array of loaded policy names that will be applied during
-    "critique". By default all modules under the "App::DBCritic::Policy"
-    namespace are loaded.
-
-  critique
-    Runs the "schema" through the "App::DBCritic" engine using all the
-    policies that have been loaded and dumps a string representation of
-    "violations" to "STDOUT".
-
-  violations
-    Returns an array reference of all App::DBCritic::Violations picked up by
-    the various policies.
-
-SEE ALSO
-    Perl::Critic
-    DBIx::Class
-    DBIx::Class::Schema::Loader
+CONFIGURATION
+    All configuration is done via the command line options described by
+    "dbcritic --help".
 
 SUPPORT
   Perldoc
     You can find documentation for this module with the perldoc command.
 
-      perldoc App::DBCritic
+      perldoc bin::dbcritic
 
   Websites
     The following websites have more information about this module, and may
@@ -116,7 +74,7 @@ SUPPORT
         The CPAN Testers Dependencies is a website that shows a chart of the
         test results of all dependencies for a distribution.
 
-        <http://deps.cpantesters.org/?module=App::DBCritic>
+        <http://deps.cpantesters.org/?module=bin::dbcritic>
 
   Bugs / Feature Requests
     Please report any bugs or feature requests through the web interface at

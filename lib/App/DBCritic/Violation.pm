@@ -105,7 +105,7 @@ the object appears in double quotes.
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc App::DBCritic
+  perldoc bin::dbcritic
 
 =head2 Websites
 
@@ -168,7 +168,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=App::DBCritic>
+L<http://deps.cpantesters.org/?module=bin::dbcritic>
 
 =back
 
