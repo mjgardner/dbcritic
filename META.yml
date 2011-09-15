@@ -50,7 +50,7 @@ requires:
   strict: 0
   utf8: 0
 resources:
-  bugtracker: https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues
+  bugtracker: https://github.com/mjgardner/dbcritic/issues
   homepage: http://mjgardner.github.com/DBIx-Class-Schema-Critic/
-  repository: git://github.com/mjgardner/DBIx-Class-Schema-Critic.git
+  repository: git://github.com/mjgardner/dbcritic.git
 version: 0.015

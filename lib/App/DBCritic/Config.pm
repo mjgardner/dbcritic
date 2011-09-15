@@ -120,7 +120,7 @@ L<http://deps.cpantesters.org/?module=bin::dbcritic>
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the web
-interface at L<https://github.com/mjgardner/DBIx-Class-Schema-Critic/issues>. You will be automatically notified of any
+interface at L<https://github.com/mjgardner/dbcritic/issues>. You will be automatically notified of any
 progress on the request by the system.
 
 =head2 Source Code
@@ -129,9 +129,9 @@ The code is open to the world, and available for you to hack on. Please feel fre
 with it, or whatever. If you want to contribute patches, please send me a diff or prod me to pull
 from your repository :)
 
-L<https://github.com/mjgardner/DBIx-Class-Schema-Critic>
+L<https://github.com/mjgardner/dbcritic>
 
-  git clone git://github.com/mjgardner/DBIx-Class-Schema-Critic.git
+  git clone git://github.com/mjgardner/dbcritic.git
 
 =head1 AUTHOR
 
