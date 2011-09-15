@@ -11,7 +11,7 @@ dbcritic - Critique a database schema for best practices
 
 =head1 VERSION
 
-version 0.015
+version 0.020
 
 =head1 USAGE
 
