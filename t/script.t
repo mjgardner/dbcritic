@@ -7,7 +7,7 @@ use Path::Class;
 use FindBin;
 use local::lib dir( $FindBin::Bin, 'schema' )->stringify();
 
-my $script = 'bin/dbic_critic';
+my $script = 'bin/dbcritic';
 script_compiles($script);
 
 my $schema = DBICx::TestDatabase->new('MySchema');

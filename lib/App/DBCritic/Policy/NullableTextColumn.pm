@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Policy::NullableTextColumn;
+package App::DBCritic::Policy::NullableTextColumn;
 
 use strict;
 use utf8;
@@ -43,16 +43,16 @@ sub violates {
     } keys %column;
 }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for ResultSources with nullable text columns
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
+    use App::DBCritic;
 
-    my $critic = DBIx::Class::Schema::Critic->new(
+    my $critic = App::DBCritic->new(
         dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
@@ -77,7 +77,7 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 =method violates
 
 Returns details of each column from the
-L<"current element"|DBIx::Class::Schema::Critic::Policy> that maps to
+L<"current element"|App::DBCritic::Policy> that maps to
 following data types and
 L<"is nullable"|DBIx::Class::ResultSource/is_nullable>:
 

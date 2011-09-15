@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Policy::DuplicateRelationships;
+package App::DBCritic::Policy::DuplicateRelationships;
 
 use strict;
 use utf8;
@@ -32,16 +32,16 @@ sub violates {
         } combinations( [ $source->relationships ], 2 );
 }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for ResultSources with unnecessary duplicate relationships
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
+    use App::DBCritic;
 
-    my $critic = DBIx::Class::Schema::Critic->new(
+    my $critic = App::DBCritic->new(
         dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
@@ -66,5 +66,5 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 =method violates
 
 Returns details if the
-L<"current element"|DBIx::Class::Schema::Critic::Policy>'s C<relationship_info>
+L<"current element"|App::DBCritic::Policy>'s C<relationship_info>
 hashes for any defined relationships are duplicated.

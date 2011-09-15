@@ -6,7 +6,7 @@ use utf8;
 
 # VERSION
 use Getopt::Long::Descriptive;
-use DBIx::Class::Schema::Critic;
+use App::DBCritic;
 
 my ( $opt, $usage ) = describe_options(
     '%c %o',
@@ -24,28 +24,27 @@ if ( $opt->help ) {
     exit;
 }
 
-my $critic = DBIx::Class::Schema::Critic->new(
+my $critic = App::DBCritic->new(
     map { $_ => $opt->$_ }
     grep { defined $opt->$_ } qw(dsn username password class_name),
 );
 $critic->critique();
 
-# PODNAME: dbic_critic
+# PODNAME: dbcritic
 # ABSTRACT: Critique a database schema for best practices
 
 =head1 USAGE
 
-    dbic-critic --help
-    dbic-critic --dsn dbi:Oracle:HR --username scott --password tiger
-    dbic-critic --class_name My::Schema --dsn dbi:mysql:database=db --username perl --password pass
+    dbcritic --help
+    dbcritic --dsn dbi:Oracle:HR --username scott --password tiger
+    dbcritic --class_name My::Schema --dsn dbi:mysql:database=db --username perl --password pass
 
 =head1 DESCRIPTION
 
-This is the command line interface to
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>, a utility for
-scanning a database schema for violations of best practices.
+This is the command line interface to L<App::DBCritic|App::DBCritic>,
+a utility for scanning a database schema for violations of best practices.
 
 =head1 CONFIGURATION
 
 All configuration is done via the command line options described by
-C<dbic-critic --help>.
+C<dbcritic --help>.

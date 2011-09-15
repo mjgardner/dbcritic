@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Policy::NoPrimaryKey;
+package App::DBCritic::Policy::NoPrimaryKey;
 
 use strict;
 use utf8;
@@ -22,16 +22,16 @@ sub violates {
     return;
 }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
+    use App::DBCritic;
 
-    my $critic = DBIx::Class::Schema::Critic->new(
+    my $critic = App::DBCritic->new(
         dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
@@ -55,5 +55,5 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 =method violates
 
 Returns details if the
-L<"current element"|DBIx::Class::Schema::Critic::Policy>'s C<primary_columns>
+L<"current element"|App::DBCritic::Policy>'s C<primary_columns>
 method returns nothing.

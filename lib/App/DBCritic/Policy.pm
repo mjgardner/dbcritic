@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Policy;
+package App::DBCritic::Policy;
 
 use strict;
 use utf8;
@@ -7,7 +7,7 @@ use Modern::Perl;
 # VERSION
 use English '-no_match_vars';
 use Moo::Role;
-use DBIx::Class::Schema::Critic::Violation;
+use App::DBCritic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
 requires qw(description explanation violates);
@@ -27,7 +27,7 @@ has element => ( is => 'ro', init_arg => undef, writer => '_set_element' );
 
 sub violation {
     my $self = shift;
-    return DBIx::Class::Schema::Critic::Violation->new(
+    return App::DBCritic::Violation->new(
         details => shift,
         map { $ARG => $self->$ARG } qw(description explanation element),
     );
@@ -41,21 +41,21 @@ has schema => ( is => 'ro', writer => '_set_schema' );
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    package App::DBCritic::Policy::MyPolicy;
     use Moo;
 
     has description => ( default => sub{'Follow my policy'} );
     has explanation => ( default => {'My way or the highway'} );
     has applies_to  => ( default => sub { ['ResultSource'] } );
-    with 'DBIx::Class::Schema::Critic::Policy';
+    with 'App::DBCritic::Policy';
 
     sub violates { $_[0]->element ne '' }
 
 
 =head1 DESCRIPTION
 
-This is a L<role|Moo::Role> consumed by all
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy plugins.
+This is a L<role|Moo::Role> consumed by all L<App::DBCritic|App::DBCritic>
+policy plugins.
 
 =head1 REQUIRED METHODS
 
@@ -85,7 +85,7 @@ role.  Callers should call the C<violates> method as the following:
 =item Arguments: I<$element>, I<$schema>
 
 =item Return value: nothing if the policy passes, or a
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
+L<App::DBCritic::Violation|App::DBCritic::Violation>
 object if it doesn't.
 
 =back
@@ -93,18 +93,15 @@ object if it doesn't.
 =attr element
 
 Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+L<App::DBCritic|App::DBCritic>.
 
 =attr schema
 
 Read-only accessor for the current schema object being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
-
-=cut
+L<App::DBCritic|App::DBCritic>.
 
 =method violation
 
 Given a string description of a violation that has been encountered, creates a
-new
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
+new L<App::DBCritic::Violation|App::DBCritic::Violation>
 object from the current policy.

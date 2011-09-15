@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::PolicyType::ResultSet;
+package App::DBCritic::PolicyType::ResultSet;
 
 use strict;
 use utf8;
@@ -7,27 +7,25 @@ use Modern::Perl;
 # VERSION
 use Moo::Role;
 use namespace::autoclean -also => qr{\A _}xms;
-with 'DBIx::Class::Schema::Critic::PolicyType';
+with 'App::DBCritic::PolicyType';
 1;
 
 # ABSTRACT: Role for ResultSet critic policies
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyResultSetPolicy;
+    package App::DBCritic::Policy::MyResultSetPolicy;
     use Moo;
 
     has description => ( default => sub{'Follow my policy'} );
     has explanation => ( default => {'My way or the highway'} );
     sub violates { $_[0]->element ne '' }
 
-    with 'DBIx::Class::Schema::Critic::PolicyType::ResultSet';
+    with 'App::DBCritic::PolicyType::ResultSet';
 
 =head1 DESCRIPTION
 
-This is a role composed into
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy classes
+This is a role composed into L<App::DBCritic|App::DBCritic> policy classes
 that are interested in L<ResultSet|DBIx::Class::ResultSet>s.  It takes
-care of composing the
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
+care of composing the L<App::DBCritic::Policy|App::DBCritic::Policy>
 for you.

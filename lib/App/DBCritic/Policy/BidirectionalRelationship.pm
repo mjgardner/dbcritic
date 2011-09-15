@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Policy::BidirectionalRelationship;
+package App::DBCritic::Policy::BidirectionalRelationship;
 
 use strict;
 use utf8;
@@ -31,16 +31,16 @@ sub violates {
 
 sub _message { return "$ARG[0] to $ARG[1] not reciprocated" }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
 # ABSTRACT: Check for missing bidirectional relationships in ResultSources
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
+    use App::DBCritic;
 
-    my $critic = DBIx::Class::Schema::Critic->new(
+    my $critic = App::DBCritic->new(
         dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
@@ -64,7 +64,7 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =method violates
 
-If the L<"current element"|DBIx::Class::Schema::Critic::Policy>'s
+If the L<"current element"|App::DBCritic::Policy>'s
 L<relationships|DBIx::Class::ResultSource/relationships> do not all have
 corresponding
 L<"reverse relationships"|DBIx::Class::ResultSource/reverse_relationship_info>,

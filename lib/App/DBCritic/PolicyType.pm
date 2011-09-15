@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::PolicyType;
+package App::DBCritic::PolicyType;
 
 use strict;
 use utf8;
@@ -10,7 +10,7 @@ use List::MoreUtils;
 use Moo::Role;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
-with 'DBIx::Class::Schema::Critic::Policy';
+with 'App::DBCritic::Policy';
 
 has applies_to => (
     is   => 'ro',
@@ -29,18 +29,17 @@ END_SUB
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::PolicyType::ResultClass;
+    package App::DBCritic::PolicyType::ResultClass;
     use Moo;
-    with 'DBIx::Class::Schema::Critic::PolicyType';
+    with 'App::DBCritic::PolicyType';
     1;
 
 =head1 DESCRIPTION
 
-This is a L<role|Moo::Role> consumed by all
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy types.
+This is a L<role|Moo::Role> consumed by all L<App::DBCritic|App::DBCritic>
+policy types.
 
 =attr applies_to
 
 Returns an array reference containing the last component of all the
-C<DBIx::Class::Schema::Critic::PolicyType>
-roles composed into the consuming class.
+C<App::DBCritic::PolicyType> roles composed into the consuming class.

@@ -1,3 +1,3 @@
 /.build/
-/DBIx-Class-Schema-Critic-*
+/App-DBCritic-*
 .DS_Store

@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Violation;
+package App::DBCritic::Violation;
 
 use strict;
 use utf8;
@@ -36,13 +36,13 @@ sub _build_as_string {
 
 1;
 
-# ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
+# ABSTRACT: A violation of a App::DBCritic::Policy
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic::Violation;
+    use App::DBCritic::Violation;
 
-    my $violation = DBIx::Class::Schema::Critic::Violation->new(
+    my $violation = App::DBCritic::Violation->new(
         description => 'Violated policy',
         explanation => 'Consult the rulebook',
         description => 'The frob table is improperly swizzled.',
@@ -51,10 +51,8 @@ sub _build_as_string {
 
 =head1 DESCRIPTION
 
-This class represents
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-violations flagged by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+This class represents L<App::DBCritic::Policy|App::DBCritic::Policy>
+violations flagged by L<App::DBCritic|App::DBCritic>.
 
 =attr description
 
@@ -74,7 +72,7 @@ being critiqued.
 =attr element
 
 The schema element that violated a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
+L<App::DBCritic::Policy|App::DBCritic::Policy>.
 Only settable at construction.
 
 =attr as_string

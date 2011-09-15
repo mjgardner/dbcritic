@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic;
+package App::DBCritic;
 
 use strict;
 use utf8;
@@ -14,7 +14,7 @@ use Module::Pluggable
     instantiate => 'new';
 use Moo;
 use Scalar::Util 'blessed';
-use DBIx::Class::Schema::Critic::Loader;
+use App::DBCritic::Loader;
 
 for (qw(username password class_name)) { has $ARG => ( is => 'ro' ) }
 
@@ -59,7 +59,7 @@ sub _coerce_schema {
             print {*STDERR} $ARG[0];
         }
     };
-    return DBIx::Class::Schema::Critic::Loader->connect( @{$schema} )
+    return App::DBCritic::Loader->connect( @{$schema} )
         if ref $schema eq 'ARRAY';
     ## no critic (ErrorHandling::RequireUseOfExceptions)
     croak q{don't know how to make a schema from a } . ref $schema;
@@ -116,9 +116,9 @@ sub _policy_applies_to {
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
+    use App::DBCritic;
 
-    my $critic = DBIx::Class::Schema::Critic->new(
+    my $critic = App::DBCritic->new(
         dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
@@ -128,7 +128,7 @@ This package is used to scan a database schema and catalog any violations
 of best practices as defined by a set of policy plugins.  It takes conceptual
 and API inspiration from L<Perl::Critic|Perl::Critic>.
 
-B<dbic_critic> is the command line interface.
+B<dbcritic> is the command line interface.
 
 This is a work in progress - please see the L</SUPPORT> section below for
 information on how to contribute.  It especially needs ideas (and
@@ -138,7 +138,7 @@ implementations!) of new policies!
 
 Returns an array of loaded policy names that will be applied during
 L</critique>.  By default all modules under the
-C<DBIx::Class::Schema::Critic::Policy> namespace are loaded.
+C<App::DBCritic::Policy> namespace are loaded.
 
 =attr class_name
 
@@ -164,15 +164,14 @@ construct schema classes dynamically to be critiqued.
 
 =method critique
 
-Runs the L</schema> through the
-C<DBIx::Class::Schema::Critic> engine using all
+Runs the L</schema> through the C<App::DBCritic> engine using all
 the policies that have been loaded and dumps a string representation of
 L</violations> to C<STDOUT>.
 
 =method violations
 
 Returns an array reference of all
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>s
+L<App::DBCritic::Violation|App::DBCritic::Violation>s
 picked up by the various policies.
 
 =head1 SEE ALSO

@@ -1,7 +1,7 @@
-Revision history for DBIx-Class-Schema-Critic
+Revision history for App-DBCritic
 
 {{$NEXT}}
-
+    rename to App-DBCritic
 0.014     2011-08-30 16:13:33 America/New_York
     bump up required perl to 5.10.1 to deal with Moo & Sub::Quote issues
     some minor POD, test and code readability fixes
