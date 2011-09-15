@@ -30,12 +30,12 @@ my %WriteMakefileArgs = (
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
-  "DISTNAME" => "DBIx-Class-Schema-Critic",
+  "DISTNAME" => "App-DBCritic",
   "EXE_FILES" => [
-    "bin/dbic_critic"
+    "bin/dbcritic"
   ],
   "LICENSE" => "perl",
-  "NAME" => "DBIx::Class::Schema::Critic",
+  "NAME" => "App::DBCritic",
   "PREREQ_PM" => {
     "Algorithm::Combinatorics" => 0,
     "Carp" => 0,

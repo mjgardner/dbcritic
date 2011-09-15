@@ -1,42 +1,41 @@
-package DBIx::Class::Schema::Critic::Violation;
+package App::DBCritic::Policy::DuplicateRelationships;
 
 use strict;
 use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use Const::Fast;
+use Algorithm::Combinatorics 'combinations';
+use Data::Compare;
 use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
-use overload q{""} => sub { shift->as_string };
+use namespace::autoclean -also => qr{\A _}xms;
 
-const my @TEXT_FIELDS => qw(description explanation details);
-for (@TEXT_FIELDS) {
-    has $_ => ( is => 'ro', default => quote_sub q{q{}} );
+has description => (
+    is      => 'ro',
+    default => quote_sub q{'Duplicate relationships'},
+);
+has explanation => (
+    is      => 'ro',
+    default => quote_sub
+        q{'Each connection between tables should only be expressed once.'},
+);
+
+sub violates {
+    my $source = shift->element;
+    return if $source->relationships < 2;
+
+    return join "\n" => map { sprintf '%s and %s are duplicates', @{$ARG} }
+        grep {
+        Compare( map { $source->relationship_info($ARG) } @{$ARG} )
+        } combinations( [ $source->relationships ], 2 );
 }
 
-has element => ( is => 'ro' );
-has as_string => ( is => 'ro', lazy => 1, default => \&_build_as_string );
-
-sub _build_as_string {
-    my $self    = shift;
-    my $element = $self->element;
-    my $type    = ref $element;
-
-    $type =~ s/\A .* :://xms;
-    const my %TYPE_MAP => (
-        Table     => $element->from,
-        ResultSet => $element->result_class,
-        Schema    => 'schema',
-    );
-    return "[$type $TYPE_MAP{$type}] " . join "\n",
-        map { $self->$ARG } @TEXT_FIELDS;
-}
-
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
-# ABSTRACT: A violation of a DBIx::Class::Schema::Critic::Policy
+# ABSTRACT: Check for ResultSources with unnecessary duplicate relationships
 
 __END__
 
@@ -49,7 +48,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Violation - A violation of a DBIx::Class::Schema::Critic::Policy
+App::DBCritic::Policy::DuplicateRelationships - Check for ResultSources with unnecessary duplicate relationships
 
 =head1 VERSION
 
@@ -57,49 +56,39 @@ version 0.015
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic::Violation;
+    use App::DBCritic;
 
-    my $violation = DBIx::Class::Schema::Critic::Violation->new(
-        description => 'Violated policy',
-        explanation => 'Consult the rulebook',
-        description => 'The frob table is improperly swizzled.',
-    );
-    print "$violation\n";
+    my $critic = App::DBCritic->new(
+        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
+    $critic->critique();
 
 =head1 DESCRIPTION
 
-This class represents
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-violations flagged by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+This policy returns a violation if a
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has relationships to
+other tables that are identical in everything but name.
 
 =head1 ATTRIBUTES
 
 =head2 description
 
-A short string briefly describing what's wrong.
-Only settable at construction.
+"Duplicate relationships"
 
 =head2 explanation
 
-A string giving a longer general description of the problem.
-Only settable at construction.
+"Each connection between tables should only be expressed once."
 
-=head2 details
+=head2 applies_to
 
-A string describing the issue as it specifically applies to the L</element>
-being critiqued.
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
-=head2 element
+=head1 METHODS
 
-The schema element that violated a
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>.
-Only settable at construction.
+=head2 violates
 
-=head2 as_string
-
-Returns a string representation of the object.  The same method is called if
-the object appears in double quotes.
+Returns details if the
+L<"current element"|App::DBCritic::Policy>'s C<relationship_info>
+hashes for any defined relationships are duplicated.
 
 =head1 SUPPORT
 
@@ -107,7 +96,7 @@ the object appears in double quotes.
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc DBIx::Class::Schema::Critic
+  perldoc App::DBCritic
 
 =head2 Websites
 
@@ -122,7 +111,7 @@ Search CPAN
 
 The default CPAN search engine, useful to view POD in HTML format.
 
-L<http://search.cpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://search.cpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -130,7 +119,7 @@ AnnoCPAN
 
 The AnnoCPAN is a website that allows community annonations of Perl module documentation.
 
-L<http://annocpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://annocpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -138,7 +127,7 @@ CPAN Ratings
 
 The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
 
-L<http://cpanratings.perl.org/d/DBIx-Class-Schema-Critic>
+L<http://cpanratings.perl.org/d/App-DBCritic>
 
 =item *
 
@@ -146,7 +135,7 @@ CPANTS
 
 The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
 
-L<http://cpants.perl.org/dist/overview/DBIx-Class-Schema-Critic>
+L<http://cpants.perl.org/dist/overview/App-DBCritic>
 
 =item *
 
@@ -154,7 +143,7 @@ CPAN Testers
 
 The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
 
-L<http://www.cpantesters.org/distro/D/DBIx-Class-Schema-Critic>
+L<http://www.cpantesters.org/distro/A/App-DBCritic>
 
 =item *
 
@@ -162,7 +151,7 @@ CPAN Testers Matrix
 
 The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
 
-L<http://matrix.cpantesters.org/?dist=DBIx-Class-Schema-Critic>
+L<http://matrix.cpantesters.org/?dist=App-DBCritic>
 
 =item *
 
@@ -170,7 +159,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
+L<http://deps.cpantesters.org/?module=App::DBCritic>
 
 =back
 

@@ -1,16 +1,31 @@
-package DBIx::Class::Schema::Critic::PolicyType::ResultSet;
+package App::DBCritic::Policy::NoPrimaryKey;
 
 use strict;
 use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use Moo::Role;
+use Moo;
+use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
-with 'DBIx::Class::Schema::Critic::PolicyType';
+
+has description => ( is => 'ro', default => quote_sub q{'No primary key'} );
+has explanation => (
+    is      => 'ro',
+    default => quote_sub
+        q{'Tables should have one or more columns defined as a primary key.'},
+);
+
+sub violates {
+    my $source = shift->element;
+    return $source->name . ' has no primary key' if !$source->primary_columns;
+    return;
+}
+
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
-# ABSTRACT: Role for ResultSet critic policies
+# ABSTRACT: Check for DBIx::Class::Schema::ResultSources without primary keys
 
 __END__
 
@@ -23,7 +38,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::PolicyType::ResultSet - Role for ResultSet critic policies
+App::DBCritic::Policy::NoPrimaryKey - Check for DBIx::Class::Schema::ResultSources without primary keys
 
 =head1 VERSION
 
@@ -31,23 +46,38 @@ version 0.015
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyResultSetPolicy;
-    use Moo;
+    use App::DBCritic;
 
-    has description => ( default => sub{'Follow my policy'} );
-    has explanation => ( default => {'My way or the highway'} );
-    sub violates { $_[0]->element ne '' }
-
-    with 'DBIx::Class::Schema::Critic::PolicyType::ResultSet';
+    my $critic = App::DBCritic->new(
+        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
+    $critic->critique();
 
 =head1 DESCRIPTION
 
-This is a role composed into
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy classes
-that are interested in L<ResultSet|DBIx::Class::ResultSet>s.  It takes
-care of composing the
-L<DBIx::Class::Schema::Critic::Policy|DBIx::Class::Schema::Critic::Policy>
-for you.
+This policy returns a violation if a
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has zero primary columns.
+
+=head1 ATTRIBUTES
+
+=head2 description
+
+"No primary key"
+
+=head2 explanation
+
+"Tables should have one or more columns defined as a primary key."
+
+=head2 applies_to
+
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
+
+=head1 METHODS
+
+=head2 violates
+
+Returns details if the
+L<"current element"|App::DBCritic::Policy>'s C<primary_columns>
+method returns nothing.
 
 =head1 SUPPORT
 
@@ -55,7 +85,7 @@ for you.
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc DBIx::Class::Schema::Critic
+  perldoc App::DBCritic
 
 =head2 Websites
 
@@ -70,7 +100,7 @@ Search CPAN
 
 The default CPAN search engine, useful to view POD in HTML format.
 
-L<http://search.cpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://search.cpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -78,7 +108,7 @@ AnnoCPAN
 
 The AnnoCPAN is a website that allows community annonations of Perl module documentation.
 
-L<http://annocpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://annocpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -86,7 +116,7 @@ CPAN Ratings
 
 The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
 
-L<http://cpanratings.perl.org/d/DBIx-Class-Schema-Critic>
+L<http://cpanratings.perl.org/d/App-DBCritic>
 
 =item *
 
@@ -94,7 +124,7 @@ CPANTS
 
 The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
 
-L<http://cpants.perl.org/dist/overview/DBIx-Class-Schema-Critic>
+L<http://cpants.perl.org/dist/overview/App-DBCritic>
 
 =item *
 
@@ -102,7 +132,7 @@ CPAN Testers
 
 The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
 
-L<http://www.cpantesters.org/distro/D/DBIx-Class-Schema-Critic>
+L<http://www.cpantesters.org/distro/A/App-DBCritic>
 
 =item *
 
@@ -110,7 +140,7 @@ CPAN Testers Matrix
 
 The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
 
-L<http://matrix.cpantesters.org/?dist=DBIx-Class-Schema-Critic>
+L<http://matrix.cpantesters.org/?dist=App-DBCritic>
 
 =item *
 
@@ -118,7 +148,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
+L<http://deps.cpantesters.org/?module=App::DBCritic>
 
 =back
 

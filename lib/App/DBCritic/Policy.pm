@@ -1,4 +1,4 @@
-package DBIx::Class::Schema::Critic::Policy;
+package App::DBCritic::Policy;
 
 use strict;
 use utf8;
@@ -7,7 +7,7 @@ use Modern::Perl;
 our $VERSION = '0.015';    # VERSION
 use English '-no_match_vars';
 use Moo::Role;
-use DBIx::Class::Schema::Critic::Violation;
+use App::DBCritic::Violation;
 use namespace::autoclean -also => qr{\A _}xms;
 
 requires qw(description explanation violates);
@@ -27,7 +27,7 @@ has element => ( is => 'ro', init_arg => undef, writer => '_set_element' );
 
 sub violation {
     my $self = shift;
-    return DBIx::Class::Schema::Critic::Violation->new(
+    return App::DBCritic::Violation->new(
         details => shift,
         map { $ARG => $self->$ARG } qw(description explanation element),
     );
@@ -50,7 +50,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy - Role for criticizing database schemas
+App::DBCritic::Policy - Role for criticizing database schemas
 
 =head1 VERSION
 
@@ -58,40 +58,39 @@ version 0.015
 
 =head1 SYNOPSIS
 
-    package DBIx::Class::Schema::Critic::Policy::MyPolicy;
+    package App::DBCritic::Policy::MyPolicy;
     use Moo;
 
     has description => ( default => sub{'Follow my policy'} );
     has explanation => ( default => {'My way or the highway'} );
     has applies_to  => ( default => sub { ['ResultSource'] } );
-    with 'DBIx::Class::Schema::Critic::Policy';
+    with 'App::DBCritic::Policy';
 
     sub violates { $_[0]->element ne '' }
 
 =head1 DESCRIPTION
 
-This is a L<role|Moo::Role> consumed by all
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic> policy plugins.
+This is a L<role|Moo::Role> consumed by all L<App::DBCritic|App::DBCritic>
+policy plugins.
 
 =head1 ATTRIBUTES
 
 =head2 element
 
 Read-only accessor for the current schema element being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+L<App::DBCritic|App::DBCritic>.
 
 =head2 schema
 
 Read-only accessor for the current schema object being examined by
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>.
+L<App::DBCritic|App::DBCritic>.
 
 =head1 METHODS
 
 =head2 violation
 
 Given a string description of a violation that has been encountered, creates a
-new
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
+new L<App::DBCritic::Violation|App::DBCritic::Violation>
 object from the current policy.
 
 =head1 REQUIRED METHODS
@@ -122,7 +121,7 @@ role.  Callers should call the C<violates> method as the following:
 =item Arguments: I<$element>, I<$schema>
 
 =item Return value: nothing if the policy passes, or a
-L<DBIx::Class::Schema::Critic::Violation|DBIx::Class::Schema::Critic::Violation>
+L<App::DBCritic::Violation|App::DBCritic::Violation>
 object if it doesn't.
 
 =back
@@ -133,7 +132,7 @@ object if it doesn't.
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc DBIx::Class::Schema::Critic
+  perldoc App::DBCritic
 
 =head2 Websites
 
@@ -148,7 +147,7 @@ Search CPAN
 
 The default CPAN search engine, useful to view POD in HTML format.
 
-L<http://search.cpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://search.cpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -156,7 +155,7 @@ AnnoCPAN
 
 The AnnoCPAN is a website that allows community annonations of Perl module documentation.
 
-L<http://annocpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://annocpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -164,7 +163,7 @@ CPAN Ratings
 
 The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
 
-L<http://cpanratings.perl.org/d/DBIx-Class-Schema-Critic>
+L<http://cpanratings.perl.org/d/App-DBCritic>
 
 =item *
 
@@ -172,7 +171,7 @@ CPANTS
 
 The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
 
-L<http://cpants.perl.org/dist/overview/DBIx-Class-Schema-Critic>
+L<http://cpants.perl.org/dist/overview/App-DBCritic>
 
 =item *
 
@@ -180,7 +179,7 @@ CPAN Testers
 
 The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
 
-L<http://www.cpantesters.org/distro/D/DBIx-Class-Schema-Critic>
+L<http://www.cpantesters.org/distro/A/App-DBCritic>
 
 =item *
 
@@ -188,7 +187,7 @@ CPAN Testers Matrix
 
 The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
 
-L<http://matrix.cpantesters.org/?dist=DBIx-Class-Schema-Critic>
+L<http://matrix.cpantesters.org/?dist=App-DBCritic>
 
 =item *
 
@@ -196,7 +195,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
+L<http://deps.cpantesters.org/?module=App::DBCritic>
 
 =back
 

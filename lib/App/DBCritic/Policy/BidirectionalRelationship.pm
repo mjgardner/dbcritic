@@ -1,11 +1,10 @@
-package DBIx::Class::Schema::Critic::Policy::NullableTextColumn;
+package App::DBCritic::Policy::BidirectionalRelationship;
 
 use strict;
 use utf8;
 use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use DBI ':sql_types';
 use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
@@ -13,40 +12,29 @@ use namespace::autoclean -also => qr{\A _}xms;
 
 has description => (
     is      => 'ro',
-    default => quote_sub q{'Nullable text column'},
+    default => quote_sub q{'Missing bidirectional relationship'},
 );
 has explanation => (
     is      => 'ro',
     default => quote_sub
-        q{'Text columns should not be nullable. Default to empty string instead.'},
+        q{'Related tables should have relationships defined in both classes.'},
 );
 
 sub violates {
     my $source = shift->element;
 
-    ## no critic (ProhibitAccessOfPrivateData,ProhibitCallsToUndeclaredSubs)
-    my @text_types = (
-        qw(TEXT NTEXT CLOB NCLOB CHARACTER CHAR NCHAR VARCHAR VARCHAR2 NVARCHAR2),
-        'CHARACTER VARYING',
-        map     { uc $ARG->{TYPE_NAME} }
-            map { $source->storage->dbh->type_info($ARG) } (
-            SQL_CHAR,        SQL_CLOB,
-            SQL_VARCHAR,     SQL_WVARCHAR,
-            SQL_LONGVARCHAR, SQL_WLONGVARCHAR,
-            ),
-    );
-
-    my %column = %{ $source->columns_info };
-    return join "\n", map {"$ARG is a nullable text column."} grep {
-        uc( $column{$ARG}{data_type} // q{} ) ~~ @text_types
-            and $column{$ARG}{is_nullable}
-    } keys %column;
+    return join "\n",
+        map { _message( $source->name, $source->related_source($ARG)->name ) }
+        grep { !keys %{ $source->reverse_relationship_info($ARG) } }
+        $source->relationships;
 }
 
-with 'DBIx::Class::Schema::Critic::PolicyType::ResultSource';
+sub _message { return "$ARG[0] to $ARG[1] not reciprocated" }
+
+with 'App::DBCritic::PolicyType::ResultSource';
 1;
 
-# ABSTRACT: Check for ResultSources with nullable text columns
+# ABSTRACT: Check for missing bidirectional relationships in ResultSources
 
 __END__
 
@@ -59,7 +47,7 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-DBIx::Class::Schema::Critic::Policy::NullableTextColumn - Check for ResultSources with nullable text columns
+App::DBCritic::Policy::BidirectionalRelationship - Check for missing bidirectional relationships in ResultSources
 
 =head1 VERSION
 
@@ -67,27 +55,27 @@ version 0.015
 
 =head1 SYNOPSIS
 
-    use DBIx::Class::Schema::Critic;
+    use App::DBCritic;
 
-    my $critic = DBIx::Class::Schema::Critic->new(
+    my $critic = App::DBCritic->new(
         dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
     $critic->critique();
 
 =head1 DESCRIPTION
 
-This policy returns a violation if a
-L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has nullable text
-columns.
+This policy returns a violation if one or more of a
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource>'s relationships does not
+have a corresponding reverse relationship in the other class.
 
 =head1 ATTRIBUTES
 
 =head2 description
 
-"Nullable text column"
+"Missing bidirectional relationship"
 
 =head2 explanation
 
-"Text columns should not be nullable. Default to empty string instead."
+"Related tables should have relationships defined in both classes."
 
 =head2 applies_to
 
@@ -97,48 +85,11 @@ This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =head2 violates
 
-Returns details of each column from the
-L<"current element"|DBIx::Class::Schema::Critic::Policy> that maps to
-following data types and
-L<"is nullable"|DBIx::Class::ResultSource/is_nullable>:
-
-=over
-
-=item C<TEXT>
-
-=item C<NTEXT>
-
-=item C<CLOB>
-
-=item C<NCLOB>
-
-=item C<CHARACTER>
-
-=item C<CHAR>
-
-=item C<NCHAR>
-
-=item C<VARCHAR>
-
-=item C<VARCHAR2>
-
-=item C<NVARCHAR2>
-
-=item C<CHARACTER VARYING>
-
-=item C<SQL_CHAR>
-
-=item C<SQL_CLOB>
-
-=item C<SQL_VARCHAR>
-
-=item C<SQL_WVARCHAR>
-
-=item C<SQL_LONGVARCHAR>
-
-=item C<SQL_WLONGVARCHAR>
-
-=back
+If the L<"current element"|App::DBCritic::Policy>'s
+L<relationships|DBIx::Class::ResultSource/relationships> do not all have
+corresponding
+L<"reverse relationships"|DBIx::Class::ResultSource/reverse_relationship_info>,
+returns a string describing details of the issue.
 
 =head1 SUPPORT
 
@@ -146,7 +97,7 @@ L<"is nullable"|DBIx::Class::ResultSource/is_nullable>:
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc DBIx::Class::Schema::Critic
+  perldoc App::DBCritic
 
 =head2 Websites
 
@@ -161,7 +112,7 @@ Search CPAN
 
 The default CPAN search engine, useful to view POD in HTML format.
 
-L<http://search.cpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://search.cpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -169,7 +120,7 @@ AnnoCPAN
 
 The AnnoCPAN is a website that allows community annonations of Perl module documentation.
 
-L<http://annocpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://annocpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -177,7 +128,7 @@ CPAN Ratings
 
 The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
 
-L<http://cpanratings.perl.org/d/DBIx-Class-Schema-Critic>
+L<http://cpanratings.perl.org/d/App-DBCritic>
 
 =item *
 
@@ -185,7 +136,7 @@ CPANTS
 
 The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
 
-L<http://cpants.perl.org/dist/overview/DBIx-Class-Schema-Critic>
+L<http://cpants.perl.org/dist/overview/App-DBCritic>
 
 =item *
 
@@ -193,7 +144,7 @@ CPAN Testers
 
 The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
 
-L<http://www.cpantesters.org/distro/D/DBIx-Class-Schema-Critic>
+L<http://www.cpantesters.org/distro/A/App-DBCritic>
 
 =item *
 
@@ -201,7 +152,7 @@ CPAN Testers Matrix
 
 The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
 
-L<http://matrix.cpantesters.org/?dist=DBIx-Class-Schema-Critic>
+L<http://matrix.cpantesters.org/?dist=App-DBCritic>
 
 =item *
 
@@ -209,7 +160,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
+L<http://deps.cpantesters.org/?module=App::DBCritic>
 
 =back
 

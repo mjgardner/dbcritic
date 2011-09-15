@@ -5,7 +5,6 @@ use Test::Most tests => 1;
 use Path::Class;
 use FindBin;
 use local::lib dir( $FindBin::Bin, 'schema' )->stringify();
-use DBIx::Class::Schema::Critic;
+use App::DBCritic;
 
-my $critic
-    = new_ok( 'DBIx::Class::Schema::Critic' => [ class_name => 'MySchema' ] );
+my $critic = new_ok( 'App::DBCritic' => [ class_name => 'MySchema' ] );

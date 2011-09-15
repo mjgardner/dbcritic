@@ -1,37 +1,42 @@
-#!perl
+package App::DBCritic::Violation;
 
-package main;
-use Modern::Perl;
+use strict;
 use utf8;
+use Modern::Perl;
 
 our $VERSION = '0.015';    # VERSION
-use Getopt::Long::Descriptive;
-use DBIx::Class::Schema::Critic;
+use Const::Fast;
+use English '-no_match_vars';
+use Moo;
+use Sub::Quote;
+use overload q{""} => sub { shift->as_string };
 
-my ( $opt, $usage ) = describe_options(
-    '%c %o',
-    [ 'dsn|d=s'           => 'DBI data source name' ],
-    [ 'username|user|u:s' => 'name of user to use to connect to database' ],
-    [ 'password|pass|p:s' => 'password for connecting to database' ],
-    [   'class_name|class|c:s' =>
-            'DBIx::Class::Schema to use rather than generating one',
-    ],
-    [ 'help|h' => 'print usage message and exit' ],
-);
-
-if ( $opt->help ) {
-    print $usage->text;
-    exit;
+const my @TEXT_FIELDS => qw(description explanation details);
+for (@TEXT_FIELDS) {
+    has $_ => ( is => 'ro', default => quote_sub q{q{}} );
 }
 
-my $critic = DBIx::Class::Schema::Critic->new(
-    map { $_ => $opt->$_ }
-    grep { defined $opt->$_ } qw(dsn username password class_name),
-);
-$critic->critique();
+has element => ( is => 'ro' );
+has as_string => ( is => 'ro', lazy => 1, default => \&_build_as_string );
 
-# PODNAME: dbic_critic
-# ABSTRACT: Critique a database schema for best practices
+sub _build_as_string {
+    my $self    = shift;
+    my $element = $self->element;
+    my $type    = ref $element;
+
+    $type =~ s/\A .* :://xms;
+    const my %TYPE_MAP => (
+        Table     => $element->from,
+        ResultSet => $element->result_class,
+        Schema    => 'schema',
+    );
+    return "[$type $TYPE_MAP{$type}] " . join "\n",
+        map { $self->$ARG } @TEXT_FIELDS;
+}
+
+1;
+
+# ABSTRACT: A violation of a App::DBCritic::Policy
 
 __END__
 
@@ -44,28 +49,55 @@ kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
-dbic_critic - Critique a database schema for best practices
+App::DBCritic::Violation - A violation of a App::DBCritic::Policy
 
 =head1 VERSION
 
 version 0.015
 
-=head1 USAGE
+=head1 SYNOPSIS
 
-    dbic-critic --help
-    dbic-critic --dsn dbi:Oracle:HR --username scott --password tiger
-    dbic-critic --class_name My::Schema --dsn dbi:mysql:database=db --username perl --password pass
+    use App::DBCritic::Violation;
+
+    my $violation = App::DBCritic::Violation->new(
+        description => 'Violated policy',
+        explanation => 'Consult the rulebook',
+        description => 'The frob table is improperly swizzled.',
+    );
+    print "$violation\n";
 
 =head1 DESCRIPTION
 
-This is the command line interface to
-L<DBIx::Class::Schema::Critic|DBIx::Class::Schema::Critic>, a utility for
-scanning a database schema for violations of best practices.
+This class represents L<App::DBCritic::Policy|App::DBCritic::Policy>
+violations flagged by L<App::DBCritic|App::DBCritic>.
 
-=head1 CONFIGURATION
+=head1 ATTRIBUTES
 
-All configuration is done via the command line options described by
-C<dbic-critic --help>.
+=head2 description
+
+A short string briefly describing what's wrong.
+Only settable at construction.
+
+=head2 explanation
+
+A string giving a longer general description of the problem.
+Only settable at construction.
+
+=head2 details
+
+A string describing the issue as it specifically applies to the L</element>
+being critiqued.
+
+=head2 element
+
+The schema element that violated a
+L<App::DBCritic::Policy|App::DBCritic::Policy>.
+Only settable at construction.
+
+=head2 as_string
+
+Returns a string representation of the object.  The same method is called if
+the object appears in double quotes.
 
 =head1 SUPPORT
 
@@ -73,7 +105,7 @@ C<dbic-critic --help>.
 
 You can find documentation for this module with the perldoc command.
 
-  perldoc DBIx::Class::Schema::Critic
+  perldoc App::DBCritic
 
 =head2 Websites
 
@@ -88,7 +120,7 @@ Search CPAN
 
 The default CPAN search engine, useful to view POD in HTML format.
 
-L<http://search.cpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://search.cpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -96,7 +128,7 @@ AnnoCPAN
 
 The AnnoCPAN is a website that allows community annonations of Perl module documentation.
 
-L<http://annocpan.org/dist/DBIx-Class-Schema-Critic>
+L<http://annocpan.org/dist/App-DBCritic>
 
 =item *
 
@@ -104,7 +136,7 @@ CPAN Ratings
 
 The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
 
-L<http://cpanratings.perl.org/d/DBIx-Class-Schema-Critic>
+L<http://cpanratings.perl.org/d/App-DBCritic>
 
 =item *
 
@@ -112,7 +144,7 @@ CPANTS
 
 The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
 
-L<http://cpants.perl.org/dist/overview/DBIx-Class-Schema-Critic>
+L<http://cpants.perl.org/dist/overview/App-DBCritic>
 
 =item *
 
@@ -120,7 +152,7 @@ CPAN Testers
 
 The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
 
-L<http://www.cpantesters.org/distro/D/DBIx-Class-Schema-Critic>
+L<http://www.cpantesters.org/distro/A/App-DBCritic>
 
 =item *
 
@@ -128,7 +160,7 @@ CPAN Testers Matrix
 
 The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
 
-L<http://matrix.cpantesters.org/?dist=DBIx-Class-Schema-Critic>
+L<http://matrix.cpantesters.org/?dist=App-DBCritic>
 
 =item *
 
@@ -136,7 +168,7 @@ CPAN Testers Dependencies
 
 The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
 
-L<http://deps.cpantesters.org/?module=DBIx::Class::Schema::Critic>
+L<http://deps.cpantesters.org/?module=App::DBCritic>
 
 =back
 
