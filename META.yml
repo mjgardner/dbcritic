@@ -53,4 +53,4 @@ resources:
   bugtracker: https://github.com/mjgardner/dbcritic/issues
   homepage: http://mjgardner.github.com/dbcritic/
   repository: git://github.com/mjgardner/dbcritic.git
-version: 0.015
+version: 0.020

@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.015';    # VERSION
+our $VERSION = '0.020';    # VERSION
 use Moo;
 use Sub::Quote;
 use namespace::autoclean -also => qr{\A _}xms;
@@ -42,7 +42,7 @@ App::DBCritic::Policy::NoPrimaryKey - Check for DBIx::Class::Schema::ResultSourc
 
 =head1 VERSION
 
-version 0.015
+version 0.020
 
 =head1 SYNOPSIS
 

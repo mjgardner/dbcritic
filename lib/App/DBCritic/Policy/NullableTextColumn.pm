@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.015';    # VERSION
+our $VERSION = '0.020';    # VERSION
 use DBI ':sql_types';
 use English '-no_match_vars';
 use Moo;
@@ -63,7 +63,7 @@ App::DBCritic::Policy::NullableTextColumn - Check for ResultSources with nullabl
 
 =head1 VERSION
 
-version 0.015
+version 0.020
 
 =head1 SYNOPSIS
 

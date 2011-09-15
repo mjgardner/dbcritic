@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.015';    # VERSION
+our $VERSION = '0.020';    # VERSION
 use English '-no_match_vars';
 use Moo;
 use Sub::Quote;
@@ -51,7 +51,7 @@ App::DBCritic::Policy::BidirectionalRelationship - Check for missing bidirection
 
 =head1 VERSION
 
-version 0.015
+version 0.020
 
 =head1 SYNOPSIS
 
