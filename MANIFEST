@@ -9,7 +9,6 @@ README
 bin/dbcritic
 dist.ini
 lib/App/DBCritic.pm
-lib/App/DBCritic/Config.pm
 lib/App/DBCritic/Loader.pm
 lib/App/DBCritic/Policy.pm
 lib/App/DBCritic/Policy/BidirectionalRelationship.pm
