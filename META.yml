@@ -12,7 +12,7 @@ build_requires:
   Path::Class: 0
   Test::More: 0.94
   Test::Most: 0
-  Test::Script: 0
+  Test::Script::Run: 0
   base: 0
   local::lib: 0
   perl: 5.006
