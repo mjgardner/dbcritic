@@ -2,7 +2,7 @@ NAME
     dbcritic - Critique a database schema for best practices
 
 VERSION
-    version 0.020
+    version 0.021
 
 USAGE
         dbcritic --help

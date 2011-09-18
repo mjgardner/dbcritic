@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.020';    # VERSION
+our $VERSION = '0.021';    # VERSION
 use Moo::Role;
 use namespace::autoclean -also => qr{\A _}xms;
 with 'App::DBCritic::PolicyType';
@@ -27,7 +27,7 @@ App::DBCritic::PolicyType::ResultSet - Role for ResultSet critic policies
 
 =head1 VERSION
 
-version 0.020
+version 0.021
 
 =head1 SYNOPSIS
 

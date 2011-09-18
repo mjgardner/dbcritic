@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.020';    # VERSION
+our $VERSION = '0.021';    # VERSION
 use Algorithm::Combinatorics 'combinations';
 use Data::Compare;
 use English '-no_match_vars';
@@ -52,7 +52,7 @@ App::DBCritic::Policy::DuplicateRelationships - Check for ResultSources with unn
 
 =head1 VERSION
 
-version 0.020
+version 0.021
 
 =head1 SYNOPSIS
 

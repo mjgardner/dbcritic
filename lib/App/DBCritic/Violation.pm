@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use Modern::Perl;
 
-our $VERSION = '0.020';    # VERSION
+our $VERSION = '0.021';    # VERSION
 use Const::Fast;
 use English '-no_match_vars';
 use Moo;
@@ -53,7 +53,7 @@ App::DBCritic::Violation - A violation of a App::DBCritic::Policy
 
 =head1 VERSION
 
-version 0.020
+version 0.021
 
 =head1 SYNOPSIS
 
