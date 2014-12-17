@@ -1,6 +1,6 @@
 #!perl
 
-use Modern::Perl;
+use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
 use Test::Most tests => 1;
 use English '-no_match_vars';
 use Path::Class;

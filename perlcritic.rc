@@ -1,6 +1,6 @@
 severity = brutal
 verbose = 8
-exclude = Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion Modules::RequireExplicitPackage Modules::RequirePerlVersion Tics::ProhibitLongLines BuiltInFunctions::ProhibitStringyEval
+exclude = CodeLayout::ProhibitHashBarewords Documentation::RequirePODUseEncodingUTF8 Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion Modules::RequireExplicitPackage Modules::RequirePerlVersion Tics::ProhibitLongLines BuiltInFunctions::ProhibitStringyEval
 
 [CodeLayout::RequireTidyCode]
 perltidyrc = xt/author/perltidy.rc
@@ -10,9 +10,9 @@ allowed_pragmata = diagnostics feature perlversion strict warnings utf8 Modern::
 
 # since we're using Modern::Perl
 [Compatibility::PerlMinimumVersionAndWhy]
-above_version = 5.010
+above_version = 5.012
 [Compatibility::PodMinimumVersion]
-above_version = 5.010
+above_version = 5.012
 
 [ControlStructures::ProhibitPostfixControls]
 flowcontrol = carp cluck confess croak die exit goto warn exit
