@@ -24,12 +24,12 @@ sub violates {
     my $source = shift->element;
 
     return join "\n",
-        map { _message( $source->name, $source->related_source($ARG)->name ) }
-        grep { !keys %{ $source->reverse_relationship_info($ARG) } }
+        map { _message( $source->name, $source->related_source($_)->name ) }
+        grep { !keys %{ $source->reverse_relationship_info($_) } }
         $source->relationships;
 }
 
-sub _message { return "$ARG[0] to $ARG[1] not reciprocated" }
+sub _message { return "$_[0] to $_[1] not reciprocated" }
 
 with 'App::DBCritic::PolicyType::ResultSource';
 1;

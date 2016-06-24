@@ -26,9 +26,9 @@ sub violates {
     my $source = shift->element;
     return if $source->relationships < 2;
 
-    return join "\n" => map { sprintf '%s and %s are duplicates', @{$ARG} }
+    return join "\n" => map { sprintf '%s and %s are duplicates', @{$_} }
         grep {
-        Compare( map { $source->relationship_info($ARG) } @{$ARG} )
+        Compare( map { $source->relationship_info($_) } @{$_} )
         } combinations( [ $source->relationships ], 2 );
 }
 

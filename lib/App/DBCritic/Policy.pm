@@ -13,11 +13,11 @@ use namespace::autoclean -also => qr{\A _}xms;
 requires qw(description explanation violates);
 
 around violates => sub {
-    my ( $orig, $self ) = splice @ARG, 0, 2;
+    my ( $orig, $self ) = splice @_, 0, 2;
     $self->_set_element(shift);
     $self->_set_schema(shift);
 
-    my $details = $self->$orig(@ARG);
+    my $details = $self->$orig(@_);
     return $self->violation($details) if $details;
 
     return;
@@ -29,7 +29,7 @@ sub violation {
     my $self = shift;
     return App::DBCritic::Violation->new(
         details => shift,
-        map { $ARG => $self->$ARG } qw(description explanation element),
+        map { $_ => $self->$_ } qw(description explanation element),
     );
 }
 

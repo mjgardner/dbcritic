@@ -31,7 +31,7 @@ sub _build_as_string {
         Schema    => 'schema',
     );
     return "[$type $TYPE_MAP{$type}] " . join "\n",
-        map { $self->$ARG } @TEXT_FIELDS;
+        map { $self->$_ } @TEXT_FIELDS;
 }
 
 1;

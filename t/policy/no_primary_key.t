@@ -11,5 +11,5 @@ use App::DBCritic;
 
 my $schema = DBICx::TestDatabase->new('MySchema');
 my $critic = App::DBCritic->new( schema => $schema );
-cmp_bag( [ map { $ARG->element->name } @{ $critic->violations } ],
+cmp_bag( [ map { $_->element->name } @{ $critic->violations } ],
     ['no_primary_key'] );

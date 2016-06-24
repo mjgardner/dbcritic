@@ -29,8 +29,8 @@ sub violates {
     my @text_types = (
         qw(TEXT NTEXT CLOB NCLOB CHARACTER CHAR NCHAR VARCHAR VARCHAR2 NVARCHAR2),
         'CHARACTER VARYING',
-        map     { uc $ARG->{TYPE_NAME} }
-            map { $source->storage->dbh->type_info($ARG) } (
+        map     { uc $_->{TYPE_NAME} }
+            map { $source->storage->dbh->type_info($_) } (
             SQL_CHAR,        SQL_CLOB,
             SQL_VARCHAR,     SQL_WVARCHAR,
             SQL_LONGVARCHAR, SQL_WLONGVARCHAR,
@@ -38,7 +38,7 @@ sub violates {
     );
 
     my %column = %{ $source->columns_info };
-    return join "\n", map {"$ARG is a nullable text column."} grep {
+    return join "\n", map {"$_ is a nullable text column."} grep {
         my $col = $_;
         any { uc( $column{$col}{data_type} // q{} ) eq $_ } @text_types
             and $column{$col}{is_nullable};
