@@ -1,7 +1,10 @@
 Revision history for App-DBCritic
 
 {{$NEXT}}
-
+    require perl v5.14 for development
+    fill out more authoring and development dependencies metadata
+    remove perlbrew release tests
+    add release tests for changelog and features for perl v5.12
 0.021     2014-12-18 04:52:22+00:00 UTC (TRIAL RELEASE)
      #9 remove experimental smartmatch operators (HAARG++, SREZIC++)
     #11 fix POD encoding (SROMANV++)
