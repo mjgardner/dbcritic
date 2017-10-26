@@ -1,4 +1,4 @@
-#!perl
+#!/usr/bin/env perl
 
 use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
 use Test::Most tests => 1;
