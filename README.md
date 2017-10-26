@@ -28,7 +28,7 @@ All configuration is done via the command line options described by
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc bin::dbcritic
+    perldoc dbcritic
 
 ## Websites
 
@@ -61,7 +61,7 @@ in addition to those websites please use your favorite search engine to discover
 
 - CPAN Testers
 
-    The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
+    The CPAN Testers is a network of smoke testers who run automated tests on uploaded CPAN distributions.
 
     [http://www.cpantesters.org/distro/A/App-DBCritic](http://www.cpantesters.org/distro/A/App-DBCritic)
 
@@ -99,7 +99,7 @@ Mark Gardner <mjgardner@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2016 by Mark Gardner.
+This software is copyright (c) 2017 by Mark Gardner.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
