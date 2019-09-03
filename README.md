@@ -4,7 +4,7 @@ dbcritic - Critique a database schema for best practices
 
 # VERSION
 
-version 0.022
+version 0.023
 
 # USAGE
 
@@ -40,12 +40,6 @@ in addition to those websites please use your favorite search engine to discover
     The default CPAN search engine, useful to view POD in HTML format.
 
     [http://search.cpan.org/dist/App-DBCritic](http://search.cpan.org/dist/App-DBCritic)
-
-- AnnoCPAN
-
-    The AnnoCPAN is a website that allows community annotations of Perl module documentation.
-
-    [http://annocpan.org/dist/App-DBCritic](http://annocpan.org/dist/App-DBCritic)
 
 - CPAN Ratings
 
