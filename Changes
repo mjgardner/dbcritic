@@ -1,6 +1,8 @@
 Revision history for App-DBCritic
 
 {{$NEXT}}
+
+0.022     2019-09-03 14:24:05-05:00 America/Chicago
     require perl v5.14 for development
     fill out more authoring and development dependencies metadata
     remove perlbrew release tests
