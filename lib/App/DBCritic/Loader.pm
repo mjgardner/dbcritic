@@ -1,18 +1,6 @@
 package App::DBCritic::Loader;
 
-use strict;
-use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
-
-# VERSION
-use Moo;
-extends 'DBIx::Class::Schema::Loader';
-__PACKAGE__->loader_options( naming => 'v4', generate_pod => 0 );
-1;
-
 # ABSTRACT: Loader class for schemas generated from a database connection
-
-__END__
 
 =head1 SYNOPSIS
 
@@ -25,3 +13,15 @@ This is a simple subclass of
 L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> used by
 L<App::DBCritic|App::DBCritic> to dynamically
 generate a schema based on a database connection.
+
+=cut
+
+use strict;
+use utf8;
+use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
+
+# VERSION
+use Moo;
+extends 'DBIx::Class::Schema::Loader';
+__PACKAGE__->loader_options( naming => 'v4', generate_pod => 0 );
+1;

@@ -1,5 +1,23 @@
 package App::DBCritic::Policy::NullableTextColumn;
 
+# ABSTRACT: Check for ResultSources with nullable text columns
+
+=head1 SYNOPSIS
+
+    use App::DBCritic;
+
+    my $critic = App::DBCritic->new(
+        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
+    $critic->critique();
+
+=head1 DESCRIPTION
+
+This policy returns a violation if a
+L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has nullable text
+columns.
+
+=cut
+
 use strict;
 use utf8;
 use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
@@ -16,11 +34,24 @@ has description => (
     is      => 'ro',
     default => quote_sub q{'Nullable text column'},
 );
+
+=attr description
+
+"Nullable text column"
+
+=cut
+
 has explanation => (
     is      => 'ro',
     default => quote_sub
         q{'Text columns should not be nullable. Default to empty string instead.'},
 );
+
+=attr explanation
+
+"Text columns should not be nullable. Default to empty string instead."
+
+=cut
 
 sub violates {
     my $source = shift->element;
@@ -44,39 +75,6 @@ sub violates {
             and $column{$col}{is_nullable};
     } keys %column;
 }
-
-with 'App::DBCritic::PolicyType::ResultSource';
-1;
-
-# ABSTRACT: Check for ResultSources with nullable text columns
-
-__END__
-
-=head1 SYNOPSIS
-
-    use App::DBCritic;
-
-    my $critic = App::DBCritic->new(
-        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
-    $critic->critique();
-
-=head1 DESCRIPTION
-
-This policy returns a violation if a
-L<DBIx::Class::ResultSource|DBIx::Class::ResultSource> has nullable text
-columns.
-
-=attr description
-
-"Nullable text column"
-
-=attr explanation
-
-"Text columns should not be nullable. Default to empty string instead."
-
-=attr applies_to
-
-This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
 
 =method violates
 
@@ -122,3 +120,15 @@ L<"is nullable"|DBIx::Class::ResultSource/is_nullable>:
 =item C<SQL_WLONGVARCHAR>
 
 =back
+
+=cut
+
+with 'App::DBCritic::PolicyType::ResultSource';
+
+=attr applies_to
+
+This policy applies to L<ResultSource|DBIx::Class::ResultSource>s.
+
+=cut
+
+1;

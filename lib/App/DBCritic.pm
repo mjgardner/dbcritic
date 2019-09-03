@@ -1,5 +1,29 @@
 package App::DBCritic;
 
+# ABSTRACT: Critique a database schema for best practices
+
+=head1 SYNOPSIS
+
+    use App::DBCritic;
+
+    my $critic = App::DBCritic->new(
+        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
+    $critic->critique();
+
+=head1 DESCRIPTION
+
+This package is used to scan a database schema and catalog any violations
+of best practices as defined by a set of policy plugins.  It takes conceptual
+and API inspiration from L<Perl::Critic|Perl::Critic>.
+
+B<dbcritic> is the command line interface.
+
+This is a work in progress - please see the L</SUPPORT> section below for
+information on how to contribute.  It especially needs ideas (and
+implementations!) of new policies!
+
+=cut
+
 use strict;
 use utf8;
 use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
@@ -12,11 +36,36 @@ use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
     instantiate => 'new';
+
+=method policies
+
+Returns an array of loaded policy names that will be applied during
+L</critique>.  By default all modules under the
+C<App::DBCritic::Policy> namespace are loaded.
+
+=cut
+
 use Moo;
 use Scalar::Util 'blessed';
 use App::DBCritic::Loader;
 
 for (qw(username password class_name)) { has $_ => ( is => 'ro' ) }
+
+=attr username
+
+The optional username used to connect to the database.
+
+=attr password
+
+The optional password used to connect to the database.
+
+=attr class_name
+
+The name of a L<DBIx::Class::Schema|DBIx::Class::Schema> class you wish to
+L</critique>.
+Only settable at construction time.
+
+=cut
 
 has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn );
 
@@ -30,6 +79,14 @@ sub _build_dsn {
     ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
     return join q{:} => 'dbi', $dbh->{Driver}{Name}, $dbh->{Name};
 }
+
+=attr dsn
+
+The L<DBI|DBI> data source name (required) used to connect to the database.
+If no L</class_name> or L</schema> is provided, L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then
+construct schema classes dynamically to be critiqued.
+
+=cut
 
 has schema => (
     is        => 'ro',
@@ -69,6 +126,18 @@ sub _coerce_schema {
     croak q{don't know how to make a schema from a } . ref $schema;
 }
 
+=attr schema
+
+A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
+Only settable at construction time.
+
+=attr has_schema
+
+An attribute predicates that is true or false, depending on whether L</schema>
+has been defined.
+
+=cut
+
 has _elements => ( is => 'ro', lazy => 1, default => \&_build__elements );
 
 sub _build__elements {
@@ -86,6 +155,14 @@ sub critique {
     return;
 }
 
+=method critique
+
+Runs the L</schema> through the C<App::DBCritic> engine using all
+the policies that have been loaded and dumps a string representation of
+L</violations> to C<STDOUT>.
+
+=cut
+
 has violations => (
     is      => 'ro',
     lazy    => 1,
@@ -96,6 +173,14 @@ has violations => (
         ];
     },
 );
+
+=method violations
+
+Returns an array reference of all
+L<App::DBCritic::Violation|App::DBCritic::Violation>s
+picked up by the various policies.
+
+=cut
 
 sub _policy_loop {
     my ( $self, $policy_type, $elements_ref ) = @_;
@@ -116,74 +201,7 @@ sub _policy_applies_to {
 
 1;
 
-# ABSTRACT: Critique a database schema for best practices
-
 __END__
-
-=head1 SYNOPSIS
-
-    use App::DBCritic;
-
-    my $critic = App::DBCritic->new(
-        dsn => 'dbi:Oracle:HR', username => 'scott', password => 'tiger');
-    $critic->critique();
-
-=head1 DESCRIPTION
-
-This package is used to scan a database schema and catalog any violations
-of best practices as defined by a set of policy plugins.  It takes conceptual
-and API inspiration from L<Perl::Critic|Perl::Critic>.
-
-B<dbcritic> is the command line interface.
-
-This is a work in progress - please see the L</SUPPORT> section below for
-information on how to contribute.  It especially needs ideas (and
-implementations!) of new policies!
-
-=attr class_name
-
-The name of a L<DBIx::Class::Schema|DBIx::Class::Schema> class you wish to
-L</critique>.
-Only settable at construction time.
-
-=attr schema
-
-A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
-Only settable at construction time.
-
-=attr dsn
-
-=attr username
-
-=attr password
-
-The L<DBI|DBI> data source name (required) and optional username and password
-used to connect to the database.  If no L</class_name> or L</schema> is
-provided, L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then
-construct schema classes dynamically to be critiqued.
-
-=attr has_schema
-
-An attribute predicates that is true or false, depending on whether L</schema>
-has been defined.
-
-=method policies
-
-Returns an array of loaded policy names that will be applied during
-L</critique>.  By default all modules under the
-C<App::DBCritic::Policy> namespace are loaded.
-
-=method critique
-
-Runs the L</schema> through the C<App::DBCritic> engine using all
-the policies that have been loaded and dumps a string representation of
-L</violations> to C<STDOUT>.
-
-=method violations
-
-Returns an array reference of all
-L<App::DBCritic::Violation|App::DBCritic::Violation>s
-picked up by the various policies.
 
 =head1 SEE ALSO
 
