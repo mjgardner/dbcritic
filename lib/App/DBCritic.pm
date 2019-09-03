@@ -7,7 +7,7 @@ use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
 # VERSION
 use Carp;
 use English '-no_match_vars';
-use List::MoreUtils 'any';
+use List::Util 1.33 'any';
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
