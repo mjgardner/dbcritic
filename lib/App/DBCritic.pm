@@ -25,6 +25,7 @@ has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn, predicate => 1 );
 sub _build_dsn {
     my $self = shift;
 
+    ## no critic (ErrorHandling::RequireUseOfExceptions)
     croak 'No schema defined' if not $self->has_schema;
     my $dbh = $self->schema->storage->dbh;
 
@@ -44,6 +45,7 @@ has schema => (
 sub _build_schema {
     my $self = shift;
 
+    ## no critic (ErrorHandling::RequireUseOfExceptions)
     croak 'No dsn defined'      if not $self->has_dsn;
     croak 'No username defined' if not $self->has_username;
     croak 'No password defined' if not $self->has_password;
@@ -165,6 +167,19 @@ The L<DBI|DBI> data source name (required) and optional username and password
 used to connect to the database.  If no L</class_name> or L</schema> is
 provided, L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then
 construct schema classes dynamically to be critiqued.
+
+=attr has_class_name
+
+=attr has_schema
+
+=attr has_dsn
+
+=attr has_username
+
+=attr has_password
+
+These attribute predicates are true or false, depending on whether their
+attributes have been defined.
 
 =method policies
 
