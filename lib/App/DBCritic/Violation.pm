@@ -16,7 +16,7 @@ for (@TEXT_FIELDS) {
     has $_ => ( is => 'ro', default => quote_sub q{q{}} );
 }
 
-has element => ( is => 'ro' );
+has element   => ( is => 'ro' );
 has as_string => ( is => 'ro', lazy => 1, default => \&_build_as_string );
 
 sub _build_as_string {

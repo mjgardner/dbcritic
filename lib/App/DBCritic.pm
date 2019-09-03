@@ -16,32 +16,40 @@ use Moo;
 use Scalar::Util 'blessed';
 use App::DBCritic::Loader;
 
-for (qw(username password class_name)) { has $_ => ( is => 'ro' ) }
+for (qw(username password class_name)) {
+    has $_ => ( is => 'ro', predicate => 1 );
+}
 
-has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn );
+has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn, predicate => 1 );
 
 sub _build_dsn {
     my $self = shift;
 
-    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
+    croak 'No schema defined' if not $self->has_schema;
     my $dbh = $self->schema->storage->dbh;
+
+    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
     return join q{:} => 'dbi', $dbh->{Driver}{Name}, $dbh->{Name};
 }
 
 has schema => (
-    is      => 'ro',
-    coerce  => 1,
-    lazy    => 1,
-    default => \&_build_schema,
-    coerce  => \&_coerce_schema,
+    is        => 'ro',
+    coerce    => 1,
+    lazy      => 1,
+    default   => \&_build_schema,
+    coerce    => \&_coerce_schema,
+    predicate => 1,
 );
 
 sub _build_schema {
     my $self = shift;
 
+    croak 'No dsn defined'      if not $self->has_dsn;
+    croak 'No username defined' if not $self->has_username;
+    croak 'No password defined' if not $self->has_password;
     my @connect_info = map { $self->$_ } qw(dsn username password);
 
-    if ( my $class_name = $self->class_name ) {
+    if ( $self->has_class_name and my $class_name = $self->class_name ) {
         return $class_name->connect(@connect_info)
             if eval "require $class_name";
     }
