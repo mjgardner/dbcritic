@@ -7,7 +7,7 @@ Revision history for App-DBCritic
  - add repository links to metadata
  - inline POD to encourage keeping it up to date with the code
  - remove links to defunct AnnoCPAN
- - add CPANFile
+ - GH#12 add CPANFile
 0.022     2019-09-03 14:24:05-05:00 America/Chicago
  - require perl v5.14 for development
  - fill out more authoring and development dependencies metadata
