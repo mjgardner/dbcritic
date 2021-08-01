@@ -4,7 +4,7 @@ dbcritic - Critique a database schema for best practices
 
 # VERSION
 
-version 0.023
+version 0.024
 
 # USAGE
 
@@ -14,7 +14,7 @@ version 0.023
 
 # DESCRIPTION
 
-This is the command line interface to [App::DBCritic](https://metacpan.org/pod/App::DBCritic),
+This is the command line interface to [App::DBCritic](https://metacpan.org/pod/App%3A%3ADBCritic),
 a utility for scanning a database schema for violations of best practices.
 
 # CONFIGURATION
@@ -35,17 +35,11 @@ You can find documentation for this module with the perldoc command.
 The following websites have more information about this module, and may be of help to you. As always,
 in addition to those websites please use your favorite search engine to discover more resources.
 
-- Search CPAN
+- MetaCPAN
 
-    The default CPAN search engine, useful to view POD in HTML format.
+    A modern, open-source CPAN search engine, useful to view POD in HTML format.
 
-    [http://search.cpan.org/dist/App-DBCritic](http://search.cpan.org/dist/App-DBCritic)
-
-- CPAN Ratings
-
-    The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
-
-    [http://cpanratings.perl.org/d/App-DBCritic](http://cpanratings.perl.org/d/App-DBCritic)
+    [https://metacpan.org/release/App-DBCritic](https://metacpan.org/release/App-DBCritic)
 
 - CPANTS
 
@@ -93,7 +87,7 @@ Mark Gardner <mjgardner@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2019 by Mark Gardner.
+This software is copyright (c) 2021 by Mark Gardner.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -1,7 +1,8 @@
 Revision history for App-DBCritic
 
 {{$NEXT}}
-
+ - remove CPAN Ratings link from docs since it's read-only now
+ - change search.cpan link to MetaCPAN in docs
 0.023     2019-09-03 16:45:34-05:00 America/Chicago
  - bulleted Changes log to get better formatting in MetaCPAN
  - add repository links to metadata
