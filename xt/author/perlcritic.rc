@@ -36,3 +36,6 @@ equivalent_modules = Modern::Perl
 
 [TestingAndDebugging::RequireUseWarnings]
 equivalent_modules = Modern::Perl
+
+[Bangs::ProhibitCommentedOutCode]
+commentedcoderegex = (?<!^#pod ).*\$[A-Za-z_].*=/
