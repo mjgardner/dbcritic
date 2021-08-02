@@ -31,7 +31,6 @@ implementations!) of new policies!
 # VERSION
 use utf8;
 use Carp;
-use English '-no_match_vars';
 use List::Util 1.33 'any';
 use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
