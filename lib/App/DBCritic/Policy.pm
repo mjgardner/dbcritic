@@ -23,7 +23,7 @@ policy plugins.
 
 use strict;
 use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
+use Modern::Perl '2011';
 
 # VERSION
 use English '-no_match_vars';

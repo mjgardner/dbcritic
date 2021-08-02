@@ -20,7 +20,7 @@ other tables that are identical in everything but name.
 
 use strict;
 use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
+use Modern::Perl '2011';
 
 # VERSION
 use Algorithm::Combinatorics 'combinations';

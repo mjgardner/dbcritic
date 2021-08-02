@@ -1,4 +1,8 @@
+use v5.12;
+use Object::Pad 0.47;
+
 package App::DBCritic;
+class App::DBCritic;
 
 # ABSTRACT: Critique a database schema for best practices
 
@@ -24,11 +28,8 @@ implementations!) of new policies!
 
 =cut
 
-use strict;
-use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
-
 # VERSION
+use utf8;
 use Carp;
 use English '-no_match_vars';
 use List::Util 1.33 'any';
@@ -36,6 +37,8 @@ use Module::Pluggable
     search_path => [ __PACKAGE__ . '::Policy' ],
     sub_name    => 'policies',
     instantiate => 'new';
+
+=for Pod::Coverage DOES META new
 
 =method policies
 
@@ -45,19 +48,26 @@ C<App::DBCritic::Policy> namespace are loaded.
 
 =cut
 
-use Moo;
 use Scalar::Util 'blessed';
 use App::DBCritic::Loader;
 
-for (qw(username password class_name)) { has $_ => ( is => 'ro' ) }
+has $username :reader :param = undef;
 
 =attr username
 
 The optional username used to connect to the database.
 
+=cut
+
+has $password :reader :param = undef;
+
 =attr password
 
 The optional password used to connect to the database.
+
+=cut
+
+has $class_name :reader :param = undef;
 
 =attr class_name
 
@@ -67,17 +77,26 @@ Only settable at construction time.
 
 =cut
 
-has dsn => ( is => 'ro', lazy => 1, default => \&_build_dsn );
+has $dsn    :reader :param = undef;
+has $schema :reader :param = undef;
 
-sub _build_dsn {
-    my $self = shift;
+ADJUST {
+    $dsn //= join q{:} => 'dbi', 'SQLite', ':memory:';
+    my @connect_info = ( $dsn, $username, $password );
 
-    ## no critic (ErrorHandling::RequireUseOfExceptions)
-    croak 'No schema defined' if not $self->has_schema;
-    my $dbh = $self->schema->storage->dbh;
+    if ($class_name and eval "require $class_name") {
+        $schema = $class_name->connect(@connect_info);
+    }
+    elsif ( not ( blessed($schema) and $schema->isa('DBIx::Class::Schema') ) ) {
+        local $SIG{__WARN__} = sub {
+            if ( $_[0] !~ / has no primary key at /ms ) {
+                print {*STDERR} $_[0];
+            }
+        };
+        $schema = App::DBCritic::Loader->connect(@connect_info);
+    }
 
-    ## no critic (ValuesAndExpressions::ProhibitAccessOfPrivateData)
-    return join q{:} => 'dbi', $dbh->{Driver}{Name}, $dbh->{Name};
+    croak 'No schema defined' if not $schema;
 }
 
 =attr dsn
@@ -86,72 +105,42 @@ The L<DBI|DBI> data source name (required) used to connect to the database.
 If no L</class_name> or L</schema> is provided, L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader> will then
 construct schema classes dynamically to be critiqued.
 
-=cut
-
-has schema => (
-    is        => 'ro',
-    coerce    => 1,
-    lazy      => 1,
-    default   => \&_build_schema,
-    coerce    => \&_coerce_schema,
-    predicate => 1,
-);
-
-sub _build_schema {
-    my $self = shift;
-
-    my @connect_info = map { $self->$_ } qw(dsn username password);
-
-    if ( my $class_name = $self->class_name ) {
-        return $class_name->connect(@connect_info)
-            if eval "require $class_name";
-    }
-
-    return _coerce_schema( \@connect_info );
-}
-
-sub _coerce_schema {
-    my $schema = shift;
-
-    return $schema if blessed $schema and $schema->isa('DBIx::Class::Schema');
-
-    local $SIG{__WARN__} = sub {
-        if ( $_[0] !~ / has no primary key at /ms ) {
-            print {*STDERR} $_[0];
-        }
-    };
-    return App::DBCritic::Loader->connect( @{$schema} )
-        if 'ARRAY' eq ref $schema;
-    ## no critic (ErrorHandling::RequireUseOfExceptions)
-    croak q{don't know how to make a schema from a } . ref $schema;
-}
-
 =attr schema
 
 A L<DBIx::Class::Schema|DBIx::Class::Schema> object you wish to L</critique>.
 Only settable at construction time.
 
-=attr has_schema
-
-An attribute predicates that is true or false, depending on whether L</schema>
-has been defined.
-
 =cut
 
-has _elements => ( is => 'ro', lazy => 1, default => \&_build__elements );
+has %elements;
 
-sub _build__elements {
-    my $self   = shift;
-    my $schema = $self->schema;
-    return {
+ADJUST {
+    %elements = (
         Schema       => [$schema],
         ResultSource => [ map { $schema->source($_) } $schema->sources ],
         ResultSet    => [ map { $schema->resultset($_) } $schema->sources ],
-    };
+    );
 }
 
-sub critique {
-    for ( @{ shift->violations } ) {say}
+has @violations;
+
+ADJUST {
+    @violations = map { $self->_policy_loop( $_, $elements{$_} ) }
+        keys %elements;
+}
+
+method violations { wantarray ? @violations : \@violations }
+
+=method violations
+
+Returns an array of all
+L<App::DBCritic::Violation|App::DBCritic::Violation>s
+picked up by the various policies.
+
+=cut
+
+method critique {
+    say for @violations;
     return;
 }
 
@@ -163,40 +152,19 @@ L</violations> to C<STDOUT>.
 
 =cut
 
-has violations => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        my $self = shift;
-        [   map { $self->_policy_loop( $_, $self->_elements->{$_} ) }
-                keys %{ $self->_elements },
-        ];
-    },
-);
+sub _policy_applies_to ( $policy, $type ) {
+    return any { $_ eq $type } @{ $policy->applies_to };
+}
 
-=method violations
-
-Returns an array reference of all
-L<App::DBCritic::Violation|App::DBCritic::Violation>s
-picked up by the various policies.
-
-=cut
-
-sub _policy_loop {
-    my ( $self, $policy_type, $elements_ref ) = @_;
-    my @violations;
+method _policy_loop ($policy_type, $elements_ref) {
+    my @_violations;
     for my $policy ( grep { _policy_applies_to( $_, $policy_type ) }
         $self->policies )
     {
-        push @violations, grep {$_}
-            map { $policy->violates( $_, $self->schema ) } @{$elements_ref};
+        push @_violations, grep {$_}
+            map { $policy->violates( $_, $schema ) } @{$elements_ref};
     }
-    return @violations;
-}
-
-sub _policy_applies_to {
-    my ( $policy, $type ) = @_;
-    return any { $_ eq $type } @{ $policy->applies_to };
+    return @_violations;
 }
 
 1;
