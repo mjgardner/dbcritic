@@ -76,11 +76,10 @@ Only settable at construction time.
 
 =cut
 
-has $dsn    :reader :param = undef;
+has $dsn    :reader :param = 'dbi:SQLite::memory:';
 has $schema :reader :param = undef;
 
 ADJUST {
-    $dsn //= join q{:} => 'dbi', 'SQLite', ':memory:';
     my @connect_info = ( $dsn, $username, $password );
 
     if ($class_name and eval "require $class_name") {
