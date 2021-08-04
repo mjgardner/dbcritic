@@ -24,7 +24,7 @@ for you.
 
 use strict;
 use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
+use Modern::Perl '2011';
 
 # VERSION
 use Moo::Role;

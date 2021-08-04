@@ -20,7 +20,7 @@ columns.
 
 use strict;
 use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
+use Modern::Perl '2011';
 
 # VERSION
 use DBI ':sql_types';
@@ -56,7 +56,6 @@ has explanation => (
 sub violates {
     my $source = shift->element;
 
-    ## no critic (ProhibitAccessOfPrivateData,ProhibitCallsToUndeclaredSubs)
     my @text_types = (
         qw(TEXT NTEXT CLOB NCLOB CHARACTER CHAR NCHAR VARCHAR VARCHAR2 NVARCHAR2),
         'CHARACTER VARYING',

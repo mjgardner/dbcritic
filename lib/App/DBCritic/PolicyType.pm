@@ -18,7 +18,7 @@ policy types.
 
 use strict;
 use utf8;
-use Modern::Perl '2011';    ## no critic (Modules::ProhibitUseQuotedVersion)
+use Modern::Perl '2011';
 
 # VERSION
 require Devel::Symdump;
@@ -31,7 +31,6 @@ with 'App::DBCritic::Policy';
 has applies_to => (
     is   => 'ro',
     lazy => 1,
-    ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
     default => quote_sub( <<'END_SUB' => { '$package' => \__PACKAGE__ } ),
         [   List::MoreUtils::apply {s/\A .+ :://xms}
             grep { shift->does($_) } Devel::Symdump->packages($package),
